@@ -846,7 +846,7 @@
                         <a href="{{ route('getstarted.index') }}" class="navbar-link text-white hover:text-cream px-4 py-2 text-sm font-normal transition-all hover:bg-white/10 rounded-lg backdrop-blur-sm">
                             Get Started
                         </a>
-                        <a href="#kontak" class="navbar-link text-white hover:text-cream px-4 py-2 text-sm font-normal transition-all hover:bg-white/10 rounded-lg backdrop-blur-sm">
+                        <a href="{{ route('contact.index') }}" class="navbar-link text-white hover:text-cream px-4 py-2 text-sm font-normal transition-all hover:bg-white/10 rounded-lg backdrop-blur-sm">
                             Kontak
                         </a>
                     </div>
@@ -906,7 +906,7 @@
                 <a href="{{ route('home') }}" class="block px-3 py-2 text-cream hover:text-warm-cream hover:bg-sage/20 rounded-lg font-light">Beranda</a>
                 <a href="{{ route('properties.index') }}" class="block px-3 py-2 text-cream hover:text-warm-cream hover:bg-sage/20 rounded-lg font-light">Property</a>
                 <a href="{{ route('getstarted.index') }}" class="block px-3 py-2 text-cream hover:text-warm-cream hover:bg-sage/20 rounded-lg font-light">Get Started</a>
-                <a href="#kontak" class="block px-3 py-2 text-cream hover:text-warm-cream hover:bg-sage/20 rounded-lg font-light">Kontak</a>
+                <a href="{{ route('contact.index') }}" class="block px-3 py-2 text-cream hover:text-warm-cream hover:bg-sage/20 rounded-lg font-light">Kontak</a>
                 
                 @auth
                     <hr class="my-3 border-sage/30">
