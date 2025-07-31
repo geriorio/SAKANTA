@@ -33,22 +33,13 @@
                 Mulai dari <strong class="text-amber-300 font-normal">Rp 50 juta</strong> untuk 1/8 bagian property.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center" data-aos="fade-up" data-aos-delay="300">
-                <a href="{{ route('properties.index') }}" class="btn-sunset px-8 py-4 rounded-xl text-lg font-light inline-block">
+                <a href="{{ route('properties.index') }}" class="btn-sunset px-8 py-4 rounded-xl text-lg font-light inline-block" data-aos="zoom-in" data-aos-delay="400">
                     Lihat Property
                 </a>
-                <a href="#cara-kerja" class="card-natural border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-xl text-lg font-light transition-all">
+                <a href="#cara-kerja" class="card-natural border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-xl text-lg font-light transition-all" data-aos="zoom-in" data-aos-delay="500">
                     Cara Kerja
                 </a>
             </div>
-        </div>
-        
-        <!-- Scroll indicator -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <a href="#features" class="block w-12 h-12 card-natural rounded-full flex items-center justify-center hover:bg-white/20 transition-all cursor-pointer group" onclick="smoothScrollTo('#features')">
-                <svg class="w-6 h-6 text-white group-hover:text-warm-cream transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                </svg>
-            </a>
         </div>
     </div>
 </section>
@@ -63,7 +54,7 @@
     
     <div class="absolute inset-0 bg-pattern opacity-30"></div>
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16" data-aos="fade-up">
+        <div class="text-center mb-16" data-aos="fade-up" data-aos-delay="100">
             <h2 class="text-3xl md:text-4xl font-light text-gray-900 mb-4 font-heading">
                 Mengapa Memilih 
                 <span class="text-gradient">Sakanta</span>?
@@ -74,7 +65,7 @@
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="text-center p-8 rounded-3xl bg-gradient-to-br from-amber-100 to-orange-200 text-gray-800 card-hover relative overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+            <div class="text-center p-8 rounded-3xl bg-gradient-to-br from-amber-100 to-orange-200 text-gray-800 card-hover relative overflow-hidden" data-aos="fade-up" data-aos-delay="200">
                 <div class="absolute inset-0 bg-white/20 backdrop-blur-sm"></div>
                 <div class="relative">
                     <div class="w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-6 floating-element">
@@ -89,7 +80,7 @@
                 </div>
             </div>
             
-            <div class="text-center p-8 rounded-3xl bg-gradient-to-br from-emerald-100 to-teal-200 text-gray-800 card-hover relative overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+            <div class="text-center p-8 rounded-3xl bg-gradient-to-br from-emerald-100 to-teal-200 text-gray-800 card-hover relative overflow-hidden" data-aos="fade-up" data-aos-delay="300">
                 <div class="absolute inset-0 bg-white/20 backdrop-blur-sm"></div>
                 <div class="relative">
                     <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-6 floating-element" style="animation-delay: -2s;">
@@ -104,7 +95,7 @@
                 </div>
             </div>
             
-            <div class="text-center p-8 rounded-3xl bg-gradient-to-br from-rose-100 to-pink-200 text-gray-800 card-hover relative overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+            <div class="text-center p-8 rounded-3xl bg-gradient-to-br from-rose-100 to-pink-200 text-gray-800 card-hover relative overflow-hidden" data-aos="fade-up" data-aos-delay="400">
                 <div class="absolute inset-0 bg-white/20 backdrop-blur-sm"></div>
                 <div class="relative">
                     <div class="w-16 h-16 bg-gradient-to-br from-rose-500 to-pink-600 rounded-2xl flex items-center justify-center mx-auto mb-6 floating-element" style="animation-delay: -4s;">
@@ -137,7 +128,7 @@
     </div>
     
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16" data-aos="fade-up">
+        <div class="text-center mb-16" data-aos="fade-up" data-aos-delay="100">
             <h2 class="text-3xl md:text-4xl font-light mb-4 font-heading">
                 Cara Kerja <span class="text-gradient-natural">Co-Ownership</span>
             </h2>
@@ -147,7 +138,7 @@
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div class="text-center relative" data-aos="fade-up" data-aos-delay="100">
+            <div class="text-center relative" data-aos="fade-up" data-aos-delay="200">
                 <div class="card-natural p-8 rounded-3xl">
                     <div class="w-20 h-20 bg-gradient-sunset rounded-2xl flex items-center justify-center mx-auto mb-6 text-gray-800 text-2xl font-normal floating-element">
                         1
@@ -163,7 +154,7 @@
                 </div>
             </div>
             
-            <div class="text-center relative" data-aos="fade-up" data-aos-delay="200">
+            <div class="text-center relative" data-aos="fade-up" data-aos-delay="300">
                 <div class="card-natural p-8 rounded-3xl">
                     <div class="w-20 h-20 bg-gradient-ocean rounded-2xl flex items-center justify-center mx-auto mb-6 text-white text-2xl font-normal floating-element" style="animation-delay: -1s;">
                         2
@@ -179,7 +170,7 @@
                 </div>
             </div>
             
-            <div class="text-center relative" data-aos="fade-up" data-aos-delay="300">
+            <div class="text-center relative" data-aos="fade-up" data-aos-delay="400">
                 <div class="card-natural p-8 rounded-3xl">
                     <div class="w-20 h-20 bg-gradient-forest rounded-2xl flex items-center justify-center mx-auto mb-6 text-white text-2xl font-normal floating-element" style="animation-delay: -2s;">
                         3
@@ -195,7 +186,7 @@
                 </div>
             </div>
             
-            <div class="text-center" data-aos="fade-up" data-aos-delay="400">
+            <div class="text-center" data-aos="fade-up" data-aos-delay="500">
                 <div class="card-natural p-8 rounded-3xl">
                     <div class="w-20 h-20 bg-gradient-sakanta rounded-2xl flex items-center justify-center mx-auto mb-6 text-white text-2xl font-normal floating-element" style="animation-delay: -3s;">
                         4
@@ -212,114 +203,164 @@
 
 <!-- Featured Properties Section -->
 @if($featuredProperties->count() > 0)
-<section class="py-20 bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 relative">
-    <!-- Background Pattern -->
-    <div class="absolute inset-0 opacity-5">
-        <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
-             alt="House Pattern" class="w-full h-full object-cover">
+<section class="py-20 bg-gradient-to-br from-white via-gray-50 to-cream/20 relative">
+    <!-- Subtle Background Pattern -->
+    <div class="absolute inset-0 opacity-30">
+        <div class="w-full h-full" style="background-image: radial-gradient(circle at 25px 25px, rgba(114, 116, 68, 0.08) 2px, transparent 2px), radial-gradient(circle at 75px 75px, rgba(210, 185, 150, 0.08) 2px, transparent 2px); background-size: 100px 100px;"></div>
     </div>
     
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div class="flex justify-between items-center mb-12" data-aos="fade-up">
+        <div class="flex justify-between items-center mb-12" data-aos="fade-up" data-aos-delay="100">
             <div>
                 <h2 class="text-3xl md:text-4xl font-light text-gray-900 mb-4 font-heading">
-                    Property <span class="text-gradient">Unggulan</span>
+                    Property <span class="text-gradient-sage">Unggulan</span>
                 </h2>
                 <p class="text-xl text-gray-600 font-light">
-                    Property pilihan dengan potensi return terbaik dan lokasi strategis.
+                    Property pilihan dengan potensi return terbaik dan lokasi strategis untuk investasi jangka panjang.
                 </p>
             </div>
-            <a href="{{ route('properties.index') }}" class="hidden md:inline-block btn-ocean text-white px-6 py-3 rounded-xl font-light hover:shadow-lg transition-all">
-                Lihat Semua
+            <a href="{{ route('properties.index') }}" class="hidden md:inline-flex items-center px-6 py-3 rounded-xl text-sm font-medium text-white bg-gradient-to-r from-sage to-olive hover:from-olive hover:to-sage transition-all duration-300 shadow-lg hover:shadow-xl" data-aos="zoom-in" data-aos-delay="300">
+                <span>Lihat Semua</span>
+                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
             </a>
         </div>
         
-        <!-- Featured Properties Swiper -->
-        <div class="swiper-container" data-aos="fade-up" data-aos-delay="200">
-            <div class="featured-properties-swiper">
-                <div class="swiper">
-                    <div class="swiper-wrapper">
-                        @foreach($featuredProperties as $property)
-                        <div class="swiper-slide">
-                            <div class="card-natural rounded-3xl overflow-hidden card-hover group h-full">
-                                <div class="relative">
-                                    <img src="{{ $property->main_image }}" alt="{{ $property->title }}" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
-                                    <div class="absolute top-4 left-4">
-                                        <span class="bg-emerald-500 text-white px-3 py-1 rounded-full text-sm font-light shadow-lg">
-                                            {{ $property->available_shares }}/{{ $property->total_shares }} Tersedia
-                                        </span>
-                                    </div>
-                                    @if($property->expected_rental_yield)
-                                    <div class="absolute top-4 right-4">
-                                        <span class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-light shadow-lg">
-                                            {{ $property->expected_rental_yield }}% Yield
-                                        </span>
-                                    </div>
-                                    @endif
+        <!-- Swiper Container for Featured Properties -->
+        <div class="swiper-container featured-properties-swiper pt-8">
+            <div class="swiper-wrapper" data-aos="fade-up" data-aos-delay="200">
+                @foreach($featuredProperties as $property)
+                <div class="swiper-slide">
+                    <div class="group relative">
+                        <!-- Main Card -->
+                        <div class="relative overflow-hidden rounded-2xl bg-white shadow-xl property-card">
+                            <!-- Image Container -->
+                            <div class="relative h-72 overflow-hidden rounded-t-2xl">
+                                <img src="{{ $property->main_image }}" alt="{{ $property->title }}" 
+                                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                
+                                <!-- Gradient Overlay -->
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                                
+                                <!-- Status Badges -->
+                                <div class="absolute top-4 left-4 flex flex-col gap-2">
+                                    <span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-sage text-white shadow-lg backdrop-blur-sm">
+                                        <svg class="w-3 h-3 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        {{ $property->available_shares }}/{{ $property->total_shares }} Tersedia
+                                    </span>
                                 </div>
                                 
-                                <div class="p-6 bg-white/80 backdrop-blur-sm flex-1 flex flex-col">
-                                    <h3 class="text-xl font-normal text-gray-900 mb-2 font-heading">{{ $property->title }}</h3>
-                                    <p class="text-gray-600 mb-4 flex items-center font-light">
-                                        <svg class="w-4 h-4 mr-2 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                @if($property->expected_rental_yield)
+                                <div class="absolute top-4 right-4">
+                                    <span class="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg backdrop-blur-sm">
+                                        <svg class="w-3 h-3 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                        </svg>
+                                        {{ $property->expected_rental_yield }}% Yield
+                                    </span>
+                                </div>
+                                @endif
+                                
+                                <!-- Property Type Badge -->
+                                <div class="absolute bottom-4 left-4">
+                                    <span class="inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium bg-white/20 backdrop-blur-md text-white border border-white/30">
+                                        {{ $property->property_type ?? 'Premium Property' }}
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <!-- Content Container -->
+                            <div class="p-6 bg-gradient-to-br from-white to-gray-50">
+                                <!-- Title & Location -->
+                                <div class="mb-4">
+                                    <h3 class="text-xl font-semibold text-gray-900 mb-2 line-clamp-1 group-hover:text-sage transition-colors">
+                                        {{ $property->title }}
+                                    </h3>
+                                    <div class="flex items-center text-gray-500 text-sm">
+                                        <svg class="w-4 h-4 mr-2 text-sage" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                         </svg>
                                         {{ $property->city }}, {{ $property->province }}
-                                    </p>
-                                    
-                                    <div class="grid grid-cols-2 gap-4 mb-4 text-sm text-gray-600">
-                                        @if($property->bedrooms)
-                                        <div class="flex items-center">
-                                            <svg class="w-4 h-4 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    </div>
+                                </div>
+                                
+                                <!-- Property Features -->
+                                <div class="flex items-center gap-4 mb-6">
+                                    @if($property->bedrooms)
+                                    <div class="flex items-center text-gray-600 text-sm">
+                                        <div class="w-8 h-8 rounded-lg bg-sage/10 flex items-center justify-center mr-2">
+                                            <svg class="w-4 h-4 text-sage" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
                                             </svg>
-                                            <span class="font-light">{{ $property->bedrooms }} Kamar</span>
                                         </div>
-                                        @endif
-                                        @if($property->bathrooms)
-                                        <div class="flex items-center">
-                                            <svg class="w-4 h-4 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <span class="font-medium">{{ $property->bedrooms }} Kamar</span>
+                                    </div>
+                                    @endif
+                                    @if($property->bathrooms)
+                                    <div class="flex items-center text-gray-600 text-sm">
+                                        <div class="w-8 h-8 rounded-lg bg-sage/10 flex items-center justify-center mr-2">
+                                            <svg class="w-4 h-4 text-sage" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10v11M20 10v11"></path>
                                             </svg>
-                                            <span class="font-light">{{ $property->bathrooms }} Kamar Mandi</span>
                                         </div>
-                                        @endif
+                                        <span class="font-medium">{{ $property->bathrooms }} Bath</span>
                                     </div>
-                                    
-                                    <div class="border-t border-gray-200 pt-4 mt-auto">
-                                        <div class="flex justify-between items-center mb-2">
-                                            <span class="text-gray-600 text-sm font-light">Harga per saham (1/{{ $property->total_shares }})</span>
+                                    @endif
+                                </div>
+                                
+                                <!-- Price Section -->
+                                <div class="border-t border-gray-200 pt-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs text-gray-500 font-medium uppercase tracking-wide">
+                                            Harga per saham (1/{{ $property->total_shares }})
+                                        </span>
+                                        <div class="flex items-center space-x-1">
+                                            <svg class="w-4 h-4 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                            </svg>
+                                            <span class="text-xs text-gray-500">Premium</span>
                                         </div>
-                                        <div class="flex justify-between items-center">
-                                            <span class="text-2xl font-normal text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-orange-600 font-heading">
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex flex-col">
+                                            <span class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sage to-olive">
                                                 {{ $property->formatted_price_per_share }}
                                             </span>
-                                            <a href="{{ route('properties.show', $property) }}" class="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-2 rounded-xl hover:from-amber-600 hover:to-orange-600 transition-all transform hover:scale-105 font-light">
-                                                Detail
-                                            </a>
+                                            <span class="text-xs text-gray-500">ROI: {{ $property->expected_rental_yield ?? '8-12' }}% /tahun</span>
                                         </div>
+                                        <a href="{{ route('properties.show', $property) }}" 
+                                           class="inline-flex items-center px-6 py-3 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-sage to-olive hover:from-olive hover:to-sage transition-all duration-300 shadow-lg hover:shadow-xl">
+                                            <span>Detail</span>
+                                            <svg class="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        @endforeach
+                        
+                        <!-- Decorative Elements -->
+                        <div class="absolute -inset-1 bg-gradient-to-r from-sage to-olive rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-lg"></div>
                     </div>
-                    
-                    <!-- Swiper Navigation -->
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                    
-                    <!-- Swiper Pagination -->
-                    <div class="swiper-pagination"></div>
                 </div>
+                @endforeach
             </div>
+            
+            <!-- Swiper Pagination -->
+            <div class="swiper-pagination"></div>
         </div>
         
         <div class="text-center mt-12 md:hidden">
-            <a href="{{ route('properties.index') }}" class="btn-ocean text-white px-8 py-3 rounded-xl font-light">
-                Lihat Semua Property
+            <a href="{{ route('properties.index') }}" class="inline-flex items-center px-8 py-3 rounded-xl text-sm font-medium text-white bg-gradient-to-r from-sage to-olive hover:from-olive hover:to-sage transition-all duration-300 shadow-lg hover:shadow-xl" data-aos="zoom-in" data-aos-delay="400">
+                <span>Lihat Semua Property</span>
+                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
             </a>
         </div>
     </div>
@@ -328,67 +369,92 @@
 
 <!-- Latest Properties Section -->
 @if($latestProperties->count() > 0)
-<section class="py-20 bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50">
+<section class="py-20 bg-gradient-to-br from-gray-50 via-white to-gray-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12" data-aos="fade-up">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Property <span class="text-gradient">Terbaru</span>
+        <div class="text-center mb-12" data-aos="fade-up" data-aos-delay="100">
+            <h2 class="text-3xl md:text-4xl font-light text-gray-900 mb-4 font-heading">
+                Property <span class="text-gradient-sage">Terbaru</span>
             </h2>
-            <p class="text-xl text-gray-600">
-                Jelajahi pilihan property terbaru dengan berbagai lokasi strategis.
+            <p class="text-xl text-gray-600 font-light">
+                Jelajahi pilihan property terbaru dengan berbagai lokasi strategis dan potensi investasi menarik.
             </p>
         </div>
         
-        <!-- Latest Properties Swiper -->
-        <div class="swiper-container" data-aos="fade-up" data-aos-delay="200">
-            <div class="latest-properties-swiper">
-                <div class="swiper">
-                    <div class="swiper-wrapper">
-                        @foreach($latestProperties as $property)
-                        <div class="swiper-slide">
-                            <div class="card-glass rounded-2xl overflow-hidden card-hover group h-full">
-                                <div class="relative">
-                                    <img src="{{ $property->main_image }}" alt="{{ $property->title }}" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
-                                    <div class="absolute top-3 left-3">
-                                        <span class="bg-white/90 backdrop-blur-sm text-gray-900 px-3 py-1 rounded-xl text-xs font-semibold shadow-lg">
-                                            {{ $property->property_type }}
-                                        </span>
-                                    </div>
+        <!-- Swiper Container for Latest Properties -->
+        <div class="swiper-container latest-properties-swiper pt-8">
+            <div class="swiper-wrapper" data-aos="fade-up" data-aos-delay="200">
+                @foreach($latestProperties as $property)
+                <div class="swiper-slide">
+                    <div class="group relative">
+                        <!-- Compact Card Design -->
+                        <div class="relative overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border border-gray-100">
+                            <!-- Image Container -->
+                            <div class="relative h-48 overflow-hidden">
+                                <img src="{{ $property->main_image }}" alt="{{ $property->title }}" 
+                                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                
+                                <!-- Gradient Overlay -->
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                                
+                                <!-- Property Type Badge -->
+                                <div class="absolute top-3 left-3">
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium bg-white/90 backdrop-blur-sm text-gray-700 shadow-sm">
+                                        {{ $property->property_type ?? 'New Property' }}
+                                    </span>
                                 </div>
                                 
-                                <div class="p-5 bg-white/80 backdrop-blur-sm flex-1 flex flex-col">
-                                    <h3 class="font-bold text-gray-900 mb-1 truncate">{{ $property->title }}</h3>
-                                    <p class="text-gray-600 text-sm mb-3 flex items-center">
-                                        <svg class="w-3 h-3 mr-1 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <!-- New Badge -->
+                                <div class="absolute top-3 right-3">
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium bg-sage text-white shadow-sm">
+                                        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                        </svg>
+                                        Baru
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <!-- Content Container -->
+                            <div class="p-4">
+                                <!-- Title & Location -->
+                                <div class="mb-3">
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-1 line-clamp-1 group-hover:text-sage transition-colors">
+                                        {{ $property->title }}
+                                    </h3>
+                                    <div class="flex items-center text-gray-500 text-sm">
+                                        <svg class="w-3 h-3 mr-1.5 text-sage" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                         </svg>
                                         {{ $property->city }}
-                                    </p>
-                                    
-                                    <div class="flex justify-between items-center mt-auto">
-                                        <span class="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600">
+                                    </div>
+                                </div>
+                                
+                                <!-- Price & Action -->
+                                <div class="flex items-center justify-between">
+                                    <div class="flex flex-col">
+                                        <span class="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-sage to-olive">
                                             {{ $property->formatted_price_per_share }}
                                         </span>
-                                        <a href="{{ route('properties.show', $property) }}" class="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-3 py-1.5 rounded-xl text-sm font-semibold hover:from-emerald-600 hover:to-teal-600 transition-all transform hover:scale-105">
-                                            Lihat →
-                                        </a>
+                                        <span class="text-xs text-gray-500">per saham</span>
                                     </div>
+                                    <a href="{{ route('properties.show', $property) }}" 
+                                       class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium text-white bg-gradient-to-r from-sage to-olive hover:from-olive hover:to-sage transform hover:scale-105 transition-all duration-200 shadow-sm hover:shadow-md">
+                                        Detail
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                        @endforeach
+                        
+                        <!-- Subtle Glow Effect -->
+                        <div class="absolute -inset-0.5 bg-gradient-to-r from-sage to-olive rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300 -z-10 blur-sm"></div>
                     </div>
-                    
-                    <!-- Swiper Navigation -->
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                    
-                    <!-- Swiper Pagination -->
-                    <div class="swiper-pagination"></div>
                 </div>
+                @endforeach
             </div>
+            
+            <!-- Swiper Pagination -->
+            <div class="swiper-pagination"></div>
         </div>
     </div>
 </section>
@@ -410,18 +476,18 @@
     </div>
     
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        <div class="card-natural p-12 rounded-4xl" data-aos="zoom-in" data-aos-delay="100">
-            <h2 class="text-3xl md:text-4xl font-light mb-6 text-white font-heading">
+        <div class="card-natural p-12 rounded-4xl" data-aos="fade-up" data-aos-delay="100">
+            <h2 class="text-3xl md:text-4xl font-light mb-6 text-white font-heading" data-aos="fade-up" data-aos-delay="200">
                 Siap Memulai <span class="text-gradient-light">Investasi</span> Property?
             </h2>
-            <p class="text-xl mb-8 max-w-3xl mx-auto text-gray-200 font-light">
+            <p class="text-xl mb-8 max-w-3xl mx-auto text-gray-200 font-light" data-aos="fade-up" data-aos-delay="300">
                 Bergabunglah dengan ribuan investor yang sudah merasakan keuntungan co-ownership property bersama Sakanta.
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="{{ route('register') }}" class="bg-white text-gray-800 px-8 py-4 rounded-2xl text-lg font-light hover:bg-gray-100 transition-all transform hover:scale-105 shadow-xl" data-aos="fade-up" data-aos-delay="200">
+            <div class="flex flex-col sm:flex-row gap-4 justify-center" data-aos="fade-up" data-aos-delay="400">
+                <a href="{{ route('register') }}" class="bg-white text-gray-800 px-8 py-4 rounded-2xl text-lg font-light hover:bg-gray-100 transition-all transform hover:scale-105 shadow-xl" data-aos="zoom-in" data-aos-delay="500">
                     Daftar Sekarang
                 </a>
-                <a href="{{ route('properties.index') }}" class="border-2 border-white/50 text-white hover:bg-white/10 backdrop-blur-sm px-8 py-4 rounded-2xl text-lg font-light transition-all transform hover:scale-105" data-aos="fade-up" data-aos-delay="300">
+                <a href="{{ route('properties.index') }}" class="border-2 border-white/50 text-white hover:bg-white/10 backdrop-blur-sm px-8 py-4 rounded-2xl text-lg font-light transition-all transform hover:scale-105" data-aos="zoom-in" data-aos-delay="600">
                     Lihat Property
                 </a>
             </div>
@@ -443,7 +509,7 @@ function smoothScrollTo(targetId) {
     }
 }
 
-// Also enable smooth scrolling for all anchor links
+// Enhanced smooth scrolling and initialization
 document.addEventListener('DOMContentLoaded', function() {
     // Add smooth scrolling to all links with # href
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -456,85 +522,118 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Initialize Featured Properties Swiper
-    const featuredSwiper = new Swiper('.featured-properties-swiper .swiper', {
-        slidesPerView: 1,
-        spaceBetween: 20,
-        loop: true,
-        grabCursor: true,
-        autoplay: {
-            delay: 4000,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true,
-        },
-        pagination: {
-            el: '.featured-properties-swiper .swiper-pagination',
-            clickable: true,
-            dynamicBullets: true,
-        },
-        navigation: {
-            nextEl: '.featured-properties-swiper .swiper-button-next',
-            prevEl: '.featured-properties-swiper .swiper-button-prev',
-        },
-        breakpoints: {
-            640: {
-                slidesPerView: 2,
-                spaceBetween: 20,
+    // Wait for page to be fully loaded before initializing Swiper
+    setTimeout(() => {
+        // Initialize Swiper for Featured Properties
+        const featuredSwiper = new Swiper('.featured-properties-swiper', {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
             },
-            1024: {
-                slidesPerView: 3,
-                spaceBetween: 30,
+            pagination: {
+                el: '.featured-properties-swiper .swiper-pagination',
+                clickable: true,
+                dynamicBullets: true,
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                },
+            },
+            effect: 'slide',
+            grabCursor: true,
+            centeredSlides: false,
+            observer: true,
+            observeParents: true,
+            touchRatio: 1,
+            touchAngle: 45,
+            allowTouchMove: true,
+        });
+        
+        // Initialize Swiper for Latest Properties
+        const latestSwiper = new Swiper('.latest-properties-swiper', {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: true,
+            autoplay: {
+                delay: 6000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+            },
+            pagination: {
+                el: '.latest-properties-swiper .swiper-pagination',
+                clickable: true,
+                dynamicBullets: true,
+            },
+            breakpoints: {
+                480: {
+                    slidesPerView: 2,
+                    spaceBetween: 15,
+                },
+                768: {
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                },
+                1024: {
+                    slidesPerView: 4,
+                    spaceBetween: 20,
+                },
+            },
+            effect: 'slide',
+            grabCursor: true,
+            centeredSlides: false,
+            observer: true,
+            observeParents: true,
+            touchRatio: 1,
+            touchAngle: 45,
+            allowTouchMove: true,
+        });
+        
+        // Pause autoplay when page is not visible
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                featuredSwiper.autoplay.stop();
+                latestSwiper.autoplay.stop();
+            } else {
+                featuredSwiper.autoplay.start();
+                latestSwiper.autoplay.start();
             }
-        },
-        on: {
-            init: function() {
-                // Ensure equal height cards
-                this.update();
-            }
-        }
-    });
+        });
+        
+    }, 500); // Small delay to ensure DOM is ready
+});
+
+// Optimize performance
+window.addEventListener('load', function() {
+    // Remove loading states
+    document.body.classList.add('loaded');
     
-    // Initialize Latest Properties Swiper
-    const latestSwiper = new Swiper('.latest-properties-swiper .swiper', {
-        slidesPerView: 1,
-        spaceBetween: 15,
-        loop: true,
-        grabCursor: true,
-        autoplay: {
-            delay: 3500,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true,
-        },
-        pagination: {
-            el: '.latest-properties-swiper .swiper-pagination',
-            clickable: true,
-            dynamicBullets: true,
-        },
-        navigation: {
-            nextEl: '.latest-properties-swiper .swiper-button-next',
-            prevEl: '.latest-properties-swiper .swiper-button-prev',
-        },
-        breakpoints: {
-            480: {
-                slidesPerView: 2,
-                spaceBetween: 15,
-            },
-            768: {
-                slidesPerView: 3,
-                spaceBetween: 20,
-            },
-            1024: {
-                slidesPerView: 4,
-                spaceBetween: 20,
-            }
-        },
-        on: {
-            init: function() {
-                // Ensure equal height cards
-                this.update();
-            }
-        }
-    });
+    // Lazy load images that are not in viewport
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.classList.remove('lazy');
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+
+        document.querySelectorAll('img[data-src]').forEach(img => {
+            imageObserver.observe(img);
+        });
+    }
 });
 </script>
 @endpush

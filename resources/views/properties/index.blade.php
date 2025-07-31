@@ -144,7 +144,7 @@
         <!-- Properties Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
             @foreach($properties as $property)
-            <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 group border border-sage/10">
+            <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden property-card group border border-sage/10">
                 <div class="relative">
                     <img src="{{ $property->main_image }}" alt="{{ $property->title }}" class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300">
                     
