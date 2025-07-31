@@ -3,10 +3,14 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\GetStartedController;
 use Illuminate\Support\Facades\Route;
 
 // Homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Get Started
+Route::get('/get-started', [GetStartedController::class, 'index'])->name('getstarted.index');
 
 // Properties
 Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
