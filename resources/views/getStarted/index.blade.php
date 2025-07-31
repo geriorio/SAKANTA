@@ -161,45 +161,39 @@
     </div>
 </section>
 
-<!-- Sell Your Home Section (Gradient bg + improved layout) -->
+
+<!-- Why Choose Sakanta Section (Keunggulan Platform) -->
 <section class="py-24 bg-gradient-to-br from-white via-brand-cream/60 to-brand-blue/10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <!-- Image -->
-            <div class="relative rounded-2xl overflow-hidden shadow-2xl order-last lg:order-first" data-aos="flip-left" data-aos-delay="100">
-                <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
-                     alt="Interior rumah modern dan cerah" class="w-full h-auto object-cover">
+        <div class="text-center mb-16" data-aos="fade-down" data-aos-delay="100">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-brand-charcoal uppercase tracking-wider font-heading" data-aos="zoom-in" data-aos-delay="200">
+                Kenapa Memilih Sakanta?
+            </h2>
+            <p class="text-xl text-brand-charcoal max-w-3xl mx-auto font-light" data-aos="fade-up" data-aos-delay="400">
+                Nikmati pengalaman investasi properti yang aman, mudah, dan transparan bersama Sakanta.
+            </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="rounded-2xl p-8 flex flex-col items-center text-center shadow-2xl bg-gradient-to-br from-brand-blue/90 via-brand-green/80 to-brand-blue/90 border-2 border-brand-blue/70 hover:scale-105 transition-transform duration-300" data-aos="fade-up" data-aos-delay="200">
+                <span class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-white via-brand-green to-brand-blue mb-6 shadow-lg border-4 border-white/40">
+                    <svg class="w-8 h-8 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zm0 0V4m0 8v8"/></svg>
+                </span>
+                <h3 class="text-xl font-semibold mb-3 text-white">Aman & Legalitas Terjamin</h3>
+                <p class="font-light text-white/90">Seluruh proses investasi diawasi dan didampingi oleh tim legal profesional.</p>
             </div>
-            <!-- Content -->
-            <div data-aos="fade-up" data-aos-delay="300">
-                <h2 class="text-3xl md:text-4xl font-light text-brand-charcoal font-heading mb-4">
-                    Jual Properti Anda <span class="text-brand-blue font-semibold">Bersama Sakanta</span>
-                </h2>
-                <p class="text-lg text-gray-700 font-light leading-relaxed mb-6">
-                    Ingin menjual properti Anda dengan lebih cepat dan harga optimal? Sakanta membantu Anda menjangkau banyak pembeli terverifikasi melalui sistem co-ownership yang transparan.
-                </p>
-                <ul class="space-y-4 mb-8">
-                    @php
-                        $features = [
-                            'Proses penjualan properti yang cepat & transparan',
-                            'Akses ke jaringan pembeli premium yang luas',
-                            'Pendampingan legal & administrasi lengkap'
-                        ];
-                    @endphp
-                    @foreach($features as $feature)
-                    <li class="flex items-start">
-                        <span class="inline-block w-7 h-7 bg-brand-green/20 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
-                            <svg class="w-5 h-5 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                        </span>
-                        <span class="text-gray-700">{{ $feature }}</span>
-                    </li>
-                    @endforeach
-                </ul>
-                <div class="pt-2" data-aos="zoom-in" data-aos-delay="600">
-                    <a href="#contact" class="inline-block bg-brand-charcoal text-white px-8 py-4 rounded-lg text-lg font-light hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-lg">
-                        Hubungi Tim Kami
-                    </a>
-                </div>
+            <div class="rounded-2xl p-8 flex flex-col items-center text-center shadow-2xl bg-gradient-to-br from-brand-green/90 via-brand-blue/80 to-brand-green/90 border-2 border-brand-green/70 hover:scale-105 transition-transform duration-300" data-aos="fade-up" data-aos-delay="400">
+                <span class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-white via-brand-blue to-brand-green mb-6 shadow-lg border-4 border-white/40">
+                    <svg class="w-8 h-8 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                </span>
+                <h3 class="text-xl font-semibold mb-3 text-white">Transparan & Mudah</h3>
+                <p class="font-light text-white/90">Semua informasi investasi dan kepemilikan dapat diakses secara transparan melalui platform.</p>
+            </div>
+            <div class="rounded-2xl p-8 flex flex-col items-center text-center shadow-2xl bg-gradient-to-br from-brand-blue/90 via-brand-green/80 to-brand-blue/90 border-2 border-brand-blue/70 hover:scale-105 transition-transform duration-300" data-aos="fade-up" data-aos-delay="600">
+                <span class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-white via-brand-green to-brand-blue mb-6 shadow-lg border-4 border-white/40">
+                    <svg class="w-8 h-8 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17a4 4 0 100-8 4 4 0 000 8zm0 0v4m0-4H7m4 0h4"/></svg>
+                </span>
+                <h3 class="text-xl font-semibold mb-3 text-white">Return Menarik</h3>
+                <p class="font-light text-white/90">Dapatkan potensi return dari rental yield dan kenaikan nilai properti setiap tahunnya.</p>
             </div>
         </div>
     </div>
