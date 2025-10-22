@@ -6,7 +6,24 @@ use App\Http\Controllers\PropertyController;
 use Illuminate\Support\Facades\Route;
 
 // Homepage
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', function () {
+    return view('welcome');
+})->name('home');
+
+// Listings/Detail Page
+Route::get('/listings', function () {
+    return view('listings');
+})->name('listings');
+
+// Property Detail Page (Static for now)
+Route::get('/property/{slug}', function ($slug) {
+    return view('properties.show');
+})->name('property.detail');
+
+// About Page
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
 
 // Properties
 Route::get('/properties', [PropertyController::class, 'index'])->name('properties.index');
