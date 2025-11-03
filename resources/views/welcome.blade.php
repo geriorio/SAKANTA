@@ -3,8 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>SAKANTA - Luxury Villa Resort</title>
+    
+    <!-- Google Fonts - Work Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
+        @font-face {
+            font-family: 'Esther';
+            src: url('/fonts/Esther-Regular.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,8 +27,61 @@
         }
 
         body {
-            font-family: 'Georgia', serif;
+            font-family: 'Esther', 'Georgia', serif;
             color: #2c3e50;
+        }
+
+        /* Success Notification */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            background: white;
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            opacity: 0;
+            transform: translateX(400px);
+            transition: all 0.4s ease;
+            border-left: 4px solid #064852;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            border-left-color: #a8c68f;
+        }
+
+        .notification .icon {
+            width: 24px;
+            height: 24px;
+            color: #a8c68f;
+        }
+
+        .notification .message {
+            font-family: 'Work Sans', sans-serif;
+            font-size: 15px;
+            color: #064852;
+            font-weight: 500;
+        }
+
+        .notification .close-btn {
+            margin-left: 20px;
+            cursor: pointer;
+            color: #999;
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+
+        .notification .close-btn:hover {
+            color: #064852;
         }
 
         .email-icon {
@@ -34,7 +102,7 @@
         /* Hero Section */
         .hero-section {
             height: 100vh;
-            background: url('/images/hero2.jpg') center/cover no-repeat;
+            background: url('/images/hero4.jpg') center/cover no-repeat;
             position: relative;
             display: flex;
             flex-direction: column;
@@ -42,30 +110,56 @@
             justify-content: center;
         }
 
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0.25) 0%,
+                rgba(0, 0, 0, 0.15) 50%,
+                rgba(0, 0, 0, 0.25) 100%
+            );
+            z-index: 1;
+        }
+
         .hero-logo {
             text-align: center;
             color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 2;
         }
 
-        .hero-logo svg {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 20px;
+        .hero-logo img {
+            filter: drop-shadow(0 10px 40px rgba(0, 0, 0, 0.8));
+            animation: logoFloat 4s ease-in-out infinite;
         }
 
-        .hero-logo h1 {
-            font-size: 72px;
-            font-weight: 300;
-            letter-spacing: 20px;
-            margin-bottom: 100px;
+        @keyframes logoFloat {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
         }
+
+
 
         .scroll-down {
             text-align: center;
             color: white;
-            font-size: 11px;
+            font-size: 15px;
             letter-spacing: 3px;
             text-transform: uppercase;
+            position: relative;
+            z-index: 2;
         }
 
         .scroll-icon {
@@ -106,7 +200,7 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
-            background: #e8e3d8;
+            background: #F7EFE2;
             padding: 100px 80px;
         }
 
@@ -135,15 +229,17 @@
             font-weight: 400;
             line-height: 1.3;
             margin-bottom: 30px;
-            color: #2c5f7f;
+            color: #064852;
+            font-family: 'Esther', serif;
         }
 
         .section2-content p {
             font-size: 16px;
             line-height: 1.8;
-            color: #2c5f7f;
+            color: #064852;
             margin-bottom: 20px;
             max-width: 500px;
+            font-family: 'Work Sans', sans-serif;
         }
 
         .section2-content p:first-of-type {
@@ -155,7 +251,7 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
-            background: #e8e3d8;
+            background: #F7EFE2;
             padding: 100px 80px;
         }
 
@@ -173,12 +269,13 @@
         }
 
         .section3-content small {
-            font-size: 13px;
+            font-size: 17px;
             color: #5a8aaa;
             letter-spacing: 2px;
-            text-transform: uppercase;
             display: block;
             margin-bottom: 20px;
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 500;
         }
 
         .section3-content h2 {
@@ -186,7 +283,7 @@
             font-weight: 400;
             line-height: 1.3;
             margin-bottom: 30px;
-            color: #2c5f7f;
+            color: #064852;
         }
 
         .section3-list {
@@ -200,35 +297,51 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 19px;
-            color: #2c5f7f;
+            font-size: 22px;
+            color: #064852;
             cursor: pointer;
             transition: padding-left 0.3s;
+        }
+
+        .section3-list li a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s;
         }
 
         .section3-list li:hover {
             padding-left: 10px;
         }
 
+        .section3-list li:hover a {
+            color: #a8c68f;
+        }
+
         .section3-list li span {
-            font-size: 20px;
+            font-size: 24px;
         }
 
         .section3-button {
             display: inline-block;
             padding: 12px 30px;
-            border: 2px solid #2c5f7f;
-            color: #2c5f7f;
+            border: 2px solid #064852;
+            color: #064852;
             text-decoration: none;
             font-size: 13px;
             letter-spacing: 2px;
             text-transform: uppercase;
             transition: all 0.3s;
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 600;
         }
 
         .section3-button:hover {
-            background: #2c5f7f;
-            color: #e8e3d8;
+            background: #064852;
+            color: #F7EFE2;
         }
 
         .section3-image {
@@ -251,7 +364,7 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
-            background: #e8e3d8;
+            background: #F7EFE2;
             padding: 100px 80px;
         }
 
@@ -269,9 +382,15 @@
         }
 
         .section4-stamp img {
-            width: 100%;
+            width: 300px;
             height: auto;
             border-radius: 8px;
+            transform: rotate(-8deg);
+            transition: transform 0.3s ease;
+        }
+
+        .section4-stamp img:hover {
+            transform: rotate(-5deg) scale(1.05);
         }
 
         .section4-content h2 {
@@ -279,7 +398,7 @@
             font-weight: 400;
             line-height: 1.4;
             margin-bottom: 50px;
-            color: #2c5f7f;
+            color: #064852;
             max-width: 600px;
         }
 
@@ -310,143 +429,67 @@
         .feature-card h3 {
             font-size: 18px;
             font-weight: 600;
-            color: #2c5f7f;
+            color: #064852;
             margin-bottom: 12px;
+            font-family: 'Work Sans', sans-serif;
         }
 
         .feature-card p {
             font-size: 14px;
             line-height: 1.6;
-            color: #2c5f7f;
+            color: #064852;
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 400;
         }
 
         .section4-button {
             display: inline-block;
             padding: 12px 30px;
-            border: 2px solid #2c5f7f;
-            color: #2c5f7f;
+            border: 2px solid #064852;
+            color: #064852;
             text-decoration: none;
             font-size: 13px;
             letter-spacing: 2px;
             text-transform: uppercase;
             transition: all 0.3s;
             background: transparent;
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 600;
         }
 
         .section4-button:hover {
-            background: #2c5f7f;
-            color: #e8e3d8;
+            background: #064852;
+            color: #F7EFE2;
         }
 
-        /* Section 5 - Villa Carousel */
-        .section5 {
-            min-height: 60vh;
-            display: flex;
-            align-items: center;
-            background: #e8e3d8;
-            padding: 80px 0;
-            overflow: hidden;
+        /* Responsive Design for Hero Logo */
+        @media (max-width: 768px) {
+            .hero-logo img {
+                max-width: 90% !important;
+            }
         }
 
-        .section5-container {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            padding: 0 80px;
-        }
-
-        .carousel-wrapper {
-            flex: 1;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .carousel-track {
-            display: flex;
-            gap: 20px;
-            transition: transform 0.5s ease;
-        }
-
-        .villa-card {
-            height: 350px;
-            position: relative;
-            border-radius: 15px;
-            overflow: hidden;
-            cursor: pointer;
-            flex-shrink: 0;
-        }
-
-        .villa-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Fixed overlay mask - tidak bergerak */
-        .carousel-mask {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            display: flex;
-            gap: 20px;
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        .mask-section {
-            flex: 1;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 15px;
-        }
-
-        .mask-section.left,
-        .mask-section.right {
-            background: rgba(0, 0, 0, 0.6);
-        }
-
-        .mask-section.center {
-            background: transparent;
-        }
-
-        .mask-section h3 {
-            color: white;
-            font-size: 28px;
-            font-weight: 300;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-        }
-
-        .carousel-btn {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: #2c5f7f;
-            border: none;
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            flex-shrink: 0;
-            z-index: 10;
-            position: relative;
-        }
-
-        .carousel-btn:hover {
-            background: rgba(168, 198, 143, 1);
-            transform: scale(1.1);
+        @media (max-width: 480px) {
+            .hero-logo img {
+                max-width: 85% !important;
+            }
         }
 
     </style>
 </head>
 <body>
+    <!-- Success Notification -->
+    @if(session('success'))
+    <div class="notification success show" id="notification">
+        <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        <span class="message">{{ session('success') }}</span>
+        <span class="close-btn" onclick="closeNotification()">×</span>
+    </div>
+    @endif
+
     @include('layouts.navbar')
 
     <!-- Email Icon -->
@@ -460,9 +503,9 @@
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="hero-logo">
-            <h1>SAKANTA</h1>
+            <img src="/images/Logo-05.png" alt="Sakanta Logo" style="max-width: 600px; width: 80%; height: auto; margin-bottom: 100px;">
         </div>
-        <div class="scroll-down">
+        <div class="scroll-down" onclick="document.querySelector('.section5').scrollIntoView({ behavior: 'smooth' })" style="cursor: pointer;">
             <div class="scroll-icon"></div>
             SCROLL DOWN<br>TO START YOUR JOURNEY
         </div>
@@ -489,24 +532,16 @@
                 <small>Explore ownership</small>
                 <h2>Shared Villa Living,<br>with Privacy Intact</h2>
                 <ul class="section3-list">
+                    @foreach($locations as $location)
                     <li>
-                        <span>Kintamani - Bali</span>
-                        <span>↗</span>
+                        <a href="{{ route('location.show', $location->slug) }}" style="display: flex; justify-content: space-between; align-items: center; text-decoration: none; color: inherit; width: 100%;">
+                            <span>{{ $location->name }}</span>
+                            <span>↗</span>
+                        </a>
                     </li>
-                    <li>
-                        <span>Raja Ampat - Papua</span>
-                        <span>↗</span>
-                    </li>
-                    <li>
-                        <span>Sumba - NTT</span>
-                        <span>↗</span>
-                    </li>
-                    <li>
-                        <span>Bukit Tinggi - Sumatra</span>
-                        <span>↗</span>
-                    </li>
+                    @endforeach
                 </ul>
-                <a href="#" class="section3-button">BOOK YOUR STAY</a>
+                <a href="{{ route('listings') }}#locationCarousel" class="section3-button">SEE ALL</a>
             </div>
             <div class="section3-image">
                 <img src="/images/home section 3.jpg" alt="Sakanta Villa">
@@ -519,7 +554,7 @@
     <section class="section4">
         <div class="section4-container">
             <div class="section4-stamp">
-                <img src="/images/perangko.jpg" alt="Sakanta Stamp">
+                <img src="/images/Stamp-01.png" alt="Sakanta Stamp">
             </div>
             <div class="section4-content">
                 <h2>Thoughtfully designed spaces that give you order and flexibility: private nooks to work or rest; communal areas to gather, dine, laugh.</h2>
@@ -541,113 +576,37 @@
     </section>
 
     <!-- Section 5 - Villa Carousel -->
-    <section class="section5">
-        <div class="section5-container">
-            <button class="carousel-btn prev-btn" onclick="moveSlide(-1)">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M15 18l-6-6 6-6"/>
-                </svg>
-            </button>
-            
-            <div class="carousel-wrapper">
-                <div class="carousel-track">
-                    <div class="villa-card">
-                        <img src="/images/villa1.jpg" alt="Personalized Villa">
-                    </div>
-                    <div class="villa-card">
-                        <img src="/images/villa2.jpg" alt="Luxury Villa">
-                    </div>
-                    <div class="villa-card">
-                        <img src="/images/villa3.jpg" alt="Premium Villa">
-                    </div>
-                    <div class="villa-card">
-                        <img src="/images/villa4.jpg" alt="Exclusive Villa">
-                    </div>
-                    <div class="villa-card">
-                        <img src="/images/villa5.jpg" alt="Deluxe Villa">
-                    </div>
-                    <div class="villa-card">
-                        <img src="/images/villa6.jpg" alt="Grand Villa">
-                    </div>
-                </div>
-                
-                <!-- Fixed Mask Overlay -->
-                <div class="carousel-mask">
-                    <div class="mask-section left">
-                        <h3 id="leftLabel">PERSONALIZED</h3>
-                    </div>
-                    <div class="mask-section center"></div>
-                    <div class="mask-section right">
-                        <h3 id="rightLabel">PREMIUM</h3>
-                    </div>
-                </div>
-            </div>
-            
-            <button class="carousel-btn next-btn" onclick="moveSlide(1)">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M9 18l6-6-6-6"/>
-                </svg>
-            </button>
-        </div>
-    </section>
+    <!-- MOVED TO AFTER HERO SECTION -->
 
     <script>
-        let currentSlide = 0;
-        const track = document.querySelector('.carousel-track');
-        const wrapper = document.querySelector('.carousel-wrapper');
-        const slides = document.querySelectorAll('.villa-card');
-        const totalSlides = slides.length;
-        const leftLabel = document.getElementById('leftLabel');
-        const rightLabel = document.getElementById('rightLabel');
-        
-        const labels = ['PERSONALIZED', 'LUXURY', 'PREMIUM', 'EXCLUSIVE', 'DELUXE', 'GRAND'];
-        
-        function setCardWidths() {
-            const wrapperWidth = wrapper.offsetWidth;
-            const gap = 20;
-            const cardWidth = (wrapperWidth - (gap * 2)) / 3; // 3 cards with 2 gaps
-            
-            slides.forEach(slide => {
-                slide.style.width = cardWidth + 'px';
-            });
-        }
-        
-        function updateCarousel() {
-            setCardWidths();
-            
-            const cardWidth = slides[0].offsetWidth;
-            const gap = 20;
-            const slideWidth = cardWidth + gap;
-            const offset = -currentSlide * slideWidth;
-            track.style.transform = `translateX(${offset}px)`;
-            
-            // Update labels
-            const leftIndex = currentSlide;
-            const rightIndex = (currentSlide + 2) % totalSlides;
-            
-            leftLabel.textContent = labels[leftIndex];
-            rightLabel.textContent = labels[rightIndex];
-        }
-        
-        function moveSlide(direction) {
-            currentSlide += direction;
-            
-            // Wrap around
-            if (currentSlide < 0) {
-                currentSlide = totalSlides - 3;
-            } else if (currentSlide > totalSlides - 3) {
-                currentSlide = 0;
+        // Notification auto-hide and close
+        function closeNotification() {
+            const notification = document.getElementById('notification');
+            if (notification) {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 400);
             }
-            
-            updateCarousel();
         }
-        
-        // Initialize
-        window.addEventListener('load', updateCarousel);
-        window.addEventListener('resize', updateCarousel);
+
+        // Auto close notification after 5 seconds
+        window.addEventListener('load', function() {
+            const notification = document.getElementById('notification');
+            if (notification) {
+                setTimeout(closeNotification, 5000);
+            }
+        });
     </script>
+
+    <!-- Featured Listings Carousel -->
+    @include('components.featured-listings', [
+        'listings' => $listings ?? collect(),
+        'title' => 'Hot Listings',
+        'description' => 'Discover our finest investment opportunities across all locations'
+    ])
 
     @include('layouts.footer')
 
 </body>
 </html>
+
+

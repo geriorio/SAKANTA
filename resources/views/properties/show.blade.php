@@ -4,7 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Barnfield Cottage - SAKANTA</title>
+    
+    <!-- Google Fonts - Work Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
+        @font-face {
+            font-family: 'Esther';
+            src: url('/fonts/Esther-Regular.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,9 +26,14 @@
         }
 
         body {
-            font-family: 'Georgia', serif;
+            font-family: 'Esther', 'Georgia', serif;
             color: #2c3e50;
             background: #f5f2ea;
+        }
+        
+        /* Apply Work Sans to all buttons */
+        button, .btn, [type="submit"], a[class*="btn"] {
+            font-family: 'Work Sans', sans-serif !important;
         }
 
         /* ===== SECTION 1: HERO WITH OVERLAY TEXT ===== */
@@ -63,7 +82,7 @@
         .view-gallery-btn {
             display: inline-block;
             padding: 15px 35px;
-            background: #2c5f7f;
+            background: #064852;
             color: white;
             text-decoration: none;
             font-size: 13px;
@@ -72,6 +91,7 @@
             font-weight: 600;
             transition: all 0.3s;
             border-radius: 3px;
+            font-family: 'Work Sans', sans-serif;
         }
 
         .view-gallery-btn:hover {
@@ -106,7 +126,7 @@
         .property-main-info h2 {
             font-size: 42px;
             font-weight: 400;
-            color: #2c5f7f;
+            color: #064852;
             margin-bottom: 25px;
             line-height: 1.2;
         }
@@ -114,38 +134,40 @@
         .property-price {
             font-size: 26px;
             font-weight: 600;
-            color: #2c5f7f;
+            color: #064852;
             margin-bottom: 50px;
         }
 
         .property-specs-list {
             font-size: 14px;
-            color: #2c5f7f;
+            color: #064852;
             line-height: 1.5;
             margin-bottom: 12px;
         }
 
         .property-address {
             font-size: 14px;
-            color: #2c5f7f;
+            color: #064852;
             margin-bottom: 12px;
         }
 
         .check-maps-btn {
             display: inline-block;
             padding: 8px 18px;
-            border: 2px solid #2c5f7f;
-            color: #2c5f7f;
+            border: 2px solid #064852;
+            color: #064852;
             text-decoration: none;
             font-size: 10px;
             letter-spacing: 1.5px;
             text-transform: uppercase;
             transition: all 0.3s;
             margin-bottom: 30px;
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 600;
         }
 
         .check-maps-btn:hover {
-            background: #2c5f7f;
+            background: #064852;
             color: white;
         }
 
@@ -170,20 +192,20 @@
         .feature-icon svg {
             width: 100%;
             height: 100%;
-            stroke: #2c5f7f;
+            stroke: #064852;
             stroke-width: 1.5;
         }
 
         .feature-text h3 {
             font-size: 15px;
             font-weight: 600;
-            color: #2c5f7f;
+            color: #064852;
             margin-bottom: 5px;
         }
 
         .feature-text p {
             font-size: 12px;
-            color: #2c5f7f;
+            color: #064852;
             line-height: 1.5;
         }
 
@@ -198,7 +220,7 @@
         .property-icon-large svg {
             width: 100%;
             height: 100%;
-            stroke: #2c5f7f;
+            stroke: #064852;
             stroke-width: 1;
         }
 
@@ -214,7 +236,7 @@
         .property-description-right p {
             font-size: 14px;
             line-height: 1.7;
-            color: #2c5f7f;
+            color: #064852;
             margin-bottom: 16px;
         }
 
@@ -281,14 +303,14 @@
         .pied-header-icon svg {
             width: 100%;
             height: 100%;
-            stroke: #2c5f7f;
+            stroke: #064852;
             stroke-width: 1.5;
         }
 
         .pied-header-container h2 {
             font-size: 42px;
             font-weight: 400;
-            color: #2c5f7f;
+            color: #064852;
             margin-bottom: 25px;
             line-height: 1.3;
         }
@@ -296,7 +318,7 @@
         .pied-header-container p {
             font-size: 16px;
             line-height: 1.7;
-            color: #2c5f7f;
+            color: #064852;
         }
 
         /* ===== SECTION 5: PIED-A-TERRE GRID ===== */
@@ -320,7 +342,7 @@
             position: relative;
             height: 500px;
             overflow: hidden;
-            border: 2px solid #2c5f7f;
+            border: 2px solid #064852;
             border-radius: 15px;
         }
 
@@ -353,7 +375,7 @@
         .pied-box-icon svg {
             width: 24px;
             height: 24px;
-            stroke: #2c5f7f;
+            stroke: #064852;
             stroke-width: 2;
         }
 
@@ -376,14 +398,14 @@
         .pied-text-icon svg {
             width: 100%;
             height: 100%;
-            stroke: #2c5f7f;
+            stroke: #064852;
             stroke-width: 1.5;
         }
 
         .pied-box-text h3 {
             font-size: 20px;
             font-weight: 600;
-            color: #2c5f7f;
+            color: #064852;
             margin-bottom: 15px;
             line-height: 1.3;
         }
@@ -391,13 +413,17 @@
         .pied-box-text p {
             font-size: 14px;
             line-height: 1.6;
-            color: #2c5f7f;
+            color: #064852;
         }
 
         /* ===== SECTION 5: FAQ SECTION ===== */
         .faq-section {
-            background: #2c5f7f;
+            background: #064852;
             padding: 80px 80px;
+        }
+
+        .faq-section.section-faq {
+            /* Marker class for navbar detection */
         }
 
         .faq-container {
@@ -528,21 +554,21 @@
         .founder-small-icon svg {
             width: 100%;
             height: 100%;
-            stroke: #2c5f7f;
+            stroke: #064852;
             stroke-width: 1;
         }
 
         .founder-content p {
             font-size: 16px;
             line-height: 1.8;
-            color: #2c5f7f;
+            color: #064852;
             margin-bottom: 25px;
         }
 
         .founder-content h2 {
             font-size: 52px;
             font-weight: 400;
-            color: #2c5f7f;
+            color: #064852;
             margin-bottom: 30px;
             line-height: 1.2;
         }
@@ -556,7 +582,7 @@
         .social-icon {
             width: 40px;
             height: 40px;
-            border: 2px solid #2c5f7f;
+            border: 2px solid #064852;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -566,7 +592,7 @@
         }
 
         .social-icon:hover {
-            background: #2c5f7f;
+            background: #064852;
         }
 
         .social-icon:hover svg {
@@ -576,14 +602,14 @@
         .social-icon svg {
             width: 20px;
             height: 20px;
-            stroke: #2c5f7f;
+            stroke: #064852;
             stroke-width: 2;
             transition: stroke 0.3s;
         }
 
         .founder-copyright {
             font-size: 13px;
-            color: #2c5f7f;
+            color: #064852;
             margin-top: 30px;
         }
     </style>
@@ -743,7 +769,7 @@
     </section>
 
     <!-- SECTION 5: FAQ -->
-    <section class="faq-section">
+    <section class="faq-section section-faq">
         <div class="faq-container">
             <div class="faq-header">
                 <h2>FAQ</h2>
@@ -857,3 +883,5 @@
     </script>
 </body>
 </html>
+
+

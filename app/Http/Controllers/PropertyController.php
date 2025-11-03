@@ -3,10 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Models\Property;
+use App\Models\Location;
 use Illuminate\Http\Request;
 
 class PropertyController extends Controller
 {
+    /**
+     * Display listings page with location carousel
+     */
+    public function listings(Request $request)
+    {
+        $locations = Location::all();
+        $listings = Property::where('status', 'available')
+                           ->latest()
+                           ->get();
+        
+        return view('listings', compact('locations', 'listings'));
+    }
+
+    /**
+     * Display properties for a specific location
+     */
+    public function showLocation(Location $location)
+    {
+        $properties = $location->properties()
+                               ->where('status', 'available')
+                               ->latest()
+                               ->paginate(12);
+        
+        return view('locations', compact('location', 'properties'));
+    }
+
     public function index(Request $request)
     {
         $query = Property::where('status', 'available');

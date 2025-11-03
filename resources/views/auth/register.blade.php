@@ -3,6 +3,16 @@
 @section('title', 'Daftar - Sakanta')
 @section('description', 'Daftar akun Sakanta dan mulai investasi property co-ownership dengan modal terjangkau.')
 
+@push('styles')
+<style>
+    /* Apply Work Sans to all buttons */
+    button, .btn, [type="submit"], a.btn-gradient {
+        font-family: 'Work Sans', sans-serif !important;
+        font-weight: 600 !important;
+    }
+</style>
+@endpush
+
 @section('content')
 
 <section class="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-white to-blue-50 py-12">
@@ -247,3 +257,5 @@ function togglePassword(fieldId) {
 }
 </script>
 @endpush
+
+

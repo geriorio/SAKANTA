@@ -3,8 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Listings - SAKANTA</title>
+    
+    <!-- Google Fonts - Work Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
+        @font-face {
+            font-family: 'Esther';
+            src: url('/fonts/Esther-Regular.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
         * {
             margin: 0;
             padding: 0;
@@ -12,8 +26,14 @@
         }
 
         body {
-            font-family: 'Georgia', serif;
+            font-family: 'Esther', 'Georgia', serif;
             color: #2c3e50;
+        }
+        
+        /* Apply Work Sans ONLY to buttons */
+        .area-guide-btn, .ownership-btn {
+            font-family: 'Work Sans', sans-serif !important;
+            font-weight: 600 !important;
         }
 
         .email-icon {
@@ -34,7 +54,7 @@
         /* Hero Section */
         .hero-listings {
             height: 100vh;
-            background: url('/images/hero.jpg') center/cover no-repeat;
+            background: url('/images/herolistings.jpg') center/cover no-repeat;
             position: relative;
             display: flex;
             flex-direction: column;
@@ -60,7 +80,7 @@
         }
 
         .hero-text small {
-            font-size: 12px;
+            font-size: 20px;
             letter-spacing: 4px;
             text-transform: uppercase;
             display: block;
@@ -97,8 +117,8 @@
 
         /* Section 2 - What We Offer */
         .what-we-offer {
-            background: #e8e3d8;
-            padding: 120px 80px;
+            background: #F7EFE2;
+            padding: 100px 80px;
             text-align: center;
         }
 
@@ -108,46 +128,73 @@
         }
 
         .offer-icon {
-            margin-bottom: 30px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .offer-icon img {
+            max-width: 120px;
+            height: auto;
+            filter: drop-shadow(0 4px 12px rgba(6, 72, 82, 0.25)) brightness(1.05) contrast(1.1);
         }
 
         .offer-icon svg {
             width: 60px;
             height: 60px;
-            stroke: #2c5f7f;
+            stroke: #064852;
             stroke-width: 1.5;
         }
 
         .offer-label {
-            font-size: 13px;
+            font-size: 20px;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: #2c5f7f;
-            margin-bottom: 30px;
+            color: #064852;
+            margin-bottom: 15px;
         }
 
         .offer-title {
             font-size: 48px;
             font-weight: 400;
-            color: #2c5f7f;
-            margin-bottom: 40px;
+            color: #064852;
+            margin-bottom: 25px;
             line-height: 1.3;
         }
 
         .offer-description {
-            font-size: 18px;
+            font-size: 20px;
             line-height: 1.8;
-            color: #2c5f7f;
+            color: #064852;
+            font-family: 'Work Sans', sans-serif;
         }
 
         /* Section 3 - Properties Grid */
         .properties-grid {
-            background: #e8e3d8;
+            background: #F7EFE2;
             padding: 80px 80px 120px;
             overflow: visible;
         }
 
-        .grid-container {
+        .properties-section-label {
+            font-size: 20px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #064852;
+            margin-bottom: 30px;
+            text-align: center;
+            font-family: "Work Sans", sans-serif;
+        }
+
+        .properties-section-title {
+            font-size: 48px;
+            font-weight: 400;
+            color: #064852;
+            margin-bottom: 60px;
+            text-align: center;
+            line-height: 1.3;
+        }
             max-width: 1400px;
             margin: 0 auto;
             display: grid;
@@ -183,6 +230,38 @@
             object-fit: cover;
         }
 
+        /* Like Button */
+        .like-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .like-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .like-btn svg {
+            transition: all 0.3s;
+        }
+
+        .like-btn.liked svg {
+            fill: #e74c3c;
+        }
+
         .property-info-card {
             padding: 30px;
         }
@@ -195,9 +274,9 @@
         }
 
         .property-name {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 400;
-            color: #2c5f7f;
+            color: #064852;
         }
 
         .property-icon {
@@ -208,26 +287,26 @@
         .property-icon svg {
             width: 100%;
             height: 100%;
-            stroke: #2c5f7f;
+            stroke: #064852;
             stroke-width: 1.5;
         }
 
         .property-location-text {
-            font-size: 14px;
+            font-size: 17px;
             color: #5a8aaa;
             margin-bottom: 20px;
         }
 
         .property-price-text {
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 600;
-            color: #2c5f7f;
+            color: #064852;
             margin-bottom: 15px;
         }
 
         .property-specs {
-            font-size: 14px;
-            color: #2c5f7f;
+            font-size: 17px;
+            color: #064852;
             margin-bottom: 5px;
         }
 
@@ -243,25 +322,25 @@
         .page-btn {
             width: 40px;
             height: 40px;
-            border: 2px solid #2c5f7f;
+            border: 2px solid #064852;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #2c5f7f;
+            color: #064852;
             text-decoration: none;
             transition: all 0.3s;
         }
 
         .page-btn:hover,
         .page-btn.active {
-            background: #2c5f7f;
+            background: #064852;
             color: white;
         }
 
         /* Section 4 - Area Guide */
         .area-guide {
-            background: #2c5f7f;
+            background: #064852;
             padding: 120px 80px;
             text-align: center;
         }
@@ -275,10 +354,11 @@
         }
 
         .area-guide p {
-            font-size: 18px;
+            font-size: 20px;
             color: white;
             margin-bottom: 40px;
             opacity: 0.95;
+            font-family: "Work Sans", sans-serif;
         }
 
         .area-guide-btn {
@@ -296,12 +376,12 @@
 
         .area-guide-btn:hover {
             background: white;
-            color: #2c5f7f;
+            color: #064852;
         }
 
         /* Section 5 - Ownership */
         .ownership-section {
-            background: #e8e3d8;
+            background: #F7EFE2;
             padding: 100px 80px;
             align-items: center;
         }
@@ -322,9 +402,15 @@
         }
 
         .ownership-stamp img {
-            width: 100%;
+            width: 300px;
             height: auto;
             border-radius: 8px;
+            transform: rotate(-8deg);
+            transition: transform 0.3s ease;
+        }
+
+        .ownership-stamp img:hover {
+            transform: rotate(-5deg) scale(1.05);
         }
 
         .ownership-content {
@@ -333,11 +419,12 @@
         }
 
         .ownership-label {
-            font-size: 13px;
+            font-size: 17px;
             letter-spacing: 3px;
             text-transform: uppercase;
             color: #5a8aaa;
             margin-bottom: 20px;
+            font-family: "Work Sans", sans-serif;
         }
 
         .ownership-content h2 {
@@ -345,14 +432,14 @@
             font-weight: 400;
             line-height: 1.4;
             margin-bottom: 40px;
-            color: #2c5f7f;
+            color: #064852;
         }
 
         .ownership-btn {
             display: inline-block;
             padding: 12px 30px;
-            border: 2px solid #2c5f7f;
-            color: #2c5f7f;
+            border: 2px solid #064852;
+            color: #064852;
             text-decoration: none;
             font-size: 13px;
             letter-spacing: 2px;
@@ -361,27 +448,217 @@
         }
 
         .ownership-btn:hover {
-            background: #2c5f7f;
-            color: #e8e3d8;
+            background: #064852;
+            color: #F7EFE2;
         }
 
-        /* Slider Container */
-        .slider-wrapper {
-            overflow: hidden;
+        /* Location Section */
+        .location-section {
+            background: #F7EFE2;
+            padding: 120px 80px 40px;
+            text-align: center;
+        }
+
+        .location-section-label {
+            font-size: 20px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #064852;
+            margin-bottom: 30px;
+            font-family: "Work Sans", sans-serif;
+        }
+
+        .location-section h2 {
+            font-size: 52px;
+            font-weight: 400;
+            color: #064852;
+            margin-bottom: 60px;
+            line-height: 1.3;
+        }
+
+        /* Location Carousel */
+        .location-carousel-wrapper {
             position: relative;
-            padding-top: 20px;
-            margin-top: -20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            overflow: hidden;
+            padding: 20px 0;
         }
 
-        .slider-container {
+        .location-carousel-container {
             display: flex;
-            transition: transform 0.5s ease-in-out;
             gap: 30px;
+            transition: transform 0.5s ease-in-out;
         }
 
-        .slider-container .property-card {
+        .location-card {
             flex: 0 0 calc((100% - 60px) / 3);
-            max-width: calc((100% - 60px) / 3);
+            min-width: calc((100% - 60px) / 3);
+            cursor: pointer;
+            position: relative;
+            height: 500px;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .location-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .location-card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .location-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+            transition: background 0.3s ease;
+        }
+
+        .location-card:hover::before {
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .location-card-content {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            right: 30px;
+            z-index: 2;
+            color: white;
+            text-align: left;
+        }
+
+        .location-card-name {
+            font-size: 36px;
+            font-weight: 400;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .location-card-description {
+            font-size: 16px;
+            opacity: 0.9;
+            font-family: "Work Sans", sans-serif;
+        }
+
+        .location-card.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #064852;
+            z-index: 3;
+        }
+
+        /* Carousel Controls */
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .carousel-btn {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #064852;
+            border-radius: 50%;
+            background: white;
+            color: #064852;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-btn:hover {
+            background: #064852;
+            color: white;
+        }
+
+        .carousel-dots {
+            display: flex;
+            gap: 10px;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid #064852;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: #064852;
+        }
+
+        /* No properties message */
+        .no-properties {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .no-properties p {
+            font-size: 18px;
+            color: #999;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .grid-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .location-card {
+                flex: 0 0 calc((100% - 30px) / 2);
+                min-width: calc((100% - 30px) / 2);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+
+            .location-card {
+                flex: 0 0 100%;
+                min-width: 100%;
+            }
+
+            .hero-text h1 {
+                font-size: 48px;
+            }
+
+            .location-section,
+            .what-we-offer,
+            .properties-grid,
+            .area-guide,
+            .ownership-section {
+                padding: 60px 30px;
+            }
         }
     </style>
 </head>
@@ -400,24 +677,46 @@
     <section class="hero-listings">
         <div class="hero-text">
             <small>FIND YOUR SANCTUARY IN</small>
-            <h1>Bali</h1>
+            <h1 id="heroTitle">SAKANTA</h1>
         </div>
-        <div class="scroll-indicator">↓</div>
+        <div class="scroll-indicator" onclick="document.querySelector('.location-section').scrollIntoView({ behavior: 'smooth' })" style="cursor: pointer;">↓</div>
+    </section>
+
+    <!-- Location Section -->
+    <section class="location-section">
+        <p class="location-section-label">EXPLORE DESTINATIONS</p>
+        <h2>Choose Your Dream Location</h2>
+        
+        <div class="location-carousel-wrapper">
+            <div class="location-carousel-container" id="locationCarousel">
+                @foreach($locations as $location)
+                <div class="location-card" data-location-id="{{ $location->id }}" data-location-slug="{{ $location->slug }}" data-location-name="{{ $location->name }}" onclick="selectLocation('{{ $location->slug }}')">
+                    <img src="/images/locations/{{ $location->image }}" alt="{{ $location->name }}" class="location-card-image">
+                    <div class="location-card-content">
+                        <div class="location-card-name">{{ $location->name }}</div>
+                        <div class="location-card-description">{{ $location->description }}</div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+
+        <div class="carousel-controls">
+            <button class="carousel-btn" onclick="slideLocation('prev')">←</button>
+            <div class="carousel-dots" id="carouselDots">
+                @foreach($locations as $index => $location)
+                <div class="carousel-dot {{ $index === 0 ? 'active' : '' }}" onclick="slideToLocation({{ $index }})"></div>
+                @endforeach
+            </div>
+            <button class="carousel-btn" onclick="slideLocation('next')">→</button>
+        </div>
     </section>
 
     <!-- Section 2 - What We Offer -->
     <section class="what-we-offer">
         <div class="offer-container">
             <div class="offer-icon">
-                <svg viewBox="0 0 100 100" fill="none">
-                    <rect x="30" y="20" width="40" height="50" stroke="currentColor" stroke-width="2" rx="3"/>
-                    <line x1="50" y1="20" x2="50" y2="70" stroke="currentColor" stroke-width="2"/>
-                    <line x1="30" y1="45" x2="70" y2="45" stroke="currentColor" stroke-width="2"/>
-                    <circle cx="40" cy="32" r="3" fill="currentColor" opacity="0.3"/>
-                    <circle cx="60" cy="32" r="3" fill="currentColor" opacity="0.3"/>
-                    <circle cx="40" cy="57" r="3" fill="currentColor" opacity="0.3"/>
-                    <circle cx="60" cy="57" r="3" fill="currentColor" opacity="0.3"/>
-                </svg>
+                <img src="/images/Icon Test-01.svg" alt="Sakanta Icon" style="width: 80px; height: auto;">
             </div>
             <p class="offer-label">WHAT WE OFFER</p>
             <h2 class="offer-title">A Home That Moves With You</h2>
@@ -427,339 +726,62 @@
         </div>
     </section>
 
-    <!-- Section 3 - Properties Grid -->
-    <section class="properties-grid">
-        <div class="slider-wrapper">
-            <div class="slider-container" id="propertySlider">
-                <!-- Property 1 -->
-                <div class="property-card">
-                <div class="property-image">
-                    <img src="/images/villa1.jpg" alt="Green Garden">
-                </div>
-                <div class="property-info-card">
-                    <div class="property-header">
-                        <h3 class="property-name">Green Garden</h3>
-                        <div class="property-icon">
-                            <svg viewBox="0 0 50 50" fill="none">
-                                <path d="M 10 25 L 25 10 L 40 25 L 25 40 Z" stroke="currentColor" fill="none"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <p class="property-location-text">Uluwatu</p>
-                    <p class="property-price-text">Rp. 5.000.000.000</p>
-                    <p class="property-specs">1/8 Ownership</p>
-                    <p class="property-specs">4 BDS  |  4.5 BA  |  1,545 FT</p>
-                </div>
-            </div>
 
-            <!-- Property 2 -->
-            <div class="property-card">
-                <div class="property-image">
-                    <img src="/images/villa2.jpg" alt="Mountain Side">
-                </div>
-                <div class="property-info-card">
-                    <div class="property-header">
-                        <h3 class="property-name">Mountain Side</h3>
-                        <div class="property-icon">
-                            <svg viewBox="0 0 50 50" fill="none">
-                                <path d="M 10 25 L 25 10 L 40 25 L 25 40 Z" stroke="currentColor" fill="none"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <p class="property-location-text">Kintamani</p>
-                    <p class="property-price-text">Rp. 5.000.000.000</p>
-                    <p class="property-specs">1/8 Ownership</p>
-                    <p class="property-specs">4 BDS  |  4.5 BA  |  2,300 FT</p>
-                </div>
-            </div>
-
-            <!-- Property 3 -->
-            <div class="property-card">
-                <div class="property-image">
-                    <img src="/images/villa3.jpg" alt="The Barnfield">
-                </div>
-                <div class="property-info-card">
-                    <div class="property-header">
-                        <h3 class="property-name">The Barnfield</h3>
-                        <div class="property-icon">
-                            <svg viewBox="0 0 50 50" fill="none">
-                                <path d="M 10 25 L 25 10 L 40 25 L 25 40 Z" stroke="currentColor" fill="none"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <p class="property-location-text">Ubud</p>
-                    <p class="property-price-text">Rp. 5.000.000.000</p>
-                    <p class="property-specs">1/4 Ownership</p>
-                    <p class="property-specs">3 BDS  |  3.5 BA  |  1,921 FT</p>
-                </div>
-            </div>
-
-            <!-- Property 4 -->
-            <div class="property-card">
-                <div class="property-image">
-                    <img src="/images/villa1.jpg" alt="Ocean Breeze">
-                </div>
-                <div class="property-info-card">
-                    <div class="property-header">
-                        <h3 class="property-name">Ocean Breeze</h3>
-                        <div class="property-icon">
-                            <svg viewBox="0 0 50 50" fill="none">
-                                <path d="M 10 25 L 25 10 L 40 25 L 25 40 Z" stroke="currentColor" fill="none"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <p class="property-location-text">Seminyak</p>
-                    <p class="property-price-text">Rp. 6.500.000.000</p>
-                    <p class="property-specs">1/8 Ownership</p>
-                    <p class="property-specs">5 BDS  |  5 BA  |  2,100 FT</p>
-                </div>
-            </div>
-
-            <!-- Property 5 -->
-            <div class="property-card">
-                <div class="property-image">
-                    <img src="/images/villa2.jpg" alt="Sunset Villa">
-                </div>
-                <div class="property-info-card">
-                    <div class="property-header">
-                        <h3 class="property-name">Sunset Villa</h3>
-                        <div class="property-icon">
-                            <svg viewBox="0 0 50 50" fill="none">
-                                <path d="M 10 25 L 25 10 L 40 25 L 25 40 Z" stroke="currentColor" fill="none"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <p class="property-location-text">Canggu</p>
-                    <p class="property-price-text">Rp. 7.000.000.000</p>
-                    <p class="property-specs">1/4 Ownership</p>
-                    <p class="property-specs">4 BDS  |  4 BA  |  1,800 FT</p>
-                </div>
-            </div>
-
-            <!-- Property 6 -->
-            <div class="property-card">
-                <div class="property-image">
-                    <img src="/images/villa3.jpg" alt="Rice Field Retreat">
-                </div>
-                <div class="property-info-card">
-                    <div class="property-header">
-                        <h3 class="property-name">Rice Field Retreat</h3>
-                        <div class="property-icon">
-                            <svg viewBox="0 0 50 50" fill="none">
-                                <path d="M 10 25 L 25 10 L 40 25 L 25 40 Z" stroke="currentColor" fill="none"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <p class="property-location-text">Ubud</p>
-                    <p class="property-price-text">Rp. 4.500.000.000</p>
-                    <p class="property-specs">1/8 Ownership</p>
-                    <p class="property-specs">3 BDS  |  3 BA  |  1,400 FT</p>
-                </div>
-            </div>
-
-            <!-- Property 7 -->
-            <div class="property-card">
-                <div class="property-image">
-                    <img src="/images/villa1.jpg" alt="Cliff House">
-                </div>
-                <div class="property-info-card">
-                    <div class="property-header">
-                        <h3 class="property-name">Cliff House</h3>
-                        <div class="property-icon">
-                            <svg viewBox="0 0 50 50" fill="none">
-                                <path d="M 10 25 L 25 10 L 40 25 L 25 40 Z" stroke="currentColor" fill="none"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <p class="property-location-text">Uluwatu</p>
-                    <p class="property-price-text">Rp. 8.000.000.000</p>
-                    <p class="property-specs">1/4 Ownership</p>
-                    <p class="property-specs">5 BDS  |  5.5 BA  |  2,500 FT</p>
-                </div>
-            </div>
-
-            <!-- Property 8 -->
-            <div class="property-card">
-                <div class="property-image">
-                    <img src="/images/villa2.jpg" alt="Tropical Haven">
-                </div>
-                <div class="property-info-card">
-                    <div class="property-header">
-                        <h3 class="property-name">Tropical Haven</h3>
-                        <div class="property-icon">
-                            <svg viewBox="0 0 50 50" fill="none">
-                                <path d="M 10 25 L 25 10 L 40 25 L 25 40 Z" stroke="currentColor" fill="none"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <p class="property-location-text">Sanur</p>
-                    <p class="property-price-text">Rp. 5.500.000.000</p>
-                    <p class="property-specs">1/8 Ownership</p>
-                    <p class="property-specs">4 BDS  |  4 BA  |  1,750 FT</p>
-                </div>
-            </div>
-
-            <!-- Property 9 -->
-            <div class="property-card">
-                <div class="property-image">
-                    <img src="/images/villa3.jpg" alt="Jungle Villa">
-                </div>
-                <div class="property-info-card">
-                    <div class="property-header">
-                        <h3 class="property-name">Jungle Villa</h3>
-                        <div class="property-icon">
-                            <svg viewBox="0 0 50 50" fill="none">
-                                <path d="M 10 25 L 25 10 L 40 25 L 25 40 Z" stroke="currentColor" fill="none"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <p class="property-location-text">Ubud</p>
-                    <p class="property-price-text">Rp. 4.800.000.000</p>
-                    <p class="property-specs">1/8 Ownership</p>
-                    <p class="property-specs">3 BDS  |  3.5 BA  |  1,650 FT</p>
-                </div>
-            </div>
-
-            <!-- Property 10 -->
-            <div class="property-card">
-                <div class="property-image">
-                    <img src="/images/villa1.jpg" alt="Paradise View">
-                </div>
-                <div class="property-info-card">
-                    <div class="property-header">
-                        <h3 class="property-name">Paradise View</h3>
-                        <div class="property-icon">
-                            <svg viewBox="0 0 50 50" fill="none">
-                                <path d="M 10 25 L 25 10 L 40 25 L 25 40 Z" stroke="currentColor" fill="none"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <p class="property-location-text">Nusa Dua</p>
-                    <p class="property-price-text">Rp. 9.000.000.000</p>
-                    <p class="property-specs">1/4 Ownership</p>
-                    <p class="property-specs">6 BDS  |  6 BA  |  3,000 FT</p>
-                </div>
-            </div>
-
-            <!-- Property 11 -->
-            <div class="property-card">
-                <div class="property-image">
-                    <img src="/images/villa2.jpg" alt="Beach Front">
-                </div>
-                <div class="property-info-card">
-                    <div class="property-header">
-                        <h3 class="property-name">Beach Front</h3>
-                        <div class="property-icon">
-                            <svg viewBox="0 0 50 50" fill="none">
-                                <path d="M 10 25 L 25 10 L 40 25 L 25 40 Z" stroke="currentColor" fill="none"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <p class="property-location-text">Jimbaran</p>
-                    <p class="property-price-text">Rp. 7.500.000.000</p>
-                    <p class="property-specs">1/4 Ownership</p>
-                    <p class="property-specs">5 BDS  |  5 BA  |  2,200 FT</p>
-                </div>
-            </div>
-
-            <!-- Property 12 -->
-            <div class="property-card">
-                <div class="property-image">
-                    <img src="/images/villa3.jpg" alt="Serene Escape">
-                </div>
-                <div class="property-info-card">
-                    <div class="property-header">
-                        <h3 class="property-name">Serene Escape</h3>
-                        <div class="property-icon">
-                            <svg viewBox="0 0 50 50" fill="none">
-                                <path d="M 10 25 L 25 10 L 40 25 L 25 40 Z" stroke="currentColor" fill="none"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <p class="property-location-text">Tabanan</p>
-                    <p class="property-price-text">Rp. 4.200.000.000</p>
-                    <p class="property-specs">1/8 Ownership</p>
-                    <p class="property-specs">3 BDS  |  3 BA  |  1,350 FT</p>
-                </div>
-            </div>
-        </div>
-        </div>
-
-        <!-- Pagination -->
-        <div class="pagination">
-            <a href="#" class="page-btn" onclick="changeSlide('prev'); return false;">←</a>
-            <a href="#" class="page-btn page-number" data-page="1" onclick="goToPage(1); return false;">1</a>
-            <a href="#" class="page-btn page-number active" data-page="2" onclick="goToPage(2); return false;">2</a>
-            <a href="#" class="page-btn page-number" data-page="3" onclick="goToPage(3); return false;">3</a>
-            <a href="#" class="page-btn page-number" data-page="4" onclick="goToPage(4); return false;">4</a>
-            <a href="#" class="page-btn" onclick="changeSlide('next'); return false;">→</a>
-        </div>
-    </section>
 
     <script>
-        let currentPage = 1;
-        const itemsPerPage = 3;
-        const slider = document.getElementById('propertySlider');
-        const totalItems = slider.children.length;
-        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        let currentLocationSlide = 0;
+        const totalLocations = {{ count($locations) }};
+        const cardsPerView = 3;
 
-        function updateSlider() {
-            // Calculate card width including gap
-            const sliderWrapper = slider.parentElement;
-            const wrapperWidth = sliderWrapper.offsetWidth;
-            const gap = 30; // gap between cards
-            const cardWidth = (wrapperWidth - (gap * 2)) / 3; // width of one card
-            const moveDistance = (cardWidth + gap) * 3; // move exactly 3 cards + their gaps
+        function slideLocation(direction) {
+            // Geser 1 kartu per klik, bukan 3
+            if (direction === 'next' && currentLocationSlide < totalLocations - cardsPerView) {
+                currentLocationSlide++;
+            } else if (direction === 'prev' && currentLocationSlide > 0) {
+                currentLocationSlide--;
+            }
+            updateLocationCarousel();
+        }
+
+        function slideToLocation(index) {
+            currentLocationSlide = index;
+            updateLocationCarousel();
+        }
+
+        function updateLocationCarousel() {
+            const carousel = document.getElementById('locationCarousel');
+            const wrapper = carousel.parentElement;
+            const gap = 30;
             
-            // Calculate offset in pixels
-            const offset = -(currentPage - 1) * moveDistance;
-            slider.style.transform = `translateX(${offset}px)`;
+            // Hitung card width dengan benar memperhitungkan gap
+            const cardWidth = (wrapper.offsetWidth - (gap * (cardsPerView - 1))) / cardsPerView;
             
-            // Update active pagination
-            document.querySelectorAll('.page-number').forEach(btn => {
-                btn.classList.remove('active');
-                if (parseInt(btn.dataset.page) === currentPage) {
-                    btn.classList.add('active');
-                }
+            // Offset untuk geser 1 kartu per klik
+            // moveDistance = currentSlide * (cardWidth + gap)
+            const moveDistance = currentLocationSlide * (cardWidth + gap);
+            carousel.style.transform = `translateX(-${moveDistance}px)`;
+
+            // Update active dots
+            const dots = document.querySelectorAll('.carousel-dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentLocationSlide);
             });
         }
 
-        function changeSlide(direction) {
-            if (direction === 'next' && currentPage < totalPages) {
-                currentPage++;
-            } else if (direction === 'prev' && currentPage > 1) {
-                currentPage--;
-            }
-            updateSlider();
+        function selectLocation(locationSlug) {
+            // Redirect ke halaman location menggunakan slug
+            window.location.href = `/location/${locationSlug}`;
         }
 
-        function goToPage(page) {
-            if (page >= 1 && page <= totalPages) {
-                currentPage = page;
-                updateSlider();
-            }
-        }
-
-        // Initialize
-        updateSlider();
-        
-        // Recalculate on window resize
-        window.addEventListener('resize', updateSlider);
-
-        // Make property cards clickable
-        document.querySelectorAll('.property-card').forEach((card, index) => {
-            card.style.cursor = 'pointer';
-            card.addEventListener('click', function(e) {
-                // Get property name from the card
-                const propertyName = this.querySelector('.property-name').textContent;
-                const slug = propertyName.toLowerCase().replace(/\s+/g, '-');
-                window.location.href = `/property/${slug}`;
-            });
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateLocationCarousel();
+            window.addEventListener('resize', updateLocationCarousel);
         });
     </script>
 
     <!-- Section 4 - Area Guide -->
-    <section class="area-guide">
+    <section class="area-guide dark-section">
         <h2>Not Sure Where To<br>Hang Your Hat?</h2>
         <p>Every place whispers a different kind of peace.</p>
         <a href="#" class="area-guide-btn">AREA GUIDES</a>
@@ -769,7 +791,7 @@
     <section class="ownership-section">
         <div class="ownership-container">
             <div class="ownership-stamp">
-                <img src="/images/perangko.jpg" alt="Sakanta Stamp">
+                <img src="/images/Stamp-01.png" alt="Sakanta Stamp">
             </div>
             <div class="ownership-content">
                 <p class="ownership-label">EXPLORE SAKANTA OWNERSHIP</p>
@@ -779,6 +801,62 @@
         </div>
     </section>
 
+    <!-- Featured Listings Carousel -->
+    @include('components.featured-listings', [
+        'listings' => $listings ?? collect(),
+        'title' => 'Hot Listings',
+        'description' => 'Discover our finest investment opportunities across all locations'
+    ])
+
     @include('layouts.footer')
+    
+    <script>
+        // AJAX Like/Unlike Function
+        function toggleLike(button, propertyId) {
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            const svg = button.querySelector('svg');
+            
+            fetch(`/property/${propertyId}/like`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.liked) {
+                    button.classList.add('liked');
+                    svg.setAttribute('fill', '#e74c3c');
+                    svg.setAttribute('stroke', '#e74c3c');
+                } else {
+                    button.classList.remove('liked');
+                    svg.setAttribute('fill', 'none');
+                    svg.setAttribute('stroke', '#666');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Please sign in to like properties');
+            });
+        }
+
+        // Handle anchor scroll with offset for locationCarousel
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.location.hash === '#locationCarousel') {
+                const element = document.getElementById('locationCarousel');
+                if (element) {
+                    setTimeout(() => {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // Scroll up a bit more (100px offset)
+                        window.scrollBy(0, -100);
+                    }, 100);
+                }
+            }
+        });
+    </script>
 </body>
 </html>
+
+

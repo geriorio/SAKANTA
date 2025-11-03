@@ -22,6 +22,9 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
+        'google_id',
+        'avatar',
+        'is_admin',
     ];
 
     /**
@@ -45,5 +48,22 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Get properties yang dilike oleh user
+     */
+    public function likedProperties()
+    {
+        return $this->belongsToMany(Property::class, 'property_likes')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Check apakah user sudah like property tertentu
+     */
+    public function hasLiked($propertyId)
+    {
+        return $this->likedProperties()->where('property_id', $propertyId)->exists();
     }
 }

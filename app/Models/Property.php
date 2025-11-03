@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Property extends Model
 {
     protected $fillable = [
         'title',
+        'slug',
         'description', 
         'address',
         'city',
@@ -23,10 +25,12 @@ class Property extends Model
         'land_area',
         'building_area',
         'images',
+        'main_image',
         'amenities',
         'status',
         'expected_rental_yield',
-        'is_featured'
+        'is_featured',
+        'location_id'
     ];
 
     protected $casts = [
@@ -40,14 +44,42 @@ class Property extends Model
         'is_featured' => 'boolean'
     ];
 
+    /**
+     * Get the route key for implicit model binding.
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function propertyShares(): HasMany
     {
         return $this->hasMany(PropertyShare::class);
     }
 
-    public function getMainImageAttribute()
+    /**
+     * Relationship: Location
+     */
+    public function location(): BelongsTo
     {
-        return isset($this->images[0]) ? $this->images[0] : '/images/default-property.jpg';
+        return $this->belongsTo(Location::class);
+    }
+
+    /**
+     * Users yang like property ini
+     */
+    public function likedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'property_likes')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Check apakah property ini dilike oleh user tertentu
+     */
+    public function isLikedBy($userId)
+    {
+        return $this->likedByUsers()->where('user_id', $userId)->exists();
     }
 
     public function getFormattedPriceAttribute()

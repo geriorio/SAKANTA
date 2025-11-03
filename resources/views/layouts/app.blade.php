@@ -9,7 +9,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&family=Poppins:wght@100;200;300;400;500;600&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&family=Poppins:wght@100;200;300;400;500;600&family=Space+Grotesk:wght@300;400;500;600&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -43,6 +43,14 @@
     
     <!-- Custom CSS -->
     <style>
+        @font-face {
+            font-family: 'Esther';
+            src: url('/fonts/Esther-Regular.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
         :root {
             --color-sage: #727444;
             --color-cream: #d2b996;
@@ -55,7 +63,7 @@
         }
         
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Esther', 'Inter', sans-serif;
             font-weight: 300;
             background: linear-gradient(135deg, var(--color-deep-forest) 0%, var(--color-olive) 50%, var(--color-sage) 100%);
             min-height: 100vh;
@@ -259,8 +267,9 @@
             background: linear-gradient(135deg, var(--color-sage) 0%, var(--color-taupe) 100%);
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(114, 116, 68, 0.4);
-            font-weight: 300;
+            font-weight: 600;
             color: white;
+            font-family: 'Work Sans', sans-serif;
         }
         
         .btn-gradient:hover {
@@ -271,8 +280,9 @@
         .btn-sunset {
             background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-warm-cream) 100%);
             box-shadow: 0 4px 15px rgba(210, 185, 150, 0.4);
-            font-weight: 300;
+            font-weight: 600;
             color: var(--color-olive);
+            font-family: 'Work Sans', sans-serif;
         }
         
         .btn-sunset:hover {
@@ -283,8 +293,9 @@
         .btn-ocean {
             background: linear-gradient(135deg, var(--color-light-sage) 0%, var(--color-sage) 100%);
             box-shadow: 0 4px 15px rgba(138, 148, 86, 0.4);
-            font-weight: 300;
+            font-weight: 600;
             color: white;
+            font-family: 'Work Sans', sans-serif;
         }
         
         .btn-ocean:hover {
@@ -296,8 +307,9 @@
             background: linear-gradient(135deg, var(--color-taupe) 0%, var(--color-moss) 100%);
             box-shadow: 0 4px 15px rgba(118, 100, 69, 0.4);
             border: 1px solid rgba(118, 100, 69, 0.3);
-            font-weight: 300;
+            font-weight: 600;
             color: white;
+            font-family: 'Work Sans', sans-serif;
         }
         
         .btn-natural:hover {
@@ -586,6 +598,7 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
+            font-family: 'Work Sans', sans-serif;
         }
         
         .btn:hover, .button:hover, [class*="btn-"]:hover {
@@ -966,11 +979,14 @@
                         <a href="{{ route('home') }}" class="navbar-link text-white hover:text-cream px-4 py-2 text-sm font-normal transition-all hover:bg-white/10 rounded-lg backdrop-blur-sm">
                             Beranda
                         </a>
-                        <a href="{{ route('properties.index') }}" class="navbar-link text-white hover:text-cream px-4 py-2 text-sm font-normal transition-all hover:bg-white/10 rounded-lg backdrop-blur-sm">
-                            Property
+                        <a href="{{ route('listings') }}" class="navbar-link text-white hover:text-cream px-4 py-2 text-sm font-normal transition-all hover:bg-white/10 rounded-lg backdrop-blur-sm">
+                            Listings
                         </a>
-                        <a href="#tentang" class="navbar-link text-white hover:text-cream px-4 py-2 text-sm font-normal transition-all hover:bg-white/10 rounded-lg backdrop-blur-sm">
+                        <a href="{{ route('about') }}" class="navbar-link text-white hover:text-cream px-4 py-2 text-sm font-normal transition-all hover:bg-white/10 rounded-lg backdrop-blur-sm">
                             Tentang
+                        </a>
+                        <a href="{{ route('faq') }}" class="navbar-link text-white hover:text-cream px-4 py-2 text-sm font-normal transition-all hover:bg-white/10 rounded-lg backdrop-blur-sm">
+                            FAQs
                         </a>
                         <a href="#kontak" class="navbar-link text-white hover:text-cream px-4 py-2 text-sm font-normal transition-all hover:bg-white/10 rounded-lg backdrop-blur-sm">
                             Kontak
@@ -1030,8 +1046,9 @@
         <div x-show="open" x-transition class="md:hidden bg-gradient-dark/95 backdrop-blur-sm border-t border-sage/30">
             <div class="px-4 py-3 space-y-1">
                 <a href="{{ route('home') }}" class="block px-3 py-2 text-cream hover:text-warm-cream hover:bg-sage/20 rounded-lg font-light">Beranda</a>
-                <a href="{{ route('properties.index') }}" class="block px-3 py-2 text-cream hover:text-warm-cream hover:bg-sage/20 rounded-lg font-light">Property</a>
-                <a href="#tentang" class="block px-3 py-2 text-cream hover:text-warm-cream hover:bg-sage/20 rounded-lg font-light">Tentang</a>
+                <a href="{{ route('listings') }}" class="block px-3 py-2 text-cream hover:text-warm-cream hover:bg-sage/20 rounded-lg font-light">Listings</a>
+                <a href="{{ route('about') }}" class="block px-3 py-2 text-cream hover:text-warm-cream hover:bg-sage/20 rounded-lg font-light">Tentang</a>
+                <a href="{{ route('faq') }}" class="block px-3 py-2 text-cream hover:text-warm-cream hover:bg-sage/20 rounded-lg font-light">FAQs</a>
                 <a href="#kontak" class="block px-3 py-2 text-cream hover:text-warm-cream hover:bg-sage/20 rounded-lg font-light">Kontak</a>
                 
                 @auth
@@ -1357,3 +1374,5 @@
     @stack('scripts')
 </body>
 </html>
+
+
