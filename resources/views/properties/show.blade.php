@@ -26,6 +26,10 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Esther', 'Georgia', serif;
             color: #2c3e50;
@@ -392,13 +396,6 @@
             grid-template-columns: repeat(12, 1fr);
             gap: 15px;
             margin-bottom: 30px;
-            max-height: 580px;
-            overflow: hidden;
-            transition: max-height 0.5s ease;
-        }
-
-        .photos-grid.expanded {
-            max-height: none;
         }
 
         .photo-item {
@@ -409,6 +406,10 @@
             cursor: pointer;
             background: #F7EFE2;
             height: 280px;
+        }
+
+        .photo-item.hidden-photo {
+            display: none;
         }
 
         /* Layout dengan tinggi sama, lebar berbeda - lumayan kotak */
@@ -491,10 +492,6 @@
 
         .photo-item:hover img {
             transform: scale(1.05);
-        }
-
-        .hidden-photo {
-            display: none !important;
         }
 
         .view-more-btn {
@@ -663,6 +660,7 @@
             margin-top: 60px;
             padding-top: 60px;
             border-top: 1px solid rgba(6, 72, 82, 0.1);
+            scroll-margin-top: 100px;
         }
 
         .map-container {
@@ -963,22 +961,30 @@
         .feature-carousel {
             position: relative;
             overflow: hidden;
+            width: 100%;
+            min-height: 150px;
         }
 
         .feature-carousel-wrapper {
             display: flex;
             transition: transform 0.5s ease;
+            width: 100%;
         }
 
         .feature-slide {
             min-width: 100%;
+            width: 100%;
             flex-shrink: 0;
+            box-sizing: border-box;
+            padding: 5px 0;
         }
 
         .feature-item {
             display: flex;
             gap: 18px;
-            align-items: center;
+            align-items: flex-start;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .feature-icon {
@@ -987,6 +993,7 @@
             flex-shrink: 0;
             border-radius: 8px;
             overflow: hidden;
+            box-shadow: 0 2px 8px rgba(6, 72, 82, 0.1);
         }
 
         .feature-icon img {
@@ -995,12 +1002,21 @@
             object-fit: cover;
         }
 
+        .feature-text {
+            flex: 1;
+            min-width: 0;
+            padding-right: 10px;
+        }
+
         .feature-text h3 {
             font-size: 18px;
             font-weight: 600;
             color: #064852;
             margin-bottom: 8px;
             font-family: 'Work Sans', sans-serif;
+            line-height: 1.3;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .feature-text p {
@@ -1008,6 +1024,9 @@
             color: #064852;
             line-height: 1.6;
             font-family: 'Work Sans', sans-serif;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
         }
 
         .carousel-controls {
@@ -1071,28 +1090,36 @@
 
             .photos-grid {
                 grid-template-columns: repeat(6, 1fr);
-                grid-auto-rows: 130px;
                 gap: 12px;
-                max-height: 540px;
             }
 
+            .photo-item {
+                height: 200px;
+            }
+
+            /* Baris 1 - 2 foto besar */
             .photo-item:nth-child(1),
             .photo-item:nth-child(2) {
                 grid-column: span 3;
-                grid-row: span 2;
             }
 
+            /* Baris 2 - 3 foto sedang */
             .photo-item:nth-child(3),
             .photo-item:nth-child(4),
-            .photo-item:nth-child(5),
-            .photo-item:nth-child(6) {
+            .photo-item:nth-child(5) {
                 grid-column: span 2;
-                grid-row: span 2;
             }
 
-            .photo-item:nth-child(n+7) {
+            /* Baris 3 - 3 foto sedang */
+            .photo-item:nth-child(6),
+            .photo-item:nth-child(7),
+            .photo-item:nth-child(8) {
                 grid-column: span 2;
-                grid-row: span 2;
+            }
+
+            /* Foto selanjutnya 2 kolom */
+            .photo-item:nth-child(n+9) {
+                grid-column: span 3;
             }
 
             .lightbox-prev {
@@ -1115,6 +1142,19 @@
             .related-properties-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 20px;
+            }
+
+            .feature-icon {
+                width: 100px;
+                height: 100px;
+            }
+
+            .feature-text h3 {
+                font-size: 16px;
+            }
+
+            .feature-text p {
+                font-size: 12px;
             }
         }
 
@@ -1211,16 +1251,37 @@
 
             /* Photos Grid - Responsif 2 kolom di tablet */
             .photos-grid {
-                grid-template-columns: repeat(2, 1fr) !important;
-                grid-auto-rows: auto;
-                gap: 10px;
-                max-height: none;
+                grid-template-columns: repeat(6, 1fr);
+                gap: 12px;
             }
 
             .photo-item {
-                grid-column: span 1 !important;
-                grid-row: span 1 !important;
-                height: 180px !important;
+                height: 200px;
+            }
+
+            /* Baris 1 - 2 foto besar */
+            .photo-item:nth-child(1),
+            .photo-item:nth-child(2) {
+                grid-column: span 3;
+            }
+
+            /* Baris 2 - 3 foto sedang */
+            .photo-item:nth-child(3),
+            .photo-item:nth-child(4),
+            .photo-item:nth-child(5) {
+                grid-column: span 2;
+            }
+
+            /* Baris 3 - 3 foto sedang */
+            .photo-item:nth-child(6),
+            .photo-item:nth-child(7),
+            .photo-item:nth-child(8) {
+                grid-column: span 2;
+            }
+
+            /* Foto selanjutnya 2 kolom */
+            .photo-item:nth-child(n+9) {
+                grid-column: span 3;
             }
 
             .lightbox-prev,
@@ -1276,6 +1337,30 @@
             .feature-item {
                 flex-direction: column;
                 align-items: flex-start;
+                gap: 15px;
+            }
+
+            .feature-icon {
+                width: 100%;
+                height: 200px;
+            }
+
+            .feature-text {
+                padding-right: 0;
+            }
+
+            .feature-text h3 {
+                font-size: 16px;
+            }
+
+            .feature-text p {
+                font-size: 13px;
+            }
+
+            .carousel-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
             }
         }
 
@@ -1355,12 +1440,17 @@
 
             /* Photos Grid - 1 kolom untuk mobile kecil */
             .photos-grid {
-                grid-template-columns: 1fr !important;
+                grid-template-columns: 1fr;
                 gap: 8px;
             }
 
             .photo-item {
-                height: 200px !important;
+                grid-column: span 1;
+                height: 220px;
+            }
+
+            .photo-item:nth-child(n+1) {
+                grid-column: span 1;
             }
 
             .view-more-btn {
@@ -1448,9 +1538,15 @@
                 height: 180px;
             }
 
+            .feature-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
             .feature-icon {
-                width: 80px;
-                height: 80px;
+                width: 100%;
+                height: 180px;
             }
 
             .feature-text h3 {
@@ -1459,6 +1555,7 @@
 
             .feature-text p {
                 font-size: 12px;
+                line-height: 1.7;
             }
 
             .carousel-btn {
@@ -1636,7 +1733,7 @@
                         {{ $property->address }}, {{ $property->location->name ?? $property->city }}, {{ $property->province }}
                     </p>
                     
-                    <a href="#" class="check-maps-btn">CHECK MAPS →</a>
+                    <a href="#map-section" class="check-maps-btn">CHECK MAPS →</a>
 
                     @if($property->description)
                     <div class="property-description-right">
@@ -1729,7 +1826,7 @@
 
         <!-- Map Section -->
         @if($property->map_embed_url || ($property->latitude && $property->longitude))
-        <div class="map-section">
+        <div class="map-section" id="map-section">
             <div class="map-container">
                 <h4 class="map-title">Location</h4>
                 
@@ -1918,7 +2015,7 @@
                 // Hide photos beyond threshold
                 allPhotos.forEach((photo, index) => {
                     if (index >= threshold) {
-                        photo.style.display = 'none';
+                        photo.classList.add('hidden-photo');
                     }
                 });
                 btnText.textContent = 'View More';
@@ -1928,7 +2025,7 @@
             } else {
                 // Show all photos
                 allPhotos.forEach(photo => {
-                    photo.style.display = 'block';
+                    photo.classList.remove('hidden-photo');
                 });
                 btnText.textContent = 'View Less';
                 btn.classList.add('expanded');
@@ -1939,9 +2036,11 @@
         function getPhotoThreshold() {
             const width = window.innerWidth;
             if (width <= 480) {
-                return 5; // Mobile: 1 column, show 5 photos
+                return 6; // Mobile: 1 column, show 6 photos
+            } else if (width <= 768) {
+                return 8; // Tablet: 2-3 columns, show 8 photos
             } else {
-                return 6; // Tablet/Desktop: 2 columns, show 6 photos (3 rows)
+                return 6; // Desktop: 12 columns grid, show 6 photos (2 baris x 3 foto)
             }
         }
 
@@ -1951,10 +2050,15 @@
             const btn = document.getElementById('viewMoreBtn');
             const threshold = getPhotoThreshold();
             
+            // Reset all photos first
+            allPhotos.forEach(photo => {
+                photo.classList.remove('hidden-photo');
+            });
+            
             // Hide photos beyond threshold
             allPhotos.forEach((photo, index) => {
                 if (index >= threshold) {
-                    photo.style.display = 'none';
+                    photo.classList.add('hidden-photo');
                 }
             });
             
@@ -1964,6 +2068,10 @@
             } else {
                 btn.style.display = 'none';
             }
+            
+            // Reset button state
+            btn.classList.remove('expanded');
+            document.getElementById('btnText').textContent = 'View More';
         }
 
         // Initialize on page load
@@ -1976,12 +2084,6 @@
         window.addEventListener('resize', function() {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(function() {
-                const btn = document.getElementById('viewMoreBtn');
-                // Reset expanded state on resize
-                if (btn.classList.contains('expanded')) {
-                    btn.classList.remove('expanded');
-                    document.getElementById('btnText').textContent = 'View More';
-                }
                 initializePhotos();
             }, 250);
         });

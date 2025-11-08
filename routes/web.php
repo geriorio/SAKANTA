@@ -46,7 +46,7 @@ Route::get('/about', function () {
 
 // How It Works Page
 Route::get('/how-it-works', function () {
-    $properties = \App\Models\Property::inRandomOrder()->limit(6)->get();
+    $properties = \App\Models\Property::inRandomOrder()->get();
     return view('how-it-works', compact('properties'));
 })->name('how-it-works');
 
@@ -106,6 +106,9 @@ Route::prefix('admin')->group(function () {
             'update' => 'admin.properties.update',
             'destroy' => 'admin.properties.destroy',
         ]);
+        
+        // Delete Property Additional Image
+        Route::delete('/properties/{property}/images/{index}', [AdminPropertyController::class, 'deleteImage'])->name('admin.properties.deleteImage');
 
         // FAQ Management
         Route::resource('faqs', AdminFaqController::class)->names([

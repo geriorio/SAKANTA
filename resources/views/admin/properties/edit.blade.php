@@ -325,9 +325,25 @@
             <div class="form-group">
                 <label>Additional Images</label>
                 @if($property->images && count($property->images) > 0)
-                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem;">
-                        @foreach($property->images as $image)
-                            <img src="{{ asset($image) }}" alt="Property image" style="width: 100px; height: 75px; object-fit: cover; border-radius: 5px;">
+                    <div style="margin-bottom: 0.75rem;">
+                        <button type="button" onclick="deleteSelectedImages({{ $property->id }})" class="btn" style="background: #dc3545; color: white; padding: 6px 12px; font-size: 13px; margin-right: 8px;">
+                            🗑️ Delete Selected
+                        </button>
+                        <button type="button" onclick="selectAllImages()" class="btn" style="background: #6c757d; color: white; padding: 6px 12px; font-size: 13px;">
+                            Select All
+                        </button>
+                    </div>
+                    <div id="images-container" style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem;">
+                        @foreach($property->images as $index => $image)
+                            <div class="image-item" data-index="{{ $index }}" style="position: relative; display: inline-block; border: 2px solid transparent; border-radius: 5px; transition: border 0.2s;">
+                                <input type="checkbox" class="image-checkbox" value="{{ $index }}" 
+                                    style="position: absolute; top: 5px; left: 5px; width: 18px; height: 18px; cursor: pointer; z-index: 10;">
+                                <img src="{{ asset($image) }}" alt="Property image" style="width: 100px; height: 75px; object-fit: cover; border-radius: 5px; display: block;">
+                                <button type="button" onclick="deleteAdditionalImage({{ $property->id }}, {{ $index }})" 
+                                    style="position: absolute; top: -8px; right: -8px; background: #dc3545; color: white; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; font-size: 14px; line-height: 1; padding: 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2); z-index: 10;">
+                    ×
+                </button>
+                            </div>
                         @endforeach
                     </div>
                 @endif
@@ -342,6 +358,101 @@
         </div>
     </form>
 </div>
+
+<script>
+    function deleteAdditionalImage(propertyId, imageIndex) {
+        const imageItem = document.querySelector(`.image-item[data-index="${imageIndex}"]`);
+        
+        fetch(`/admin/properties/${propertyId}/images/${imageIndex}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Remove the image element with fade effect
+                imageItem.style.opacity = '0';
+                imageItem.style.transition = 'opacity 0.3s';
+                setTimeout(() => {
+                    imageItem.remove();
+                    updateImageIndices();
+                }, 300);
+            } else {
+                alert('Failed to delete image: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while deleting the image');
+        });
+    }
+
+    function selectAllImages() {
+        const checkboxes = document.querySelectorAll('.image-checkbox');
+        const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+        checkboxes.forEach(cb => {
+            cb.checked = !allChecked;
+            updateImageBorder(cb);
+        });
+    }
+
+    function deleteSelectedImages(propertyId) {
+        const selectedCheckboxes = document.querySelectorAll('.image-checkbox:checked');
+        
+        if (selectedCheckboxes.length === 0) {
+            alert('Please select images to delete');
+            return;
+        }
+
+        const indices = Array.from(selectedCheckboxes).map(cb => parseInt(cb.value));
+        
+        // Delete images one by one (from highest index to lowest to avoid index shifting issues)
+        indices.sort((a, b) => b - a).forEach((index, i) => {
+            setTimeout(() => {
+                deleteAdditionalImage(propertyId, index);
+            }, i * 100);
+        });
+    }
+
+    function updateImageIndices() {
+        const imageItems = document.querySelectorAll('.image-item');
+        imageItems.forEach((item, newIndex) => {
+            item.setAttribute('data-index', newIndex);
+            const checkbox = item.querySelector('.image-checkbox');
+            if (checkbox) checkbox.value = newIndex;
+            const deleteBtn = item.querySelector('button[onclick*="deleteAdditionalImage"]');
+            if (deleteBtn) {
+                const propertyId = deleteBtn.getAttribute('onclick').match(/deleteAdditionalImage\((\d+),/)[1];
+                deleteBtn.setAttribute('onclick', `deleteAdditionalImage(${propertyId}, ${newIndex})`);
+            }
+        });
+    }
+
+    function updateImageBorder(checkbox) {
+        const imageItem = checkbox.closest('.image-item');
+        if (checkbox.checked) {
+            imageItem.style.borderColor = '#667eea';
+            imageItem.style.boxShadow = '0 0 8px rgba(102, 126, 234, 0.5)';
+        } else {
+            imageItem.style.borderColor = 'transparent';
+            imageItem.style.boxShadow = 'none';
+        }
+    }
+
+    // Add event listeners to checkboxes
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.image-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                updateImageBorder(this);
+            });
+        });
+    });
+</script>
+
 @endsection
 
 

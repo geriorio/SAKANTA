@@ -290,17 +290,27 @@ function performSearch(query) {
                 // Properties - tanpa header
                 if (data.properties.length > 0) {
                     data.properties.forEach(property => {
+                        const imageHtml = property.main_image ? 
+                            `<img src="${property.main_image}" 
+                                  alt="${property.name}" 
+                                  style="width: 45px; height: 45px; object-fit: cover; border-radius: 8px;" 
+                                  loading="eager"
+                                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                             <div style="width: 45px; height: 45px; background: #e0e0e0; border-radius: 8px; display: none; align-items: center; justify-content: center;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                </svg>
+                             </div>` :
+                            `<div style="width: 45px; height: 45px; background: #e0e0e0; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                </svg>
+                             </div>`;
+                        
                         html += `
                             <a href="/property/${property.slug}" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; text-decoration: none; color: #333; transition: background 0.2s; border-bottom: 1px solid #f0f0f0;" onmouseover="this.style.background='#f8f9fa'" onmouseout="this.style.background='transparent'">
                                 <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
-                                    ${property.main_image ? 
-                                        `<img src="${property.main_image}" alt="${property.name}" style="width: 45px; height: 45px; object-fit: cover; border-radius: 8px;">` :
-                                        `<div style="width: 45px; height: 45px; background: #e0e0e0; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2">
-                                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                            </svg>
-                                        </div>`
-                                    }
+                                    ${imageHtml}
                                     <div>
                                         <div style="font-weight: 600; font-size: 14px; color: #064852;">${property.name}</div>
                                         <div style="font-size: 11px; color: #999;">${property.location_name || 'No location'}</div>

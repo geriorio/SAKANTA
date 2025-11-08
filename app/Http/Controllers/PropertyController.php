@@ -164,7 +164,7 @@ class PropertyController extends Controller
                 return [
                     'name' => $property->title,
                     'slug' => $property->slug,
-                    'main_image' => $property->main_image,
+                    'main_image' => $property->main_image ? asset($property->main_image) : null,
                     'location_name' => $property->location ? $property->location->name : null
                 ];
             });

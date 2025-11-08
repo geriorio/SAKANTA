@@ -32,7 +32,8 @@ class PropertyController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        // Custom validation for images including AVIF
+        $request->validate([
             'title' => 'required|string|max:255',
             'subtitle' => 'nullable|string|max:255',
             'description' => 'required|string',
@@ -51,17 +52,38 @@ class PropertyController extends Controller
             'map_embed_url' => 'nullable|string',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
-            'main_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'main_image' => 'nullable|file|max:2048',
+            'images.*' => 'nullable|file|max:2048',
             'facilities.*.name' => 'nullable|string|max:255',
             'facilities.*.description' => 'nullable|string|max:500',
-            'facilities.*.image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'facilities.*.image' => 'nullable|file|max:2048',
             'surroundings.*.name' => 'nullable|string|max:255',
             'surroundings.*.description' => 'nullable|string|max:500',
-            'surroundings.*.image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'surroundings.*.image' => 'nullable|file|max:2048',
             'perfect_for' => 'nullable|string',
             'status' => 'required|in:available,fully_owned,coming_soon'
         ]);
+
+        // Validate image extensions manually
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'avif'];
+        
+        if ($request->hasFile('main_image')) {
+            $ext = strtolower($request->file('main_image')->getClientOriginalExtension());
+            if (!in_array($ext, $allowedExtensions)) {
+                return back()->withErrors(['main_image' => 'Main image must be: jpeg, png, jpg, gif, webp, or avif.']);
+            }
+        }
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $key => $image) {
+                $ext = strtolower($image->getClientOriginalExtension());
+                if (!in_array($ext, $allowedExtensions)) {
+                    return back()->withErrors(["images.$key" => "Image must be: jpeg, png, jpg, gif, webp, or avif."]);
+                }
+            }
+        }
+
+        $validated = $request->all();
 
         // Generate slug
         $validated['slug'] = Str::slug($validated['title']);
@@ -166,7 +188,8 @@ class PropertyController extends Controller
     {
         $property = Property::findOrFail($id);
 
-        $validated = $request->validate([
+        // Custom validation for images including AVIF
+        $request->validate([
             'title' => 'required|string|max:255',
             'subtitle' => 'nullable|string|max:255',
             'description' => 'required|string',
@@ -185,19 +208,40 @@ class PropertyController extends Controller
             'map_embed_url' => 'nullable|string',
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
-            'main_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'main_image' => 'nullable|file|max:2048',
+            'images.*' => 'nullable|file|max:2048',
             'facilities.*.name' => 'nullable|string|max:255',
             'facilities.*.description' => 'nullable|string|max:500',
-            'facilities.*.image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'facilities.*.image' => 'nullable|file|max:2048',
             'facilities.*.existing_image' => 'nullable|string',
             'surroundings.*.name' => 'nullable|string|max:255',
             'surroundings.*.description' => 'nullable|string|max:500',
-            'surroundings.*.image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'surroundings.*.image' => 'nullable|file|max:2048',
             'surroundings.*.existing_image' => 'nullable|string',
             'perfect_for' => 'nullable|string',
             'status' => 'required|in:available,fully_owned,coming_soon'
         ]);
+
+        // Validate image extensions manually
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'avif'];
+        
+        if ($request->hasFile('main_image')) {
+            $ext = strtolower($request->file('main_image')->getClientOriginalExtension());
+            if (!in_array($ext, $allowedExtensions)) {
+                return back()->withErrors(['main_image' => 'Main image must be: jpeg, png, jpg, gif, webp, or avif.']);
+            }
+        }
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $key => $image) {
+                $ext = strtolower($image->getClientOriginalExtension());
+                if (!in_array($ext, $allowedExtensions)) {
+                    return back()->withErrors(["images.$key" => "Image must be: jpeg, png, jpg, gif, webp, or avif."]);
+                }
+            }
+        }
+
+        $validated = $request->all();
 
         // Update slug if title changed
         if ($validated['title'] !== $property->title) {
@@ -320,6 +364,35 @@ class PropertyController extends Controller
 
         return redirect()->route('admin.properties.index')
             ->with('success', 'Property deleted successfully!');
+    }
+
+    /**
+     * Delete a specific additional image from property
+     */
+    public function deleteImage(string $id, int $index)
+    {
+        $property = Property::findOrFail($id);
+        
+        if (!$property->images || !isset($property->images[$index])) {
+            return response()->json(['success' => false, 'message' => 'Image not found'], 404);
+        }
+
+        $imagePath = $property->images[$index];
+        
+        // Delete the physical file
+        if (file_exists(public_path($imagePath))) {
+            unlink(public_path($imagePath));
+        }
+
+        // Remove from array
+        $images = $property->images;
+        array_splice($images, $index, 1);
+        
+        // Update property
+        $property->images = array_values($images); // Re-index array
+        $property->save();
+
+        return response()->json(['success' => true, 'message' => 'Image deleted successfully']);
     }
 }
 
