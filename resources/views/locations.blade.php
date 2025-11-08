@@ -201,6 +201,36 @@
             object-fit: cover;
         }
 
+        /* Status Badge */
+        .status-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-family: 'Work Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 20;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .status-badge.coming-soon {
+            background: #f39c12;
+            color: white;
+        }
+
+        .status-badge.sold-out {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .property-card.faded {
+            opacity: 0.7;
+        }
+
         /* Like Button */
         .like-btn {
             position: absolute;
@@ -246,11 +276,12 @@
         }
 
         .property-name {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 400;
             color: #064852;
             line-height: 1.3;
             flex: 1;
+            font-family: 'Esther', 'Georgia', serif;
         }
 
         .property-icon {
@@ -268,9 +299,10 @@
         }
 
         .property-location-text {
-            font-size: 14px;
+            font-size: 13px;
             color: #5a8aaa;
             margin-bottom: 10px;
+            font-family: 'Work Sans', sans-serif;
         }
 
         .property-price-text {
@@ -278,13 +310,15 @@
             font-weight: 600;
             color: #064852;
             margin-bottom: 10px;
+            font-family: 'Work Sans', sans-serif;
         }
 
         .property-specs {
             font-size: 12px;
-            color: #064852;
+            color: #666;
             margin-bottom: 4px;
             line-height: 1.4;
+            font-family: 'Work Sans', sans-serif;
         }
 
         /* Pagination */
@@ -352,6 +386,47 @@
             color: #999;
         }
 
+        /* Area Guide Section */
+        .area-guide {
+            background: #064852;
+            padding: 120px 80px;
+            text-align: center;
+        }
+
+        .area-guide h2 {
+            font-size: 52px;
+            font-weight: 400;
+            color: white;
+            margin-bottom: 30px;
+            line-height: 1.3;
+        }
+
+        .area-guide p {
+            font-size: 20px;
+            color: white;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            font-family: "Work Sans", sans-serif;
+        }
+
+        .area-guide-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            border: 2px solid white;
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .area-guide-btn:hover {
+            background: white;
+            color: #064852;
+        }
+
         /* Back Button */
         .back-btn {
             display: inline-block;
@@ -413,8 +488,8 @@
             }
 
             .property-card {
-                flex: 0 0 100%;
-                min-width: 100%;
+                flex: 0 0 100% !important;
+                min-width: 100% !important;
             }
 
             .property-image {
@@ -448,6 +523,18 @@
             .carousel-wrapper {
                 padding: 15px 0;
             }
+
+            .area-guide {
+                padding: 80px 40px;
+            }
+
+            .area-guide h2 {
+                font-size: 36px;
+            }
+
+            .area-guide p {
+                font-size: 16px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -459,6 +546,11 @@
                 width: 35px;
                 height: 35px;
                 font-size: 13px;
+            }
+
+            .property-card {
+                flex: 0 0 100% !important;
+                min-width: 100% !important;
             }
 
             .properties-section {
@@ -483,6 +575,23 @@
 
             .carousel-wrapper {
                 padding: 10px 0;
+            }
+
+            .area-guide {
+                padding: 60px 20px;
+            }
+
+            .area-guide h2 {
+                font-size: 28px;
+            }
+
+            .area-guide p {
+                font-size: 14px;
+            }
+
+            .area-guide-btn {
+                padding: 12px 30px;
+                font-size: 11px;
             }
         }
     </style>
@@ -525,9 +634,15 @@
             <div class="carousel-wrapper">
                 <div class="carousel-track" id="carouselTrack">
                     @forelse($properties as $property)
-                    <a href="{{ route('property.detail', $property->slug) }}" class="property-card">
+                    <a href="{{ route('property.detail', $property->slug) }}" class="property-card {{ $property->status !== 'available' ? 'faded' : '' }}">
                         <div class="property-image">
                             <img src="{{ asset($property->main_image ?? '/images/villa1.jpg') }}" alt="{{ $property->title }}">
+                            
+                            @if($property->status === 'coming_soon')
+                                <div class="status-badge coming-soon">Coming Soon</div>
+                            @elseif($property->status === 'fully_owned')
+                                <div class="status-badge sold-out">Sold Out</div>
+                            @endif
                             
                             @auth
                             <button class="like-btn {{ Auth::user()->hasLiked($property->id) ? 'liked' : '' }}" 
@@ -550,8 +665,40 @@
                             </div>
                             <p class="property-location-text">{{ $property->location->name ?? $property->city }}</p>
                             <p class="property-price-text">{{ $property->formatted_price }}</p>
-                            <p class="property-specs">1/{{ $property->total_shares }} Ownership</p>
-                            <p class="property-specs">{{ $property->bedrooms }} BDS  |  {{ $property->bathrooms }} BA  |  {{ number_format($property->building_area, 0) }} FT</p>
+                            <p class="property-specs">{{ $property->ownership ?? '1/4 Ownership' }}</p>
+                            <p class="property-specs" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12px; color: #666; font-family: 'Work Sans', sans-serif;">
+                                <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                    <img src="{{ asset('images/icons/bedroom.png') }}" alt="Bedroom" style="width: 25px; height: 25px; object-fit: contain;">
+                                    {{ $property->bedrooms }}
+                                </span>
+                                <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                                <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                    <img src="{{ asset('images/icons/bathroom.png') }}" alt="Bathroom" style="width: 25px; height: 25px; object-fit: contain;">
+                                    {{ $property->bathrooms }}
+                                </span>
+                                <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                                <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#064852" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 21h18"/>
+                                        <path d="M5 21V7l8-4v18"/>
+                                        <path d="M19 21V11l-6-4"/>
+                                        <rect x="7" y="10" width="2" height="2"/>
+                                        <rect x="7" y="14" width="2" height="2"/>
+                                        <rect x="7" y="18" width="2" height="2"/>
+                                        <rect x="15" y="14" width="2" height="2"/>
+                                        <rect x="15" y="18" width="2" height="2"/>
+                                    </svg>
+                                    {{ number_format($property->building_area, 0) }} FT²
+                                </span>
+                                <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                                <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#064852" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="3" width="18" height="18" rx="1" stroke-dasharray="2,2"/>
+                                        <path d="M3 3l-2 -2M21 3l2 -2M3 21l-2 2M21 21l2 2"/>
+                                    </svg>
+                                    {{ number_format($property->land_area, 0) }} FT²
+                                </span>
+                            </p>
                         </div>
                     </a>
                     @empty
@@ -572,6 +719,13 @@
         @endif
     </section>
 
+    <!-- Area Guide Section -->
+    <section class="area-guide dark-section">
+        <h2>Discover the Region's Charm</h2>
+        <p>Explore the story behind the region and why it's chosen as one of Sakanta's signature locations.</p>
+        <a href="{{ route('location.article', $location->slug) }}" class="area-guide-btn">Discover More</a>
+    </section>
+
     @include('layouts.footer')
 
     <script>
@@ -581,18 +735,66 @@
         const cards = document.querySelectorAll('.property-card');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
-        const cardsPerSlide = 3;
-        const gap = 30;
+        
+        // Function to determine cards per slide based on screen width
+        function getCardsPerSlide() {
+            const screenWidth = window.innerWidth;
+            if (screenWidth <= 768) {
+                return 1; // Mobile: 1 card per slide
+            } else if (screenWidth <= 1024) {
+                return 2; // Tablet: 2 cards per slide
+            } else {
+                return 3; // Desktop: 3 cards per slide
+            }
+        }
+
+        // Function to get gap based on screen width
+        function getGap() {
+            const screenWidth = window.innerWidth;
+            if (screenWidth <= 480) {
+                return 12;
+            } else if (screenWidth <= 768) {
+                return 15;
+            } else if (screenWidth <= 1024) {
+                return 20;
+            } else {
+                return 30;
+            }
+        }
+
         const totalCards = cards.length;
-        const totalSlides = Math.ceil(totalCards / cardsPerSlide);
+
+        function getTotalSlides() {
+            const cardsPerSlide = getCardsPerSlide();
+            return Math.ceil(totalCards / cardsPerSlide);
+        }
 
         function updateCarousel() {
             if (totalCards === 0 || !wrapper) return;
 
+            const cardsPerSlide = getCardsPerSlide();
+            const gap = getGap();
+            const totalSlides = getTotalSlides();
+
+            // Reset current slide if out of bounds
+            if (currentSlide >= totalSlides) {
+                currentSlide = totalSlides - 1;
+            }
+            if (currentSlide < 0) {
+                currentSlide = 0;
+            }
+
             // Hitung card width berdasarkan wrapper width
-            // wrapper.offsetWidth = (cardWidth * 3) + (gap * 2)
             const wrapperWidth = wrapper.offsetWidth;
-            const cardWidth = (wrapperWidth - (gap * 2)) / 3;
+            let cardWidth;
+            
+            if (cardsPerSlide === 1) {
+                cardWidth = wrapperWidth; // Full width for mobile
+            } else if (cardsPerSlide === 2) {
+                cardWidth = (wrapperWidth - gap) / 2;
+            } else {
+                cardWidth = (wrapperWidth - (gap * 2)) / 3;
+            }
             
             // Set width untuk semua cards
             cards.forEach(card => {
@@ -600,6 +802,9 @@
                 card.style.minWidth = cardWidth + 'px';
                 card.style.flexBasis = cardWidth + 'px';
             });
+
+            // Update gap di track
+            track.style.gap = gap + 'px';
 
             // Hitung offset untuk slide saat ini
             const slideWidth = cardWidth + gap;
@@ -613,6 +818,8 @@
         }
 
         function slideCarousel(direction) {
+            const cardsPerSlide = getCardsPerSlide();
+            const totalSlides = getTotalSlides();
             const newSlide = currentSlide + direction;
             
             if (newSlide >= 0 && newSlide < totalSlides) {
@@ -624,17 +831,24 @@
         // Initialize carousel saat page load
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', function() {
-                setTimeout(updateCarousel, 50);
+                setTimeout(updateCarousel, 100);
             });
         } else {
-            setTimeout(updateCarousel, 50);
+            setTimeout(updateCarousel, 100);
         }
 
-        // Update saat window resize
+        // Update saat window resize dengan reset slide position
         let resizeTimeout;
         window.addEventListener('resize', function() {
             clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(updateCarousel, 250);
+            resizeTimeout = setTimeout(() => {
+                // Reset slide position on significant resize to prevent overflow
+                const newTotalSlides = getTotalSlides();
+                if (currentSlide >= newTotalSlides && newTotalSlides > 0) {
+                    currentSlide = Math.max(0, newTotalSlides - 1);
+                }
+                updateCarousel();
+            }, 250);
         });
 
         // AJAX Like/Unlike Function

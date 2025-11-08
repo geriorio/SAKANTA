@@ -65,6 +65,32 @@
         object-fit: cover;
     }
 
+    /* Status Badge */
+    .status-badge {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-family: 'Work Sans', sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        z-index: 20;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .status-badge.coming-soon {
+        background: #f39c12;
+        color: white;
+    }
+
+    .status-badge.sold-out {
+        background: #e74c3c;
+        color: white;
+    }
+
     /* Like Button */
     .like-btn {
         position: absolute;
@@ -89,7 +115,9 @@
         box-shadow: 0 6px 20px rgba(0,0,0,0.3);
     }
 
-    .like-btn svg {
+        .property-card.faded {
+            opacity: 0.7;
+        }    .like-btn svg {
         transition: all 0.3s;
     }
 
@@ -178,7 +206,7 @@
     /* Featured Section Styling */
     .featured-section {
         background: #F7EFE2;
-        padding: 120px 80px;
+        padding: 80px 80px;
     }
 
     .featured-section-content {
@@ -267,8 +295,8 @@
         }
 
         .property-card {
-            flex: 0 0 100%;
-            min-width: 100%;
+            flex: 0 0 100% !important;
+            min-width: 100% !important;
         }
 
         .property-image {
@@ -291,31 +319,148 @@
             font-size: 36px;
         }
     }
+
+    @media (max-width: 480px) {
+        .carousel-container {
+            gap: 10px;
+        }
+
+        .carousel-track {
+            gap: 12px;
+        }
+
+        .carousel-nav-btn {
+            width: 36px;
+            height: 36px;
+            font-size: 14px;
+        }
+
+        .property-card {
+            flex: 0 0 100% !important;
+            min-width: 100% !important;
+        }
+
+        .property-image {
+            height: 200px;
+        }
+
+        .property-name {
+            font-size: 15px;
+        }
+
+        .property-specs {
+            font-size: 10px;
+        }
+
+        .featured-section {
+            padding: 50px 20px 30px 20px;
+        }
+
+        .featured-section-header p {
+            font-size: 16px;
+        }
+
+        .featured-section-header h2 {
+            font-size: 32px;
+        }
+
+        .featured-section-header > p:last-child {
+            font-size: 15px;
+        }
+    }
+
+    @media (max-width: 360px) {
+        .carousel-container {
+            gap: 8px;
+        }
+
+        .carousel-track {
+            gap: 10px;
+        }
+
+        .carousel-nav-btn {
+            width: 32px;
+            height: 32px;
+            font-size: 12px;
+        }
+
+        .property-card {
+            flex: 0 0 100% !important;
+            min-width: 100% !important;
+        }
+
+        .property-image {
+            height: 180px;
+        }
+
+        .property-name {
+            font-size: 14px;
+        }
+
+        .property-price-text {
+            font-size: 14px;
+        }
+
+        .property-specs {
+            font-size: 9px;
+        }
+
+        .featured-section {
+            padding: 40px 15px 25px 15px;
+        }
+
+        .featured-section-header p {
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+
+        .featured-section-header h2 {
+            font-size: 28px;
+        }
+
+        .featured-section-header > p:last-child {
+            font-size: 14px;
+        }
+    }
 </style>
 
-<section class="featured-section">
+@php
+    // Generate numeric-only unique ID for valid JavaScript function names
+    $carouselId = 'c' . substr(str_replace('.', '', microtime(true)), 0, 10);
+    $trackId = $carouselId . '_track';
+    $prevBtnId = $carouselId . '_prev';
+    $nextBtnId = $carouselId . '_next';
+@endphp
+
+<section class="featured-section" style="background: {{ $bgColor ?? '#F7EFE2' }};">
     <div class="featured-section-content">
         <!-- Section Header -->
-        <div class="featured-section-header">
-            <p>FEATURED LISTINGS</p>
-            <h2>{{ $title ?? 'Explore More Properties' }}</h2>
-            <p>{{ $description ?? 'Discover our finest investment opportunities across all locations' }}</p>
+        <div class="featured-section-header" style="color: {{ $textColor ?? '#064852' }};">
+            <p style="color: {{ $textColor ?? '#064852' }};">FEATURED LISTINGS</p>
+            <h2 style="color: {{ $textColor ?? '#064852' }};">{{ $title ?? 'Explore More Properties' }}</h2>
+            <p style="color: {{ $textColor ?? '#064852' }};">{{ $description ?? 'Discover our finest investment opportunities across all locations' }}</p>
         </div>
 
         @if($listings->count() > 0)
         <div class="carousel-container">
-            <button class="carousel-nav-btn prev-btn" onclick="slideCarousel(-1)" id="prevBtn" title="Previous">
+            <button class="carousel-nav-btn prev-btn" onclick="slideCarousel_{{ $carouselId }}(-1)" id="{{ $prevBtnId }}" title="Previous">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M15 18l-6-6 6-6"/>
                 </svg>
             </button>
             
             <div class="carousel-wrapper">
-                <div class="carousel-track" id="carouselTrack">
+                <div class="carousel-track" id="{{ $trackId }}">
                     @forelse($listings as $property)
-                    <a href="{{ route('property.detail', $property->slug) }}" class="property-card">
+                    <a href="{{ route('property.detail', $property->slug) }}" class="property-card {{ $property->status !== 'available' ? 'faded' : '' }}">
                         <div class="property-image">
                             <img src="{{ asset($property->main_image ?? '/images/villa1.jpg') }}" alt="{{ $property->title }}">
+                            
+                            @if($property->status === 'coming_soon')
+                                <div class="status-badge coming-soon">Coming Soon</div>
+                            @elseif($property->status === 'fully_owned')
+                                <div class="status-badge sold-out">Sold Out</div>
+                            @endif
                             
                             @auth
                             <button class="like-btn {{ Auth::user()->hasLiked($property->id) ? 'liked' : '' }}" 
@@ -338,8 +483,40 @@
                             </div>
                             <p class="property-location-text">{{ $property->location->name ?? $property->city }}</p>
                             <p class="property-price-text">{{ $property->formatted_price }}</p>
-                            <p class="property-specs">1/{{ $property->total_shares }} Ownership</p>
-                            <p class="property-specs">{{ $property->bedrooms }} BDS  |  {{ $property->bathrooms }} BA  |  {{ number_format($property->building_area, 0) }} FT</p>
+                            <p class="property-specs">{{ $property->ownership ?? '1/4 Ownership' }}</p>
+                            <p class="property-specs" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12px; color: #666; font-family: 'Work Sans', sans-serif;">
+                                <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                    <img src="{{ asset('images/icons/bedroom.png') }}" alt="Bedroom" style="width: 25px; height: 25px; object-fit: contain;">
+                                    {{ $property->bedrooms }}
+                                </span>
+                                <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                                <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                    <img src="{{ asset('images/icons/bathroom.png') }}" alt="Bathroom" style="width: 25px; height: 25px; object-fit: contain;">
+                                    {{ $property->bathrooms }}
+                                </span>
+                                <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                                <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#064852" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 21h18"/>
+                                        <path d="M5 21V7l8-4v18"/>
+                                        <path d="M19 21V11l-6-4"/>
+                                        <rect x="7" y="10" width="2" height="2"/>
+                                        <rect x="7" y="14" width="2" height="2"/>
+                                        <rect x="7" y="18" width="2" height="2"/>
+                                        <rect x="15" y="14" width="2" height="2"/>
+                                        <rect x="15" y="18" width="2" height="2"/>
+                                    </svg>
+                                    {{ number_format($property->building_area, 0) }} FT²
+                                </span>
+                                <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                                <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#064852" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="3" width="18" height="18" rx="1" stroke-dasharray="2,2"/>
+                                        <path d="M3 3l-2 -2M21 3l2 -2M3 21l-2 2M21 21l2 2"/>
+                                    </svg>
+                                    {{ number_format($property->land_area, 0) }} FT²
+                                </span>
+                            </p>
                         </div>
                     </a>
                     @empty
@@ -347,7 +524,7 @@
                 </div>
             </div>
             
-            <button class="carousel-nav-btn next-btn" onclick="slideCarousel(1)" id="nextBtn" title="Next">
+            <button class="carousel-nav-btn next-btn" onclick="slideCarousel_{{ $carouselId }}(1)" id="{{ $nextBtnId }}" title="Next">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M9 18l6-6-6-6"/>
                 </svg>
@@ -362,27 +539,69 @@
 </section>
 
 <script>
-    let currentSlide = 0;
-    const track = document.getElementById('carouselTrack');
-    const wrapper = document.querySelector('.carousel-wrapper');
-    const cards = document.querySelectorAll('.property-card');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const cardsPerSlide = 3;
-    const gap = 30;
-    const totalCards = cards.length;
-    const totalSlides = Math.ceil(totalCards / cardsPerSlide);
+(function() {
+    const carouselId = '{{ $carouselId }}';
+    let currentSlide_{{ $carouselId }} = 0;
+    const track_{{ $carouselId }} = document.getElementById('{{ $trackId }}');
+    const wrapper_{{ $carouselId }} = track_{{ $carouselId }} ? track_{{ $carouselId }}.closest('.carousel-wrapper') : null;
+    const cards_{{ $carouselId }} = track_{{ $carouselId }} ? track_{{ $carouselId }}.querySelectorAll('.property-card') : [];
+    const prevBtn_{{ $carouselId }} = document.getElementById('{{ $prevBtnId }}');
+    const nextBtn_{{ $carouselId }} = document.getElementById('{{ $nextBtnId }}');
+    const totalCards_{{ $carouselId }} = cards_{{ $carouselId }}.length;
 
-    function updateCarousel() {
-        if (totalCards === 0 || !wrapper) return;
+    if (totalCards_{{ $carouselId }} === 0 || !wrapper_{{ $carouselId }}) return;
+
+    // Function to determine cards per slide based on screen width
+    function getCardsPerSlide_{{ $carouselId }}() {
+        const screenWidth = window.innerWidth;
+        if (screenWidth <= 768) {
+            return 1; // Mobile: 1 card per slide
+        } else if (screenWidth <= 1024) {
+            return 2; // Tablet: 2 cards per slide
+        } else {
+            return 3; // Desktop: 3 cards per slide
+        }
+    }
+
+    // Function to get gap based on screen width
+    function getGap_{{ $carouselId }}() {
+        const screenWidth = window.innerWidth;
+        if (screenWidth <= 480) {
+            return 12;
+        } else if (screenWidth <= 768) {
+            return 15;
+        } else {
+            return 30;
+        }
+    }
+
+    function updateCarousel_{{ $carouselId }}() {
+        const cardsPerSlide = getCardsPerSlide_{{ $carouselId }}();
+        const gap = getGap_{{ $carouselId }}();
+        const totalSlides = Math.ceil(totalCards_{{ $carouselId }} / cardsPerSlide);
+
+        // Reset current slide if out of bounds
+        if (currentSlide_{{ $carouselId }} >= totalSlides) {
+            currentSlide_{{ $carouselId }} = totalSlides - 1;
+        }
+        if (currentSlide_{{ $carouselId }} < 0) {
+            currentSlide_{{ $carouselId }} = 0;
+        }
 
         // Hitung card width berdasarkan wrapper width
-        // wrapper.offsetWidth = (cardWidth * 3) + (gap * 2)
-        const wrapperWidth = wrapper.offsetWidth;
-        const cardWidth = (wrapperWidth - (gap * 2)) / 3;
+        const wrapperWidth = wrapper_{{ $carouselId }}.offsetWidth;
+        let cardWidth;
+        
+        if (cardsPerSlide === 1) {
+            cardWidth = wrapperWidth; // Full width for mobile
+        } else if (cardsPerSlide === 2) {
+            cardWidth = (wrapperWidth - gap) / 2;
+        } else {
+            cardWidth = (wrapperWidth - (gap * 2)) / 3;
+        }
         
         // Set width untuk semua cards
-        cards.forEach(card => {
+        cards_{{ $carouselId }}.forEach(card => {
             card.style.width = cardWidth + 'px';
             card.style.minWidth = cardWidth + 'px';
             card.style.flexBasis = cardWidth + 'px';
@@ -390,39 +609,40 @@
 
         // Hitung offset untuk slide saat ini
         const slideWidth = cardWidth + gap;
-        const offset = -currentSlide * slideWidth * cardsPerSlide;
+        const offset = -currentSlide_{{ $carouselId }} * slideWidth * cardsPerSlide;
         
-        track.style.transform = `translateX(${offset}px)`;
+        track_{{ $carouselId }}.style.transform = `translateX(${offset}px)`;
 
         // Update button states
-        if (prevBtn) prevBtn.disabled = currentSlide === 0;
-        if (nextBtn) nextBtn.disabled = currentSlide === totalSlides - 1;
+        if (prevBtn_{{ $carouselId }}) prevBtn_{{ $carouselId }}.disabled = currentSlide_{{ $carouselId }} === 0;
+        if (nextBtn_{{ $carouselId }}) nextBtn_{{ $carouselId }}.disabled = currentSlide_{{ $carouselId }} === totalSlides - 1;
     }
 
-    function slideCarousel(direction) {
-        const newSlide = currentSlide + direction;
+    window['slideCarousel_{{ $carouselId }}'] = function(direction) {
+        const cardsPerSlide = getCardsPerSlide_{{ $carouselId }}();
+        const totalSlides = Math.ceil(totalCards_{{ $carouselId }} / cardsPerSlide);
+        const newSlide = currentSlide_{{ $carouselId }} + direction;
         
         if (newSlide >= 0 && newSlide < totalSlides) {
-            currentSlide = newSlide;
-            updateCarousel();
+            currentSlide_{{ $carouselId }} = newSlide;
+            updateCarousel_{{ $carouselId }}();
         }
-    }
+    };
 
-    // Initialize carousel saat page load
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(updateCarousel, 50);
+    // Initialize carousel immediately with RAF to ensure DOM is ready
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            updateCarousel_{{ $carouselId }}();
         });
-    } else {
-        setTimeout(updateCarousel, 50);
-    }
+    });
 
     // Update saat window resize
-    let resizeTimeout;
+    let resizeTimeout_{{ $carouselId }};
     window.addEventListener('resize', function() {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(updateCarousel, 250);
+        clearTimeout(resizeTimeout_{{ $carouselId }});
+        resizeTimeout_{{ $carouselId }} = setTimeout(updateCarousel_{{ $carouselId }}, 250);
     });
+})();
 
     // AJAX Like/Unlike Function
     function toggleLike(button, propertyId) {

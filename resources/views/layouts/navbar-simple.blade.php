@@ -174,6 +174,7 @@
         align-items: center;
     }
 
+    /* Base logo size - Match main navbar nav-light size */
     .navbar-simple .logo img {
         height: 48px !important;
         width: auto !important;
@@ -181,8 +182,14 @@
         transition: all 0.3s ease;
     }
 
+    /* Force all navbar-simple states to have same size */
+    .navbar-simple.nav-hero .logo img,
+    .navbar-simple.nav-visible .logo img {
+        height: 48px !important;
+    }
+
     .navbar-simple.nav-light .logo img {
-        height: 56px !important;
+        height: 52px !important; /* Slightly bigger for consistency */
         filter: drop-shadow(0 2px 4px rgba(6, 72, 82, 0.3));
     }
 
@@ -234,6 +241,137 @@
         color: white;
         opacity: 0.5;
         transition: color 0.3s;
+    }
+
+    /* Search Bar Styling - Larger and more prominent */
+    .navbar-simple .search-bar {
+        position: relative;
+    }
+
+    .navbar-simple .search-bar input,
+    .navbar-simple .navbar-search-input {
+        padding: 12px 45px 12px 20px;
+        border-radius: 25px;
+        border: 1px solid rgba(255,255,255,0.3);
+        background: rgba(255,255,255,0.1);
+        color: white;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+        width: 300px;
+        transition: all 0.3s;
+        font-family: 'Work Sans', sans-serif;
+        font-weight: 400;
+    }
+
+    .navbar-simple .search-bar input::placeholder,
+    .navbar-simple .navbar-search-input::placeholder {
+        color: rgba(255,255,255,0.7);
+        font-weight: 400;
+    }
+
+    .navbar-simple .search-bar input:focus,
+    .navbar-simple .navbar-search-input:focus {
+        outline: none;
+        width: 350px;
+        background: rgba(255,255,255,0.2);
+        border-color: rgba(255,255,255,0.5);
+    }
+
+    /* Search bar adaptation for light mode */
+    .navbar-simple.nav-light .search-bar input,
+    .navbar-simple.nav-light .navbar-search-input {
+        border: 2px solid #064852 !important;
+        background: rgba(6, 72, 82, 0.05);
+        color: #064852;
+    }
+
+    .navbar-simple.nav-light .search-bar input::placeholder,
+    .navbar-simple.nav-light .navbar-search-input::placeholder {
+        color: rgba(6, 72, 82, 0.5);
+    }
+
+    .navbar-simple.nav-light .search-bar input:focus,
+    .navbar-simple.nav-light .navbar-search-input:focus {
+        background: rgba(6, 72, 82, 0.1);
+        border: 2px solid #064852 !important;
+    }
+
+    .navbar-simple.nav-light .search-bar svg {
+        stroke: #064852 !important;
+    }
+
+    /* Search bar adaptation for dark mode */
+    .navbar-simple.nav-dark .search-bar input,
+    .navbar-simple.nav-dark .navbar-search-input {
+        border-color: rgba(255,255,255,0.3);
+        background: rgba(255,255,255,0.1);
+        color: white;
+    }
+
+    .navbar-simple.nav-dark .search-bar input::placeholder,
+    .navbar-simple.nav-dark .navbar-search-input::placeholder {
+        color: rgba(255,255,255,0.7);
+    }
+
+    .navbar-simple.nav-dark .search-bar input:focus,
+    .navbar-simple.nav-dark .navbar-search-input:focus {
+        background: rgba(255,255,255,0.2);
+        border-color: rgba(255,255,255,0.5);
+    }
+
+    .navbar-simple.nav-dark .search-bar svg {
+        stroke: white !important;
+    }
+
+    /* Custom scrollbar for search results */
+    #search-results-simple::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    #search-results-simple::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 0 12px 12px 0;
+    }
+
+    #search-results-simple::-webkit-scrollbar-thumb {
+        background: #064852;
+        border-radius: 3px;
+    }
+
+    #search-results-simple::-webkit-scrollbar-thumb:hover {
+        background: #053640;
+    }
+
+    /* Language Switcher Globe */
+    .navbar-simple .lang-btn {
+        color: white;
+        transition: all 0.3s !important;
+    }
+
+    .navbar-simple.nav-light .lang-btn {
+        color: #064852 !important;
+    }
+
+    .navbar-simple.nav-dark .lang-btn {
+        color: white !important;
+    }
+
+    .navbar-simple .lang-btn:hover {
+        transform: scale(1.15);
+    }
+
+    .navbar-simple.nav-light .lang-menu {
+        background: white !important;
+        box-shadow: 0 4px 15px rgba(6, 72, 82, 0.15) !important;
+    }
+
+    .navbar-simple.nav-dark .lang-menu {
+        background: #f8f9fa !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
+    }
+
+    .navbar-simple .lang-menu a {
+        color: #064852 !important;
     }
 
     /* Nav Right */
@@ -356,27 +494,309 @@
         visibility: visible;
         transform: translateY(0);
     }
+
+    /* ====================== MOBILE STYLES ====================== */
+    
+    /* Hamburger Menu */
+    .navbar-simple .hamburger {
+        display: none;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: center;
+        cursor: pointer;
+        gap: 5px;
+        z-index: 1003;
+        padding: 0;
+        position: relative;
+    }
+
+    .navbar-simple .hamburger span {
+        width: 25px;
+        height: 3px;
+        background: white;
+        transition: all 0.3s;
+        border-radius: 2px;
+        display: block;
+        margin: 0;
+    }
+
+    .navbar-simple.nav-light .hamburger span {
+        background: #064852;
+    }
+
+    .navbar-simple .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+        transform-origin: right center;
+    }
+
+    .navbar-simple .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .navbar-simple .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+        transform-origin: right center;
+    }
+
+    /* Mobile Backdrop */
+    .navbar-simple .mobile-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s;
+        z-index: 998;
+        display: none;
+    }
+
+    .navbar-simple .mobile-backdrop.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Mobile Auth Section */
+    .navbar-simple .mobile-auth-section {
+        display: none;
+        padding: 20px 0;
+        border-top: 1px solid rgba(6, 72, 82, 0.1);
+        margin-top: 20px;
+    }
+
+    .navbar-simple .mobile-menu-item {
+        display: flex;
+        align-items: center;
+        padding: 15px 30px;
+        text-decoration: none;
+        color: #064852;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        transition: background 0.2s;
+        border: none;
+        background: transparent;
+        width: 100%;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .navbar-simple .mobile-menu-item:hover {
+        background: rgba(168, 198, 143, 0.1);
+    }
+
+    .navbar-simple .mobile-sign-in {
+        display: block;
+        margin: 15px 30px;
+        padding: 12px 24px;
+        background: #064852;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        border-radius: 8px;
+        transition: all 0.3s;
+    }
+
+    .navbar-simple .mobile-sign-in:hover {
+        background: #a8c68f;
+    }
+
+    @media (max-width: 968px) {
+        .navbar-simple {
+            padding: 15px 20px;
+        }
+
+        /* Show hamburger */
+        .navbar-simple .hamburger {
+            display: flex;
+            margin-left: auto;
+            padding: 0;
+        }
+
+        /* Show backdrop when needed */
+        .navbar-simple .mobile-backdrop {
+            display: block;
+        }
+
+        /* Transform nav-center into mobile menu */
+        .navbar-simple .nav-center {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: white;
+            padding: 80px 0 30px 0;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0;
+            transition: right 0.3s ease-in-out;
+            z-index: 999;
+            overflow-y: auto;
+            box-shadow: -5px 0 25px rgba(0,0,0,0.2);
+        }
+
+        .navbar-simple .nav-center.active {
+            right: 0;
+        }
+
+        .navbar-simple .nav-center a {
+            width: 100%;
+            padding: 15px 30px;
+            color: #064852 !important;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: background 0.2s;
+        }
+
+        .navbar-simple .nav-center a:hover {
+            background: rgba(168, 198, 143, 0.1);
+        }
+
+        .navbar-simple .nav-center a::after {
+            display: none;
+        }
+
+        .navbar-simple .nav-center .separator {
+            display: none;
+        }
+
+        .navbar-simple .nav-center .search-bar {
+            width: calc(100% - 60px);
+            margin: 0 30px 20px 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(6, 72, 82, 0.1);
+        }
+
+        /* Hide desktop nav-right elements on mobile */
+        .navbar-simple .nav-right .language-switcher,
+        .navbar-simple .nav-right .user-dropdown,
+        .navbar-simple .nav-right .book-now-btn {
+            display: none;
+        }
+
+        /* Show mobile auth section */
+        .navbar-simple .mobile-auth-section {
+            display: block;
+        }
+
+        /* Logo size - consistent with main navbar */
+        .navbar-simple .logo img {
+            height: 40px !important; /* Changed from 30px */
+        }
+
+        .navbar-simple.nav-light .logo img {
+            height: 40px !important; /* Same size for all modes */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .navbar-simple {
+            padding: 12px 15px;
+        }
+
+        .navbar-simple .nav-center {
+            width: 260px;
+        }
+
+        .navbar-simple .logo img {
+            height: 35px !important; /* Changed from 28px */
+        }
+
+        .navbar-simple.nav-light .logo img {
+            height: 35px !important; /* Same size for all modes */
+        }
+    }
 </style>
 
-<nav class="navbar-simple nav-hero nav-visible" id="navbar-detail">
+<nav class="navbar-simple nav-light nav-visible" id="navbar-detail">
     <div class="logo">
         <a href="/" style="display: flex; align-items: center; text-decoration: none;">
-            <img id="navbar-detail-logo" src="/images/Logo-06.png" alt="Sakanta Logo">
+            <img id="navbar-detail-logo" src="/images/Logo-04.png" alt="Sakanta Logo" style="height: 48px !important;">
         </a>
     </div>
+
+    <!-- Hamburger Menu -->
+    <div class="hamburger" id="hamburgerSimple" onclick="toggleMobileMenuSimple()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Mobile Menu Backdrop -->
+    <div class="mobile-backdrop" id="mobileBackdropSimple" onclick="toggleMobileMenuSimple()"></div>
     
-    <div class="nav-center">
+    <div class="nav-center" id="navCenterSimple">
+        <!-- Search Bar - Now positioned first, larger and wider -->
+        <div class="search-bar" style="position: relative;">
+            <input type="text" id="navbar-search-simple" placeholder="Search location or property..." 
+                   class="navbar-search-input"
+                   oninput="performSearchSimple(this.value)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); pointer-events: none; opacity: 0.7;">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            
+            <!-- Search Results Dropdown -->
+            <div id="search-results-simple" style="position: absolute; top: 55px; left: 0; right: 0; background: white; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.2); max-height: 340px; overflow-y: auto; display: none; z-index: 1002; min-width: 350px;">
+                <!-- Results will be populated here -->
+            </div>
+        </div>
+        
+        <span class="separator">|</span>
         <a href="/">HOME</a>
         <a href="/listings">LISTINGS</a>
         <a href="/about">ABOUT</a>
-        <a href="/faq">FAQs</a>
-        <span class="separator">|</span>
-        <a href="#">ENGLISH</a>
-        <span class="separator">|</span>
-        <a href="#">BAHASA</a>
+        <a href="/how-it-works">HOW IT WORKS</a>
+
+        <!-- Mobile Auth Section -->
+        <div class="mobile-auth-section">
+            @auth
+                <a href="/profile" class="mobile-menu-item">
+                    <span style="margin-right: 10px;">👤</span>
+                    My Profile
+                </a>
+                <button onclick="handleLogout()" class="mobile-menu-item mobile-logout">
+                    <span style="margin-right: 10px;">🚪</span>
+                    Sign Out
+                </button>
+            @else
+                <a href="/signin" class="mobile-sign-in">
+                    SIGN IN
+                </a>
+            @endauth
+        </div>
     </div>
 
     <div class="nav-right">
+        <!-- Language Switcher Globe -->
+        <div class="language-switcher" style="position: relative;">
+            <button class="lang-btn" onclick="toggleLanguageMenuSimple()" style="background: transparent; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; padding: 0; transition: all 0.3s;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M2 12h20"></path>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+            </button>
+            
+            <!-- Language Dropdown Menu -->
+            <div class="lang-menu" id="langMenuSimple" style="position: absolute; top: 50px; right: 0; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); min-width: 150px; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s; z-index: 1001; overflow: hidden;">
+                <a href="#" style="display: block; padding: 12px 20px; text-decoration: none; color: #064852; font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid #eee; transition: background 0.2s;" onmouseover="this.style.background='#f8f9fa'" onmouseout="this.style.background='transparent'">
+                    ENGLISH
+                </a>
+                <a href="#" style="display: block; padding: 12px 20px; text-decoration: none; color: #064852; font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; transition: background 0.2s;" onmouseover="this.style.background='#f8f9fa'" onmouseout="this.style.background='transparent'">
+                    BAHASA
+                </a>
+            </div>
+        </div>
         @auth
             <!-- User sudah login - tampilkan Profile dengan Dropdown -->
             <div class="user-dropdown" style="position: relative;">
@@ -427,6 +847,64 @@
 </nav>
 
 <script>
+    // Toggle Mobile Menu
+    function toggleMobileMenuSimple() {
+        const hamburger = document.getElementById('hamburgerSimple');
+        const navCenter = document.getElementById('navCenterSimple');
+        const backdrop = document.getElementById('mobileBackdropSimple');
+        
+        hamburger.classList.toggle('active');
+        navCenter.classList.toggle('active');
+        backdrop.classList.toggle('active');
+        
+        // Prevent body scroll when menu is open
+        if (navCenter.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    }
+
+    // Close mobile menu when clicking on a link
+    document.addEventListener('DOMContentLoaded', function() {
+        const navLinks = document.querySelectorAll('#navCenterSimple a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 968) {
+                    toggleMobileMenuSimple();
+                }
+            });
+        });
+    });
+
+    // Toggle Language Menu
+    function toggleLanguageMenuSimple() {
+        const menu = document.getElementById('langMenuSimple');
+        const isVisible = menu.style.visibility === 'visible';
+        
+        if (isVisible) {
+            menu.style.opacity = '0';
+            menu.style.visibility = 'hidden';
+            menu.style.transform = 'translateY(-10px)';
+        } else {
+            menu.style.opacity = '1';
+            menu.style.visibility = 'visible';
+            menu.style.transform = 'translateY(0)';
+        }
+    }
+
+    // Close language menu when clicking outside
+    document.addEventListener('click', function(event) {
+        const langSwitcher = document.querySelector('.navbar-simple .language-switcher');
+        const langMenu = document.getElementById('langMenuSimple');
+        
+        if (langSwitcher && !langSwitcher.contains(event.target)) {
+            langMenu.style.opacity = '0';
+            langMenu.style.visibility = 'hidden';
+            langMenu.style.transform = 'translateY(-10px)';
+        }
+    });
+
     // Toggle User Dropdown
     function toggleUserDropdownDetail() {
         const dropdown = document.getElementById('userDropdownMenuDetail');
@@ -455,93 +933,121 @@
         }
     });
 
-    // ===== ADVANCED NAVBAR COLOR ADAPTATION & AUTO-HIDE SYSTEM =====
-    let lastScrollTop = 0;
-    const navbar = document.getElementById('navbar-detail');
-    const navbarLogo = document.getElementById('navbar-detail-logo');
-    let scrollThreshold = 100;
-    let isScrolling;
-
-    // Function to detect background color and adapt navbar
-    function updateNavbarDetail() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const windowHeight = window.innerHeight;
+    // Search functionality
+    let searchTimeoutSimple;
+    function performSearchSimple(query) {
+        const resultsDiv = document.getElementById('search-results-simple');
         
-        // Get all sections
-        const sections = document.querySelectorAll('section, .section-features, .section-faq, .founder-section, .property-info-section, .section-pied, .faq-section, .hero-section, .values-section, .cta-section, .light-section, .dark-section, .liked-section, .profile-header');
+        // Clear previous timeout
+        clearTimeout(searchTimeoutSimple);
         
-        // Check which section is currently at navbar position
-        let currentSection = null;
-        sections.forEach(section => {
-            const rect = section.getBoundingClientRect();
-            const sectionTop = rect.top + scrollTop;
-            const sectionBottom = sectionTop + rect.height;
-            const navbarPosition = scrollTop + 80; // navbar height position
-            
-            if (navbarPosition >= sectionTop && navbarPosition < sectionBottom) {
-                currentSection = section;
-            }
-        });
-        
-        // If no section found or at very top (less than 50px), use hero style
-        if (!currentSection || scrollTop < 50) {
-            navbar.classList.remove('nav-light', 'nav-dark');
-            navbar.classList.add('nav-hero');
-            // Use Logo-06 (white) for transparent hero
-            if (navbarLogo) navbarLogo.src = '/images/Logo-06.png';
+        // Hide results if query is empty
+        if (query.trim().length === 0) {
+            resultsDiv.style.display = 'none';
             return;
         }
         
-        if (currentSection) {
-            const bgColor = window.getComputedStyle(currentSection).backgroundColor;
-            
-            // Detect DARK/GREEN backgrounds (#064852 = rgb(6, 72, 82))
-            if (bgColor.includes('6, 72, 82') || 
-                bgColor.includes('42, 95, 127') || 
-                bgColor.includes('168, 198, 143') || // sage green
-                bgColor.includes('26, 26, 26') || // #1a1a1a (profile header dark)
-                currentSection.classList.contains('dark-section') ||
-                currentSection.classList.contains('values-section') ||
-                currentSection.classList.contains('cta-section') ||
-                currentSection.classList.contains('profile-header')) {
-                navbar.classList.remove('nav-hero', 'nav-light');
-                navbar.classList.add('nav-dark');
-                // Use Logo-06 (white) for dark backgrounds
-                if (navbarLogo) navbarLogo.src = '/images/Logo-06.png';
-            }
-            // Detect LIGHT backgrounds (#F7EFE2 = rgb(247, 239, 226))
-            else if (bgColor.includes('247, 239, 226') || 
-                bgColor.includes('245, 242, 234') || 
-                bgColor.includes('255, 255, 255') ||
-                currentSection.classList.contains('section-features') ||
-                currentSection.classList.contains('section-faq') ||
-                currentSection.classList.contains('founder-section') ||
-                currentSection.classList.contains('light-section') ||
-                currentSection.classList.contains('liked-section')) {
-                navbar.classList.remove('nav-hero', 'nav-dark');
-                navbar.classList.add('nav-light');
-                // Use Logo-04 (dark) for light backgrounds
-                if (navbarLogo) navbarLogo.src = '/images/Logo-04.png';
-            }
-            // Default to dark if background is unclear
-            else {
-                navbar.classList.remove('nav-hero', 'nav-light');
-                navbar.classList.add('nav-dark');
-                if (navbarLogo) navbarLogo.src = '/images/Logo-06.png';
-            }
-        }
+        // Show loading state
+        resultsDiv.style.display = 'block';
+        resultsDiv.innerHTML = '<div style="padding: 20px; text-align: center; color: #999; font-size: 13px;">Searching...</div>';
+        
+        // Debounce search
+        searchTimeoutSimple = setTimeout(() => {
+            fetch(`/api/search?q=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                if (data.locations.length === 0 && data.properties.length === 0) {
+                    resultsDiv.innerHTML = '<div style="padding: 20px; text-align: center; color: #999; font-size: 13px;">No results found</div>';
+                    return;
+                }
+                
+                let html = '';
+                
+                // Locations - tanpa header
+                if (data.locations.length > 0) {
+                    data.locations.forEach(location => {
+                        html += `
+                            <a href="/location/${location.slug}" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; text-decoration: none; color: #333; transition: background 0.2s; border-bottom: 1px solid #f0f0f0;" onmouseover="this.style.background='#f8f9fa'" onmouseout="this.style.background='transparent'">
+                                <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#064852" stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    <div style="font-weight: 600; font-size: 14px; color: #064852;">${location.name}</div>
+                                </div>
+                                <div style="font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">location</div>
+                            </a>
+                        `;
+                    });
+                }
+                
+                // Properties - tanpa header
+                if (data.properties.length > 0) {
+                    data.properties.forEach(property => {
+                        let imgSrc = '/images/villa1.jpg';
+                        if (property.main_image) {
+                            if (property.main_image.startsWith('http') || property.main_image.startsWith('/')) {
+                                imgSrc = property.main_image;
+                            } else {
+                                imgSrc = '/storage/' + property.main_image;
+                            }
+                        }
+                        html += `
+                            <a href="/property/${property.slug}" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; text-decoration: none; color: #333; transition: background 0.2s; border-bottom: 1px solid #f0f0f0;" onmouseover="this.style.background='#f8f9fa'" onmouseout="this.style.background='transparent'">
+                                <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
+                                    <img src="${imgSrc}" alt="${property.name}" style="width: 45px; height: 45px; object-fit: cover; border-radius: 8px;">
+                                    <div>
+                                        <div style="font-weight: 600; font-size: 14px; color: #064852;">${property.name}</div>
+                                        <div style="font-size: 11px; color: #999;">${property.location_name || 'No location'}</div>
+                                    </div>
+                                </div>
+                                <div style="font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; white-space: nowrap; margin-left: 10px;">property</div>
+                            </a>
+                        `;
+                    });
+                }
+                resultsDiv.innerHTML = html;
+                })
+                .catch(error => {
+                    console.error('Search error:', error);
+                    resultsDiv.innerHTML = '<div style="padding: 20px; text-align: center; color: #e74c3c; font-size: 13px;">Error loading results</div>';
+                });
+        }, 300); // 300ms debounce
     }
 
-    // Auto-hide navbar on scroll down, show on scroll up
+    // Close search results when clicking outside
+    document.addEventListener('click', function(event) {
+        const searchBar = document.querySelector('.navbar-simple .search-bar');
+        const resultsDiv = document.getElementById('search-results-simple');
+        
+        if (searchBar && !searchBar.contains(event.target)) {
+            resultsDiv.style.display = 'none';
+        }
+    });
+
+    // AUTO-HIDE NAVBAR: scroll down hide, scroll up show
+    let lastScrollTop = 0;
+    const navbar = document.getElementById('navbar-detail');
+    const logo = document.getElementById('navbar-detail-logo');
+    let scrollThreshold = 100;
+    let isScrolling;
+
+    // Force nav-light and logo dark on load
+    document.addEventListener('DOMContentLoaded', function() {
+        if (navbar) {
+            navbar.classList.remove('nav-hero', 'nav-dark', 'nav-hidden');
+            navbar.classList.add('nav-light', 'nav-visible');
+        }
+        if (logo) {
+            logo.src = '/images/Logo-04.png';
+        }
+    });
+
+    // Auto-hide on scroll
     window.addEventListener('scroll', function() {
         window.clearTimeout(isScrolling);
-
         isScrolling = setTimeout(function() {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-            // Update navbar color based on section background
-            updateNavbarDetail();
-
             // Only apply auto-hide after scrolling past threshold
             if (scrollTop > scrollThreshold) {
                 if (scrollTop > lastScrollTop) {
@@ -558,23 +1064,9 @@
                 navbar.classList.remove('nav-hidden');
                 navbar.classList.add('nav-visible');
             }
-
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-        }, 50); // 50ms debounce for smooth performance
+        }, 50);
     }, false);
-
-    // Initialize navbar on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        navbar.classList.add('nav-visible', 'nav-hero');
-        
-        // Update color after brief delay to ensure sections are loaded
-        setTimeout(updateNavbarDetail, 100);
-    });
-    
-    // Also update on window resize
-    window.addEventListener('resize', function() {
-        setTimeout(updateNavbarDetail, 100);
-    });
 </script>
 
 

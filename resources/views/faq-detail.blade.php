@@ -36,9 +36,38 @@
         .faq-question:hover { background: #efefef; }
         .faq-question.active { background: #064852; color: white; }
         .faq-toggle { font-size: 24px; transition: transform 0.3s; }
-        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; padding: 0 25px; color: #555; line-height: 1.8; font-family: 'Work Sans'; font-weight: 400; }
-        .faq-answer.show { max-height: 1000px; padding: 25px; }
-        @media (max-width: 768px) { .faq-section { padding: 60px 30px; } .hero-text h1 { font-size: 48px; } .faq-title { font-size: 36px; } }
+        .faq-answer { 
+            height: 0; 
+            overflow: hidden; 
+            transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            padding: 0 25px; 
+            color: #555; 
+            line-height: 1.8; 
+            font-family: 'Work Sans'; 
+            font-weight: 400; 
+            box-sizing: border-box; 
+        }
+        .faq-answer-inner {
+            padding: 20px 0 5px 0;
+        }
+        @media (max-width: 768px) { 
+            .faq-section { padding: 60px 30px; } 
+            .hero-text h1 { font-size: 48px; } 
+            .faq-title { font-size: 36px; } 
+            .back-btn { padding: 10px 20px; font-size: 12px; margin-bottom: 30px; }
+            .faq-question { padding: 20px; font-size: 15px; }
+            .faq-answer-inner { padding: 15px 0; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 { font-size: 36px; letter-spacing: 2px; }
+            .hero-text p { font-size: 16px; }
+            .faq-section { padding: 40px 20px; }
+            .faq-title { font-size: 28px; margin-bottom: 30px; }
+            .back-btn { padding: 8px 18px; font-size: 11px; }
+            .faq-question { padding: 18px 15px; font-size: 14px; }
+            .faq-toggle { font-size: 22px; }
+        }
     </style>
 </head>
 <body>
@@ -66,7 +95,9 @@
                         <span class="faq-toggle">+</span>
                     </div>
                     <div class="faq-answer">
-                        {!! nl2br($question->answer) !!}
+                        <div class="faq-answer-inner">
+                            {!! nl2br($question->answer) !!}
+                        </div>
                     </div>
                 </div>
                 @endforeach
@@ -83,10 +114,22 @@
 
     <script>
         function toggleFaq(element) {
-            element.classList.toggle('active');
             const answer = element.nextElementSibling;
-            answer.classList.toggle('show');
-            element.querySelector('.faq-toggle').textContent = answer.classList.contains('show') ? '−' : '+';
+            const inner = answer.querySelector('.faq-answer-inner');
+            const isOpen = answer.style.height && answer.style.height !== '0px';
+            
+            if (isOpen) {
+                // Closing
+                answer.style.height = '0';
+                element.classList.remove('active');
+                element.querySelector('.faq-toggle').textContent = '+';
+            } else {
+                // Opening
+                const height = inner.offsetHeight;
+                answer.style.height = height + 'px';
+                element.classList.add('active');
+                element.querySelector('.faq-toggle').textContent = '−';
+            }
         }
     </script>
 </body>

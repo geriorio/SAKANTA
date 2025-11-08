@@ -34,30 +34,37 @@ class PropertyController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'subtitle' => 'nullable|string|max:255',
             'description' => 'required|string',
             'address' => 'required|string',
             'city' => 'required|string',
             'province' => 'required|string',
             'location_id' => 'required|exists:locations,id',
             'price' => 'required|numeric|min:0',
-            'total_shares' => 'required|integer|min:1',
-            'price_per_share' => 'required|numeric|min:0',
-            'property_type' => 'required|string',
+            'ownership' => 'nullable|string|max:100',
             'bedrooms' => 'required|integer|min:0',
             'bathrooms' => 'required|integer|min:0',
             'land_area' => 'required|numeric|min:0',
             'building_area' => 'required|numeric|min:0',
+            'built_in' => 'nullable|integer|min:1900|max:2100',
+            'distance_from_airport' => 'nullable|string|max:100',
+            'map_embed_url' => 'nullable|string',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
             'main_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'amenities' => 'nullable|string',
-            'status' => 'required|in:available,sold_out,coming_soon',
-            'expected_rental_yield' => 'nullable|numeric|min:0|max:100',
-            'is_featured' => 'boolean'
+            'facilities.*.name' => 'nullable|string|max:255',
+            'facilities.*.description' => 'nullable|string|max:500',
+            'facilities.*.image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'surroundings.*.name' => 'nullable|string|max:255',
+            'surroundings.*.description' => 'nullable|string|max:500',
+            'surroundings.*.image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'perfect_for' => 'nullable|string',
+            'status' => 'required|in:available,fully_owned,coming_soon'
         ]);
 
         // Generate slug
         $validated['slug'] = Str::slug($validated['title']);
-        $validated['available_shares'] = $validated['total_shares'];
 
         // Handle main image upload
         if ($request->hasFile('main_image')) {
@@ -78,10 +85,55 @@ class PropertyController extends Controller
         }
         $validated['images'] = $imagesPaths;
 
-        // Convert amenities string to array
-        if (isset($validated['amenities'])) {
-            $validated['amenities'] = array_map('trim', explode(',', $validated['amenities']));
+        // Handle Facilities with images
+        $facilitiesData = [];
+        if ($request->has('facilities')) {
+            foreach ($request->input('facilities') as $index => $facility) {
+                if (!empty($facility['name'])) {
+                    $facilityData = [
+                        'name' => $facility['name'],
+                        'description' => $facility['description'] ?? '',
+                        'image' => ''
+                    ];
+
+                    // Handle facility image upload
+                    if ($request->hasFile("facilities.$index.image")) {
+                        $facilityImage = $request->file("facilities.$index.image");
+                        $facilityImageName = time() . '_facility_' . $index . '_' . $facilityImage->getClientOriginalName();
+                        $facilityImage->move(public_path('images/facilities'), $facilityImageName);
+                        $facilityData['image'] = 'images/facilities/' . $facilityImageName;
+                    }
+
+                    $facilitiesData[] = $facilityData;
+                }
+            }
         }
+        $validated['facilities'] = $facilitiesData;
+
+        // Handle Surroundings with images
+        $surroundingsData = [];
+        if ($request->has('surroundings')) {
+            foreach ($request->input('surroundings') as $index => $surrounding) {
+                if (!empty($surrounding['name'])) {
+                    $surroundingData = [
+                        'name' => $surrounding['name'],
+                        'description' => $surrounding['description'] ?? '',
+                        'image' => ''
+                    ];
+
+                    // Handle surrounding image upload
+                    if ($request->hasFile("surroundings.$index.image")) {
+                        $surroundingImage = $request->file("surroundings.$index.image");
+                        $surroundingImageName = time() . '_surrounding_' . $index . '_' . $surroundingImage->getClientOriginalName();
+                        $surroundingImage->move(public_path('images/surroundings'), $surroundingImageName);
+                        $surroundingData['image'] = 'images/surroundings/' . $surroundingImageName;
+                    }
+
+                    $surroundingsData[] = $surroundingData;
+                }
+            }
+        }
+        $validated['surroundings'] = $surroundingsData;
 
         Property::create($validated);
 
@@ -116,26 +168,35 @@ class PropertyController extends Controller
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'subtitle' => 'nullable|string|max:255',
             'description' => 'required|string',
             'address' => 'required|string',
             'city' => 'required|string',
             'province' => 'required|string',
             'location_id' => 'required|exists:locations,id',
             'price' => 'required|numeric|min:0',
-            'total_shares' => 'required|integer|min:1',
-            'available_shares' => 'required|integer|min:0',
-            'price_per_share' => 'required|numeric|min:0',
-            'property_type' => 'required|string',
+            'ownership' => 'nullable|string|max:100',
             'bedrooms' => 'required|integer|min:0',
             'bathrooms' => 'required|integer|min:0',
             'land_area' => 'required|numeric|min:0',
             'building_area' => 'required|numeric|min:0',
+            'built_in' => 'nullable|integer|min:1900|max:2100',
+            'distance_from_airport' => 'nullable|string|max:100',
+            'map_embed_url' => 'nullable|string',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
             'main_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'amenities' => 'nullable|string',
-            'status' => 'required|in:available,sold_out,coming_soon',
-            'expected_rental_yield' => 'nullable|numeric|min:0|max:100',
-            'is_featured' => 'boolean'
+            'facilities.*.name' => 'nullable|string|max:255',
+            'facilities.*.description' => 'nullable|string|max:500',
+            'facilities.*.image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'facilities.*.existing_image' => 'nullable|string',
+            'surroundings.*.name' => 'nullable|string|max:255',
+            'surroundings.*.description' => 'nullable|string|max:500',
+            'surroundings.*.image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'surroundings.*.existing_image' => 'nullable|string',
+            'perfect_for' => 'nullable|string',
+            'status' => 'required|in:available,fully_owned,coming_soon'
         ]);
 
         // Update slug if title changed
@@ -168,10 +229,65 @@ class PropertyController extends Controller
             $validated['images'] = $imagesPaths;
         }
 
-        // Convert amenities string to array
-        if (isset($validated['amenities'])) {
-            $validated['amenities'] = array_map('trim', explode(',', $validated['amenities']));
+        // Handle Facilities with images
+        $facilitiesData = [];
+        if ($request->has('facilities')) {
+            foreach ($request->input('facilities') as $index => $facility) {
+                if (!empty($facility['name'])) {
+                    $facilityData = [
+                        'name' => $facility['name'],
+                        'description' => $facility['description'] ?? '',
+                        'image' => $facility['existing_image'] ?? ''
+                    ];
+
+                    // Handle facility image upload (new or replacement)
+                    if ($request->hasFile("facilities.$index.image")) {
+                        // Delete old image if exists
+                        if (!empty($facility['existing_image']) && file_exists(public_path($facility['existing_image']))) {
+                            unlink(public_path($facility['existing_image']));
+                        }
+
+                        $facilityImage = $request->file("facilities.$index.image");
+                        $facilityImageName = time() . '_facility_' . $index . '_' . $facilityImage->getClientOriginalName();
+                        $facilityImage->move(public_path('images/facilities'), $facilityImageName);
+                        $facilityData['image'] = 'images/facilities/' . $facilityImageName;
+                    }
+
+                    $facilitiesData[] = $facilityData;
+                }
+            }
         }
+        $validated['facilities'] = $facilitiesData;
+
+        // Handle Surroundings with images
+        $surroundingsData = [];
+        if ($request->has('surroundings')) {
+            foreach ($request->input('surroundings') as $index => $surrounding) {
+                if (!empty($surrounding['name'])) {
+                    $surroundingData = [
+                        'name' => $surrounding['name'],
+                        'description' => $surrounding['description'] ?? '',
+                        'image' => $surrounding['existing_image'] ?? ''
+                    ];
+
+                    // Handle surrounding image upload (new or replacement)
+                    if ($request->hasFile("surroundings.$index.image")) {
+                        // Delete old image if exists
+                        if (!empty($surrounding['existing_image']) && file_exists(public_path($surrounding['existing_image']))) {
+                            unlink(public_path($surrounding['existing_image']));
+                        }
+
+                        $surroundingImage = $request->file("surroundings.$index.image");
+                        $surroundingImageName = time() . '_surrounding_' . $index . '_' . $surroundingImage->getClientOriginalName();
+                        $surroundingImage->move(public_path('images/surroundings'), $surroundingImageName);
+                        $surroundingData['image'] = 'images/surroundings/' . $surroundingImageName;
+                    }
+
+                    $surroundingsData[] = $surroundingData;
+                }
+            }
+        }
+        $validated['surroundings'] = $surroundingsData;
 
         $property->update($validated);
 

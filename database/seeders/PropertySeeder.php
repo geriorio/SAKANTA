@@ -21,20 +21,18 @@ class PropertySeeder extends Seeder
         $rajaAmpat = Location::where('slug', 'raja-ampat')->first();
 
         // Delete existing properties to avoid duplicates
-        Property::query()->delete();
+        Property::truncate();
 
         $properties = [
             [
                 'title' => 'Rumah Modern Minimalis Jakarta Selatan',
+                'subtitle' => 'Modern Living in Elite Area',
                 'description' => 'Rumah modern minimalis di kawasan elite Jakarta Selatan dengan akses mudah ke berbagai fasilitas umum. Desain kontemporer dengan material berkualitas tinggi. Lingkungan yang aman dan nyaman untuk keluarga.',
                 'address' => 'Jl. Kemang Raya No. 123',
                 'city' => 'Jakarta Selatan',
                 'province' => 'DKI Jakarta',
                 'price' => 4000000000,
-                'total_shares' => 8,
-                'available_shares' => 6,
-                'price_per_share' => 500000000,
-                'property_type' => 'rumah',
+                'ownership' => '1/4 Ownership',
                 'bedrooms' => 4,
                 'bathrooms' => 3,
                 'land_area' => 200,
@@ -44,9 +42,12 @@ class PropertySeeder extends Seeder
                     'https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
                     'https://images.unsplash.com/photo-1484154218962-a197022b5858?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'
                 ],
-                'amenities' => ['Garasi', 'Taman', 'Security 24 Jam', 'Swimming Pool'],
-                'expected_rental_yield' => 12,
-                'is_featured' => true,
+                'facilities' => [],
+                'surroundings' => [],
+                'perfect_for' => 'Young families
+Urban professionals
+Investment seekers',
+                'status' => 'available',
                 'location_id' => $bali?->id,
             ],
             [

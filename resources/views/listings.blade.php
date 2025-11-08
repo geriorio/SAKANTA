@@ -25,6 +25,12 @@
             box-sizing: border-box;
         }
 
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+        }
+
         body {
             font-family: 'Esther', 'Georgia', serif;
             color: #2c3e50;
@@ -487,19 +493,19 @@
 
         .location-carousel-container {
             display: flex;
-            gap: 30px;
+            gap: 30px; /* Default gap - will be overridden by JS on mobile */
             transition: transform 0.5s ease-in-out;
         }
 
         .location-card {
-            flex: 0 0 calc((100% - 60px) / 3);
-            min-width: calc((100% - 60px) / 3);
+            /* Width will be set by JavaScript */
             cursor: pointer;
             position: relative;
             height: 500px;
             border-radius: 15px;
             overflow: hidden;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            flex-shrink: 0; /* Prevent cards from shrinking */
         }
 
         .location-card:hover {
@@ -644,8 +650,9 @@
             }
 
             .location-card {
-                flex: 0 0 100%;
-                min-width: 100%;
+                flex: 0 0 100% !important;
+                min-width: 100% !important;
+                height: 400px;
             }
 
             .hero-text h1 {
@@ -657,7 +664,154 @@
             .properties-grid,
             .area-guide,
             .ownership-section {
-                padding: 60px 30px;
+                padding: 60px 30px !important;
+            }
+
+            /* Ownership section - vertical stack */
+            .ownership-container {
+                grid-template-columns: 1fr !important;
+                gap: 40px !important;
+                justify-items: center;
+                text-align: center;
+            }
+
+            .ownership-stamp img {
+                width: 200px;
+                margin: 0 auto;
+                display: block;
+            }
+
+            .ownership-content {
+                text-align: center;
+                max-width: 100%;
+            }
+
+            .email-icon {
+                left: 20px;
+                bottom: 20px;
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 {
+                font-size: 36px;
+            }
+
+            .hero-text small {
+                font-size: 14px;
+                letter-spacing: 2px;
+            }
+
+            .location-section,
+            .what-we-offer,
+            .properties-grid,
+            .area-guide,
+            .ownership-section {
+                padding: 50px 20px !important;
+            }
+
+            .location-card {
+                height: 350px;
+            }
+
+            .location-section h2,
+            .what-we-offer h2,
+            .area-guide h2,
+            .ownership-section h2 {
+                font-size: 28px;
+            }
+
+            .property-card-title {
+                font-size: 20px;
+            }
+
+            .area-guide-btn,
+            .ownership-btn {
+                padding: 12px 25px;
+                font-size: 12px;
+                width: 100%;
+            }
+
+            .ownership-stamp img {
+                width: 180px;
+            }
+
+            .ownership-content h2 {
+                font-size: 28px !important;
+            }
+
+            .ownership-label {
+                font-size: 14px;
+            }
+
+            .email-icon {
+                left: 15px;
+                bottom: 15px;
+                width: 42px;
+                height: 42px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .hero-text h1 {
+                font-size: 28px;
+            }
+
+            .hero-text small {
+                font-size: 12px;
+            }
+
+            .location-section,
+            .what-we-offer,
+            .properties-grid,
+            .area-guide,
+            .ownership-section {
+                padding: 40px 15px !important;
+            }
+
+            .location-card {
+                height: 300px;
+            }
+
+            .location-card-name {
+                font-size: 20px;
+            }
+
+            .location-card-description {
+                font-size: 13px;
+            }
+
+            .location-section h2,
+            .what-we-offer h2,
+            .area-guide h2,
+            .ownership-section h2 {
+                font-size: 24px;
+            }
+
+            .property-card-title {
+                font-size: 18px;
+            }
+
+            .area-guide-btn,
+            .ownership-btn {
+                font-size: 11px;
+                padding: 10px 20px;
+            }
+
+            .ownership-stamp img {
+                width: 150px;
+            }
+
+            .ownership-content h2 {
+                font-size: 24px !important;
+                line-height: 1.3;
+            }
+
+            .ownership-label {
+                font-size: 12px;
+                letter-spacing: 2px;
             }
         }
     </style>
@@ -731,11 +885,35 @@
     <script>
         let currentLocationSlide = 0;
         const totalLocations = {{ count($locations) }};
-        const cardsPerView = 3;
+
+        // Function to determine cards per view based on screen width
+        function getCardsPerView() {
+            const screenWidth = window.innerWidth;
+            if (screenWidth <= 768) {
+                return 1; // Mobile: 1 card
+            } else if (screenWidth <= 1024) {
+                return 2; // Tablet: 2 cards
+            } else {
+                return 3; // Desktop: 3 cards
+            }
+        }
+
+        // Function to get gap based on screen width
+        function getGap() {
+            const screenWidth = window.innerWidth;
+            if (screenWidth <= 768) {
+                return 25; // Increased for better spacing
+            } else {
+                return 30;
+            }
+        }
 
         function slideLocation(direction) {
-            // Geser 1 kartu per klik, bukan 3
-            if (direction === 'next' && currentLocationSlide < totalLocations - cardsPerView) {
+            const cardsPerView = getCardsPerView();
+            const maxSlide = Math.max(0, totalLocations - cardsPerView);
+            
+            // Geser 1 kartu per klik
+            if (direction === 'next' && currentLocationSlide < maxSlide) {
                 currentLocationSlide++;
             } else if (direction === 'prev' && currentLocationSlide > 0) {
                 currentLocationSlide--;
@@ -744,20 +922,48 @@
         }
 
         function slideToLocation(index) {
-            currentLocationSlide = index;
+            const cardsPerView = getCardsPerView();
+            const maxSlide = Math.max(0, totalLocations - cardsPerView);
+            currentLocationSlide = Math.min(index, maxSlide);
             updateLocationCarousel();
         }
 
         function updateLocationCarousel() {
             const carousel = document.getElementById('locationCarousel');
+            if (!carousel) return;
+            
             const wrapper = carousel.parentElement;
-            const gap = 30;
+            const cardsPerView = getCardsPerView();
+            const gap = getGap();
+            
+            // Set gap on carousel container
+            carousel.style.gap = `${gap}px`;
+            
+            // Reset current slide if out of bounds
+            const maxSlide = Math.max(0, totalLocations - cardsPerView);
+            if (currentLocationSlide > maxSlide) {
+                currentLocationSlide = maxSlide;
+            }
             
             // Hitung card width dengan benar memperhitungkan gap
-            const cardWidth = (wrapper.offsetWidth - (gap * (cardsPerView - 1))) / cardsPerView;
+            let cardWidth;
+            if (cardsPerView === 1) {
+                cardWidth = wrapper.offsetWidth; // Full width for mobile
+            } else if (cardsPerView === 2) {
+                cardWidth = (wrapper.offsetWidth - gap) / 2;
+            } else {
+                cardWidth = (wrapper.offsetWidth - (gap * 2)) / 3;
+            }
+            
+            // Set width untuk semua cards
+            const cards = carousel.querySelectorAll('.location-card');
+            cards.forEach(card => {
+                card.style.flex = `0 0 ${cardWidth}px`;
+                card.style.minWidth = `${cardWidth}px`;
+                card.style.maxWidth = `${cardWidth}px`;
+            });
             
             // Offset untuk geser 1 kartu per klik
-            // moveDistance = currentSlide * (cardWidth + gap)
             const moveDistance = currentLocationSlide * (cardWidth + gap);
             carousel.style.transform = `translateX(-${moveDistance}px)`;
 
@@ -776,7 +982,13 @@
         // Initialize on load
         document.addEventListener('DOMContentLoaded', function() {
             updateLocationCarousel();
-            window.addEventListener('resize', updateLocationCarousel);
+        });
+
+        // Update on resize
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(updateLocationCarousel, 250);
         });
     </script>
 

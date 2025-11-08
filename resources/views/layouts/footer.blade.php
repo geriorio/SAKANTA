@@ -44,7 +44,9 @@
                 <div class="footer-nav-column">
                     <h4 class="footer-nav-title">How it works</h4>
                     <h4 class="footer-nav-title">Agents</h4>
-                    <h4 class="footer-nav-title">FAQ</h4>
+                    <a href="/faq" style="text-decoration: none;">
+                        <h4 class="footer-nav-title">FAQ</h4>
+                    </a>
                 </div>
             </div>
         </div>
@@ -278,7 +280,7 @@
     }
 
     /* Responsive */
-    @media (max-width: 768px) {
+    @media (max-width: 968px) {
         .footer {
             padding: 60px 30px 30px;
         }
@@ -288,13 +290,107 @@
             gap: 50px;
         }
 
+        .footer-left {
+            min-width: 100%;
+        }
+
+        .footer-nav {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px 20px;
+        }
+
+        .subscribe-form {
+            flex-direction: column;
+        }
+
+        .subscribe-input,
+        .subscribe-btn {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .footer {
+            padding: 60px 20px 30px;
+        }
+
+        .footer-content {
+            gap: 40px;
+        }
+
         .footer-nav {
             grid-template-columns: 1fr;
+            gap: 20px;
         }
 
         .footer-logo {
             font-size: 28px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-social {
+            gap: 15px;
+        }
+
+        .footer-social-icon {
+            width: 44px;
+            height: 44px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .footer {
+            padding: 50px 15px 25px;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            margin-bottom: 25px;
+        }
+
+        .subscribe-title {
+            font-size: 20px;
+        }
+
+        .subscribe-subtitle {
+            font-size: 13px;
+        }
+
+        .footer-nav-column {
+            gap: 15px;
+        }
+
+        .footer-bottom {
+            padding-top: 25px;
+        }
+    }
+
+    @media (max-width: 360px) {
+        .footer {
+            padding: 40px 12px 20px;
+        }
+
+        .footer-logo {
+            font-size: 22px;
+        }
+
+        .subscribe-input,
+        .subscribe-btn {
+            font-size: 11px;
+            padding: 10px 12px;
+        }
+
+        .footer-nav-title {
+            font-size: 13px;
+        }
+
+        .footer-social-icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        .footer-copyright {
+            font-size: 11px;
         }
     }
 

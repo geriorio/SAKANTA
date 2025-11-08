@@ -29,4 +29,12 @@ class Location extends Model
     {
         return $this->hasMany(Property::class);
     }
+
+    /**
+     * Article untuk lokasi ini
+     */
+    public function article()
+    {
+        return $this->hasOne(LocationArticle::class);
+    }
 }

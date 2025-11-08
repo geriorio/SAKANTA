@@ -31,6 +31,7 @@
             <a href="{{ route('admin.properties.index') }}">Manage Properties</a>
             <a href="{{ route('admin.locations.index') }}">Manage Locations</a>
             <a href="{{ route('admin.faqs.index') }}">Manage FAQs</a>
+            <a href="{{ route('admin.articles.index') }}">Manage Articles</a>
             <a href="/">View Website</a>
             <form method="POST" action="{{ route('admin.logout') }}" style="display: inline;">
                 @csrf
@@ -52,12 +53,12 @@
                     <p>Available Properties</p>
                 </div>
                 <div class="stat-card">
-                    <h3>{{ \App\Models\Property::where('status', 'sold_out')->count() }}</h3>
-                    <p>Sold Out Properties</p>
+                    <h3>{{ \App\Models\Location::count() }}</h3>
+                    <p>Total Locations</p>
                 </div>
                 <div class="stat-card">
-                    <h3>{{ \App\Models\User::count() }}</h3>
-                    <p>Total Users</p>
+                    <h3>{{ \App\Models\LocationArticle::count() }}</h3>
+                    <p>Location Articles</p>
                 </div>
             </div>
         </div>
@@ -76,6 +77,10 @@
                 <a href="{{ route('admin.faqs.create') }}" 
                    style="display: inline-block; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 5px; text-decoration: none; font-weight: 600;">
                     + Add New FAQ
+                </a>
+                <a href="{{ route('admin.articles.create') }}" 
+                   style="display: inline-block; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 5px; text-decoration: none; font-weight: 600;">
+                    + Add New Article
                 </a>
             </div>
         </div>

@@ -49,7 +49,7 @@
                             <span style="background: #ffc107; color: #000; padding: 0.25rem 0.5rem; border-radius: 3px; font-size: 0.875rem;">Coming Soon</span>
                         @endif
                     </td>
-                    <td>{{ $property->available_shares }}/{{ $property->total_shares }}</td>
+                    <td>{{ $property->ownership ?? 'N/A' }}</td>
                     <td>
                         <div style="display: flex; gap: 0.5rem;">
                             <a href="{{ route('admin.properties.edit', $property->id) }}" class="btn btn-warning" style="padding: 0.25rem 0.75rem; font-size: 0.875rem;">Edit</a>

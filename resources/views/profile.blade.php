@@ -204,7 +204,7 @@
             cursor: pointer;
             flex: 0 0 calc((100% - 60px) / 3);
             min-width: calc((100% - 60px) / 3);
-            height: 580px;
+            height: fit-content;
             text-decoration: none;
             color: inherit;
             display: flex;
@@ -248,7 +248,7 @@
         
         .property-image {
             width: 100%;
-            height: 350px;
+            height: 300px;
             position: relative;
             overflow: hidden;
         }
@@ -291,8 +291,42 @@
             fill: #e74c3c;
         }
         
+        /* Status Badge */
+        .status-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: 'Work Sans', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 5;
+        }
+
+        .status-badge.coming-soon {
+            background: rgba(255, 193, 7, 0.95);
+            color: #1a1a1a;
+        }
+
+        .status-badge.sold-out {
+            background: rgba(220, 53, 69, 0.95);
+            color: white;
+        }
+
+        /* Faded card untuk non-available properties */
+        .property-card.faded {
+            opacity: 0.6;
+        }
+
+        .property-card.faded:hover {
+            opacity: 0.8;
+        }
+        
         .property-info-card {
-            padding: 30px;
+            padding: 25px;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -303,27 +337,24 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             gap: 10px;
-            min-height: 100px;
         }
         
         .property-name {
-            font-size: 28px;
+            font-size: 18px;
             font-weight: 400;
             color: #064852;
             font-family: 'Esther', serif;
             line-height: 1.3;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            min-height: 72px;
+            margin: 0;
         }
         
         .property-icon {
-            width: 40px;
-            height: 40px;
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+            color: #064852;
         }
         
         .property-icon svg {
@@ -334,33 +365,25 @@
         }
         
         .property-location-text {
-            font-size: 17px;
+            font-size: 13px;
             color: #5a8aaa;
-            margin-bottom: 20px;
+            margin: 0 0 8px 0;
             font-family: 'Work Sans', sans-serif;
-            min-height: 22px;
         }
         
         .property-price-text {
-            font-size: 30px;
+            font-size: 18px;
             font-weight: 600;
             color: #064852;
-            margin-bottom: 15px;
+            margin: 0 0 8px 0;
             font-family: 'Work Sans', sans-serif;
-            min-height: 38px;
-            display: flex;
-            align-items: center;
         }
         
         .property-specs {
-            font-size: 17px;
+            font-size: 12px;
             color: #064852;
-            margin-bottom: 5px;
+            margin: 0 0 3px 0;
             font-family: 'Work Sans', sans-serif;
-            line-height: 1.4;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
         }
         
         /* Empty State */
@@ -421,12 +444,16 @@
             }
 
             .property-card {
-                flex: 0 0 calc((100% - 40px) / 2);
-                min-width: calc((100% - 40px) / 2);
+                flex: 0 0 calc((100% - 20px) / 2) !important;
+                min-width: calc((100% - 20px) / 2) !important;
             }
 
             .property-image {
                 height: 250px;
+            }
+
+            .liked-section {
+                padding: 80px 50px;
             }
         }
 
@@ -446,8 +473,8 @@
             }
 
             .property-card {
-                flex: 0 0 100%;
-                min-width: 100%;
+                flex: 0 0 100% !important;
+                min-width: 100% !important;
             }
 
             .property-image {
@@ -455,11 +482,131 @@
             }
 
             .property-name {
+                font-size: 18px;
+            }
+
+            .property-location-text {
                 font-size: 16px;
+            }
+
+            .property-price-text {
+                font-size: 22px;
             }
 
             .property-specs {
                 font-size: 11px;
+            }
+
+            .liked-section {
+                padding: 60px 30px;
+            }
+
+            .section-title h2 {
+                font-size: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .profile-header {
+                padding: 80px 20px 60px;
+            }
+
+            .profile-name {
+                font-size: 28px;
+            }
+
+            .profile-email {
+                font-size: 14px;
+            }
+
+            .liked-section {
+                padding: 50px 20px;
+            }
+
+            .section-title h2 {
+                font-size: 32px;
+            }
+
+            .section-title p {
+                font-size: 16px;
+            }
+
+            .carousel-container {
+                gap: 10px;
+            }
+
+            .carousel-track {
+                gap: 12px;
+            }
+
+            .property-image {
+                height: 200px;
+            }
+
+            .property-name {
+                font-size: 15px;
+            }
+
+            .property-location-text {
+                font-size: 14px;
+            }
+
+            .property-price-text {
+                font-size: 18px;
+            }
+
+            .property-specs {
+                font-size: 10px;
+            }
+
+            .carousel-nav-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
+            }
+
+            .property-info-card {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .carousel-container {
+                gap: 8px;
+            }
+
+            .carousel-track {
+                gap: 10px;
+            }
+
+            .carousel-nav-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 12px;
+            }
+
+            .property-image {
+                height: 180px;
+            }
+
+            .property-name {
+                font-size: 14px;
+            }
+
+            .property-price-text {
+                font-size: 16px;
+            }
+
+            .property-specs {
+                font-size: 9px;
+            }
+
+            .section-title h2 {
+                font-size: 28px;
+            }
+
+            .section-title p {
+                font-size: 14px;
             }
         }
     </style>
@@ -509,9 +656,15 @@
                 <div class="carousel-wrapper">
                     <div class="carousel-track" id="carouselTrack">
                         @foreach($likedProperties as $property)
-                            <div class="property-card" style="cursor: pointer;" onclick="window.location.href='/property/{{ $property->slug }}'">
+                            <div class="property-card {{ $property->status !== 'available' ? 'faded' : '' }}" style="cursor: pointer;" onclick="window.location.href='/property/{{ $property->slug }}'">
                                 <div class="property-image">
                                     <img src="{{ asset($property->main_image ?? '/images/villa1.jpg') }}" alt="{{ $property->title }}">
+                                    
+                                    @if($property->status === 'coming_soon')
+                                        <div class="status-badge coming-soon">Coming Soon</div>
+                                    @elseif($property->status === 'fully_owned')
+                                        <div class="status-badge sold-out">Sold Out</div>
+                                    @endif
                                     
                                     <button class="like-btn liked" 
                                             data-property-id="{{ $property->id}}"
@@ -530,10 +683,42 @@
                                             </svg>
                                         </div>
                                     </div>
-                                    <p class="property-location-text">{{ $property->city }}</p>
+                                    <p class="property-location-text">{{ $property->location->name ?? $property->city }}</p>
                                     <p class="property-price-text">{{ $property->formatted_price }}</p>
-                                    <p class="property-specs">1/{{ $property->total_shares }} Ownership</p>
-                                    <p class="property-specs">{{ $property->bedrooms }} BDS  |  {{ $property->bathrooms }} BA  |  {{ number_format($property->building_area, 0) }} FT</p>
+                                    <p class="property-specs">{{ $property->ownership ?? '1/4 Ownership' }}</p>
+                                    <p class="property-specs" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12px; color: #666; font-family: 'Work Sans', sans-serif;">
+                                        <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                            <img src="{{ asset('images/icons/bedroom.png') }}" alt="Bedroom" style="width: 25px; height: 25px; object-fit: contain;">
+                                            {{ $property->bedrooms }}
+                                        </span>
+                                        <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                                        <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                            <img src="{{ asset('images/icons/bathroom.png') }}" alt="Bathroom" style="width: 25px; height: 25px; object-fit: contain;">
+                                            {{ $property->bathrooms }}
+                                        </span>
+                                        <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                                        <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#064852" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                                <path d="M3 21h18"/>
+                                                <path d="M5 21V7l8-4v18"/>
+                                                <path d="M19 21V11l-6-4"/>
+                                                <rect x="7" y="10" width="2" height="2"/>
+                                                <rect x="7" y="14" width="2" height="2"/>
+                                                <rect x="7" y="18" width="2" height="2"/>
+                                                <rect x="15" y="14" width="2" height="2"/>
+                                                <rect x="15" y="18" width="2" height="2"/>
+                                            </svg>
+                                            {{ number_format($property->building_area, 0) }} FT²
+                                        </span>
+                                        <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                                        <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#064852" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                                <rect x="3" y="3" width="18" height="18" rx="1" stroke-dasharray="2,2"/>
+                                                <path d="M3 3l-2 -2M21 3l2 -2M3 21l-2 2M21 21l2 2"/>
+                                            </svg>
+                                            {{ number_format($property->land_area, 0) }} FT²
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
                         @endforeach
@@ -571,8 +756,32 @@
         const wrapper = document.querySelector('.carousel-wrapper');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
-        const cardsPerSlide = 3;
-        const gap = 30;
+
+        // Function to determine cards per slide based on screen width
+        function getCardsPerSlide() {
+            const screenWidth = window.innerWidth;
+            if (screenWidth <= 768) {
+                return 1; // Mobile: 1 card per slide
+            } else if (screenWidth <= 1024) {
+                return 2; // Tablet: 2 cards per slide
+            } else {
+                return 3; // Desktop: 3 cards per slide
+            }
+        }
+
+        // Function to get gap based on screen width
+        function getGap() {
+            const screenWidth = window.innerWidth;
+            if (screenWidth <= 480) {
+                return 12;
+            } else if (screenWidth <= 768) {
+                return 15;
+            } else if (screenWidth <= 1024) {
+                return 20;
+            } else {
+                return 30;
+            }
+        }
 
         function getCardCount() {
             return document.querySelectorAll('.property-card').length;
@@ -580,6 +789,7 @@
 
         function getTotalSlides() {
             const totalCards = getCardCount();
+            const cardsPerSlide = getCardsPerSlide();
             return Math.ceil(totalCards / cardsPerSlide);
         }
 
@@ -589,10 +799,29 @@
             
             if (totalCards === 0 || !wrapper) return;
 
+            const cardsPerSlide = getCardsPerSlide();
+            const gap = getGap();
+            const totalSlides = getTotalSlides();
+
+            // Reset current slide if out of bounds
+            if (currentSlide >= totalSlides) {
+                currentSlide = totalSlides - 1;
+            }
+            if (currentSlide < 0) {
+                currentSlide = 0;
+            }
+
             // Hitung card width berdasarkan wrapper width
-            // wrapper.offsetWidth = (cardWidth * 3) + (gap * 2)
             const wrapperWidth = wrapper.offsetWidth;
-            const cardWidth = (wrapperWidth - (gap * 2)) / 3;
+            let cardWidth;
+            
+            if (cardsPerSlide === 1) {
+                cardWidth = wrapperWidth; // Full width for mobile
+            } else if (cardsPerSlide === 2) {
+                cardWidth = (wrapperWidth - gap) / 2;
+            } else {
+                cardWidth = (wrapperWidth - (gap * 2)) / 3;
+            }
             
             // Set width untuk semua cards
             cards.forEach(card => {
@@ -601,6 +830,9 @@
                 card.style.flexBasis = cardWidth + 'px';
             });
 
+            // Update gap di track
+            track.style.gap = gap + 'px';
+
             // Hitung offset untuk slide saat ini
             const slideWidth = cardWidth + gap;
             const offset = -currentSlide * slideWidth * cardsPerSlide;
@@ -608,12 +840,12 @@
             track.style.transform = `translateX(${offset}px)`;
 
             // Update button states
-            const totalSlides = getTotalSlides();
             if (prevBtn) prevBtn.disabled = currentSlide === 0;
             if (nextBtn) nextBtn.disabled = currentSlide === totalSlides - 1;
         }
 
         function slideCarousel(direction) {
+            const cardsPerSlide = getCardsPerSlide();
             const totalSlides = getTotalSlides();
             const newSlide = currentSlide + direction;
             
@@ -626,17 +858,24 @@
         // Initialize carousel saat page load
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', function() {
-                setTimeout(updateCarousel, 50);
+                setTimeout(updateCarousel, 100);
             });
         } else {
-            setTimeout(updateCarousel, 50);
+            setTimeout(updateCarousel, 100);
         }
 
-        // Update saat window resize
+        // Update saat window resize dengan reset slide position
         let resizeTimeout;
         window.addEventListener('resize', function() {
             clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(updateCarousel, 250);
+            resizeTimeout = setTimeout(() => {
+                // Reset slide position on significant resize to prevent overflow
+                const newTotalSlides = getTotalSlides();
+                if (currentSlide >= newTotalSlides && newTotalSlides > 0) {
+                    currentSlide = Math.max(0, newTotalSlides - 1);
+                }
+                updateCarousel();
+            }, 250);
         });
 
         function toggleLike(button, propertyId) {

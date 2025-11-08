@@ -1,12 +1,12 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PropertyLikeController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\PropertyController as AdminPropertyController;
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
@@ -23,9 +23,17 @@ Route::get('/', function () {
 // Newsletter Subscribe
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
 
+// Contact Form Submit
+Route::post('/contact/submit', [ContactFormController::class, 'submit'])->name('contact.submit');
+
+// Search API
+Route::get('/api/search', [PropertyController::class, 'search'])->name('api.search');
+
 // Listings/Detail Page - Dynamic from database
 Route::get('/listings', [PropertyController::class, 'listings'])->name('listings');
 Route::get('/location/{location:slug}', [PropertyController::class, 'showLocation'])->name('location.show');
+Route::get('/location/{location:slug}/properties', [PropertyController::class, 'showLocation'])->name('location.properties');
+Route::get('/location/{location:slug}/article', [PropertyController::class, 'showArticle'])->name('location.article');
 
 // Property Detail Page (Dynamic by slug)
 Route::get('/property/{property:slug}', [PropertyController::class, 'show'])->name('property.detail');
@@ -35,6 +43,12 @@ Route::get('/about', function () {
     $listings = \App\Models\Property::inRandomOrder()->get();
     return view('about', compact('listings'));
 })->name('about');
+
+// How It Works Page
+Route::get('/how-it-works', function () {
+    $properties = \App\Models\Property::inRandomOrder()->limit(6)->get();
+    return view('how-it-works', compact('properties'));
+})->name('how-it-works');
 
 // FAQ Pages - Dynamic from database
 Route::get('/faq', [FaqController::class, 'index'])->name('faq');
@@ -111,6 +125,16 @@ Route::prefix('admin')->group(function () {
             'edit' => 'admin.locations.edit',
             'update' => 'admin.locations.update',
             'destroy' => 'admin.locations.destroy',
+        ]);
+
+        // Location Article Management
+        Route::resource('articles', \App\Http\Controllers\Admin\LocationArticleController::class)->names([
+            'index' => 'admin.articles.index',
+            'create' => 'admin.articles.create',
+            'store' => 'admin.articles.store',
+            'edit' => 'admin.articles.edit',
+            'update' => 'admin.articles.update',
+            'destroy' => 'admin.articles.destroy',
         ]);
     });
 });

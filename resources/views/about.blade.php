@@ -123,334 +123,94 @@
             }
         }
 
-        /* Our Story Section */
-        .our-story {
+        /* Content Sections */
+        .content-section {
             background: #F7EFE2;
-            padding: 120px 80px;
+            padding: 140px 60px;
         }
 
-        .story-container {
-            max-width: 1400px;
+        .content-container {
+            max-width: 1200px;
             margin: 0 auto;
+        }
+
+        .content-row {
+            margin: 140px auto 140px auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 100px;
+            gap: 80px;
             align-items: center;
         }
 
-        .story-image {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .content-row:first-child {
+            margin-top: 0;
         }
 
-        .story-image img {
-            width: 85%;
-            height: auto;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        .content-row:last-child {
+            margin-bottom: 0;
         }
 
-        .story-content h2 {
-            font-size: 48px;
-            font-weight: 400;
-            color: #064852;
-            margin-bottom: 30px;
-            line-height: 1.3;
+        .content-row.reverse {
+            direction: rtl;
         }
 
-        .story-content p {
-            font-size: 18px;
-            line-height: 1.8;
-            color: #064852;
-            margin-bottom: 20px;
-            font-family: 'Work Sans', sans-serif;
-            font-weight: 400;
+        .content-row.reverse > * {
+            direction: ltr;
         }
 
-        /* Values Section */
-        .values-section {
-            background: #F7EFE2;
-            padding: 120px 80px;
-            color: #064852;
-            position: relative;
+        .content-image {
+            width: 100%;
+            height: 500px;
+            border-radius: 20px;
             overflow: hidden;
+            position: relative;
         }
 
-        .values-section::before {
+        .content-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .content-image::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.02) 0%, rgba(0, 0, 0, 0.04) 50%, rgba(0, 0, 0, 0.02) 100%);
-            pointer-events: none;
-        }
-
-        .values-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            text-align: center;
-            position: relative;
+            top: -80px;
+            left: -80px;
+            width: 250px;
+            height: 250px;
+            border: 2px solid rgba(6, 72, 82, 0.15);
+            border-radius: 50%;
             z-index: 1;
         }
 
-        .values-header {
-            margin-bottom: 80px;
-        }
-
-        .values-header small {
+        .content-text small {
             font-size: 14px;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            display: block;
-            margin-bottom: 20px;
-            opacity: 0.8;
-            font-family: 'Work Sans', sans-serif;
-            font-weight: 600;
-            color: rgba(215, 180, 105, 1);
-        }
-
-        .values-header h2 {
-            font-size: 56px;
-            font-weight: 300;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-            font-family: 'Esther', serif;
-            color: #064852;
-        }
-
-        .values-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            margin-top: 60px;
-        }
-
-        .value-card {
-            background: white;
-            padding: 50px 45px;
-            border-radius: 2px;
-            backdrop-filter: none;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(215, 180, 105, 0.2);
-            border-left: 3px solid rgba(215, 180, 105, 0.8);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .value-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(215, 180, 105, 0.08) 0%, transparent 70%);
-            border-radius: 50%;
-            transition: all 0.5s ease;
-        }
-
-        .value-card:hover {
-            transform: translateY(-8px);
-            background: #fafaf9;
-            border-color: rgba(215, 180, 105, 0.5);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-        }
-
-        .value-card:hover::before {
-            top: -30%;
-            right: -30%;
-        }
-
-        .value-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, rgba(215, 180, 105, 0.15) 0%, rgba(215, 180, 105, 0.05) 100%);
-            border: 2px solid rgba(215, 180, 105, 0.3);
-            border-radius: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 30px;
-            font-size: 32px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .value-card h3 {
-            font-size: 24px;
-            font-weight: 400;
-            margin-bottom: 18px;
-            letter-spacing: 1px;
-            font-family: 'Esther', serif;
-            position: relative;
-            z-index: 2;
-            color: #064852;
-        }
-
-        .value-card p {
-            font-size: 15px;
-            line-height: 1.8;
-            opacity: 0.75;
-            font-family: 'Work Sans', sans-serif;
-            font-weight: 400;
-            position: relative;
-            z-index: 2;
-            letter-spacing: 0.3px;
-            color: #064852;
-        }
-
-        /* Vision Section */
-        .vision-section {
-            background: #F7EFE2;
-            padding: 120px 80px;
-        }
-
-        .vision-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 100px;
-            align-items: center;
-        }
-
-        .vision-content {
-            order: 2;
-        }
-
-        .vision-content small {
-            font-size: 17px;
             letter-spacing: 3px;
             text-transform: uppercase;
             color: #5a8aaa;
             display: block;
             margin-bottom: 20px;
             font-family: 'Work Sans', sans-serif;
-            font-weight: 500;
+            font-weight: 600;
         }
 
-        .vision-content h2 {
-            font-size: 44px;
+        .content-text h2 {
+            font-size: 42px;
             font-weight: 400;
             color: #064852;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             line-height: 1.3;
+            font-family: 'Esther', serif;
         }
 
-        .vision-content p {
-            font-size: 18px;
+        .content-text p {
+            font-size: 17px;
             line-height: 1.8;
             color: #064852;
-            margin-bottom: 20px;
             font-family: 'Work Sans', sans-serif;
             font-weight: 400;
-        }
-
-        .vision-image {
-            position: relative;
-            order: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .vision-image img {
-            width: 85%;
-            height: auto;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Team Section */
-        .team-section {
-            background: #F7EFE2;
-            padding: 100px 80px 120px;
-        }
-
-        .team-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .team-header {
-            margin-bottom: 70px;
-        }
-
-        .team-header h2 {
-            font-size: 52px;
-            font-weight: 400;
-            color: #064852;
-            margin-bottom: 20px;
-        }
-
-        .team-header p {
-            font-size: 20px;
-            color: #5a8aaa;
-            font-family: 'Work Sans', sans-serif;
-            font-weight: 400;
-        }
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-        }
-
-        .team-member {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .team-member:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .member-image {
-            width: 100%;
-            height: 350px;
-            overflow: hidden;
-            background: #d4cec0;
-        }
-
-        .member-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: top;
-            transition: transform 0.3s ease;
-        }
-
-        .team-member:hover .member-image img {
-            transform: scale(1.05);
-        }
-
-        .member-info {
-            padding: 30px;
-            text-align: center;
-        }
-
-        .member-info h3 {
-            font-size: 24px;
-            font-weight: 400;
-            color: #064852;
-            margin-bottom: 10px;
-        }
-
-        .member-info p {
-            font-size: 16px;
-            color: #5a8aaa;
-            font-family: 'Work Sans', sans-serif;
-            font-weight: 500;
+            margin-bottom: 15px;
         }
 
         /* CTA Section */
@@ -506,60 +266,93 @@
             color: #064852;
         }
 
-        /* Stats Section */
-        .stats-section {
-            background: #F7EFE2;
-            padding: 80px 80px;
-        }
-
-        .stats-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 60px;
-            text-align: center;
-        }
-
-        .stat-item h3 {
-            font-size: 56px;
-            font-weight: 400;
-            color: #064852;
-            margin-bottom: 15px;
-        }
-
-        .stat-item p {
-            font-size: 16px;
-            color: #5a8aaa;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-family: 'Work Sans', sans-serif;
-            font-weight: 600;
-        }
-
         /* Responsive */
         @media (max-width: 1024px) {
-            .story-container,
-            .vision-container {
+            .content-section {
+                padding: 80px 40px;
+            }
+
+            .content-row {
                 grid-template-columns: 1fr;
-                gap: 60px;
+                gap: 50px;
+                margin-bottom: 80px;
             }
 
-            .vision-content {
-                order: 1;
+            .content-row.reverse {
+                direction: ltr;
             }
 
-            .vision-image {
-                order: 2;
+            .content-image {
+                height: 400px;
             }
 
-            .values-grid,
-            .team-grid {
-                grid-template-columns: 1fr;
+            .content-text h2 {
+                font-size: 36px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-text h1 {
+                font-size: 48px;
             }
 
-            .stats-container {
-                grid-template-columns: repeat(2, 1fr);
+            .hero-text p {
+                font-size: 18px;
+            }
+
+            .content-section {
+                padding: 60px 30px;
+            }
+
+            .content-row {
+                gap: 40px;
+                margin-bottom: 60px;
+            }
+
+            .content-image {
+                height: 300px;
+            }
+
+            .content-text h2 {
+                font-size: 32px;
+            }
+
+            .content-text p {
+                font-size: 16px;
+            }
+
+            .cta-container h2 {
+                font-size: 36px;
+            }
+
+            .cta-container p {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 {
+                font-size: 36px;
+            }
+
+            .content-section {
+                padding: 40px 20px;
+            }
+
+            .content-image {
+                height: 250px;
+            }
+
+            .content-text small {
+                font-size: 12px;
+            }
+
+            .content-text h2 {
+                font-size: 28px;
+            }
+
+            .content-text p {
+                font-size: 15px;
             }
         }
     </style>
@@ -582,138 +375,78 @@
             <h1>About Sakanta</h1>
             <p>Where shared ownership meets unparalleled luxury, creating a new way to experience and invest in premium properties.</p>
         </div>
-        <div class="scroll-indicator" onclick="document.querySelector('.our-story').scrollIntoView({ behavior: 'smooth' })" style="cursor: pointer;">↓</div>
+        <div class="scroll-indicator" onclick="document.querySelector('.content-section').scrollIntoView({ behavior: 'smooth' })" style="cursor: pointer;">↓</div>
     </section>
 
-    <!-- Our Story Section -->
-    <section class="our-story">
-        <div class="story-container">
-            <div class="story-image">
-                <img src="/images/homevilla.jpg" alt="Sakanta Story">
+    <!-- Content Sections -->
+    <section class="content-section">
+        <div class="content-container">
+            <!-- Row 1 - Image Left -->
+            <div class="content-row">
+                <div class="content-image">
+                    <img src="/images/homevilla.jpg" alt="Sakanta Villa">
+                </div>
+                <div class="content-text">
+                    <small>About Sakanta</small>
+                    <h2>Where luxury meets belonging</h2>
+                    <p>Sakanta redefines second-home ownership in Indonesia.
+                    We make it possible for up to <b>1 in 10 co-owners</b> to share ownership of a luxury home across the Islands of Gods — combining modern elegance with the warmth of Indonesian hospitality.
+                    <br><br>Because true luxury isn’t about having more — it’s about living better, together.
+                    </p>
+                </div>
             </div>
-            <div class="story-content">
-                <h2>Our Story:<br>Reimagining Property Ownership</h2>
-                <p>Sakanta was born from a simple yet powerful idea: luxury property ownership should be accessible, flexible, and shared. We believe that the joy of having a retreat shouldn't be limited by financial barriers or practical constraints.</p>
-                <p>Founded by a team of property enthusiasts and hospitality experts, we've created a platform that democratizes access to premium properties across Indonesia's most sought-after destinations.</p>
-                <p>Our name, "Sakanta," embodies the spirit of sanctuary and tranquility — a place where you can truly escape, recharge, and create lasting memories with those who matter most.</p>
-            </div>
-        </div>
-    </section>
 
-    <!-- Stats Section -->
-    <section class="stats-section">
-        <div class="stats-container">
-            <div class="stat-item">
-                <h3>500+</h3>
-                <p>Happy Owners</p>
+            <!-- Row 2 - Image Right -->
+            <div class="content-row reverse">
+                <div class="content-image">
+                    <img src="/images/homevilla2.jpg" alt="Sakanta Ownership">
+                </div>
+                <div class="content-text">
+                    <small>Our Mission</small>
+                    <h2>Making dreams livable</h2>
+                    <p>We believe luxury living should be within reach.
+                    Through co-ownership, Sakanta opens new doors — reducing high entry barriers, adding flexibility through share resale, and ensuring every home is used and enjoyed, not left empty. <br><br>We’re here to democratize luxury and elevate life’s quality, one home at a time.
+                    </p>
+                </div>
             </div>
-            <div class="stat-item">
-                <h3>50+</h3>
-                <p>Premium Villas</p>
-            </div>
-            <div class="stat-item">
-                <h3>12</h3>
-                <p>Destinations</p>
-            </div>
-            <div class="stat-item">
-                <h3>95%</h3>
-                <p>Satisfaction Rate</p>
-            </div>
-        </div>
-    </section>
 
-    <!-- Values Section -->
-    <section class="values-section dark-section">
-        <div class="values-container">
-            <div class="values-header">
-                <small>OUR VALUES</small>
-                <h2>What We Stand For</h2>
-            </div>
-            <div class="values-grid">
-                <div class="value-card">
-                    <div class="value-icon">🏡</div>
-                    <h3>Accessibility</h3>
-                    <p>Making luxury property ownership achievable for more people through innovative co-ownership models that reduce financial barriers.</p>
+            <!-- Row 3 - Image Left -->
+            <div class="content-row">
+                <div class="content-image">
+                    <img src="/images/villa1.jpg" alt="Luxury Living">
                 </div>
-                <div class="value-card">
-                    <div class="value-icon">🤝</div>
-                    <h3>Community</h3>
-                    <p>Building a community of like-minded individuals who share a passion for exceptional spaces and meaningful experiences.</p>
-                </div>
-                <div class="value-card">
-                    <div class="value-icon">✨</div>
-                    <h3>Excellence</h3>
-                    <p>Maintaining the highest standards in property selection, management, and owner services to ensure exceptional experiences.</p>
-                </div>
-                <div class="value-card">
-                    <div class="value-icon">🌿</div>
-                    <h3>Sustainability</h3>
-                    <p>Promoting responsible property development and management that respects local communities and the environment.</p>
-                </div>
-                <div class="value-card">
-                    <div class="value-icon">🔒</div>
-                    <h3>Transparency</h3>
-                    <p>Operating with complete honesty in all transactions, ensuring legal clarity and protecting every owner's investment.</p>
-                </div>
-                <div class="value-card">
-                    <div class="value-icon">💎</div>
-                    <h3>Quality</h3>
-                    <p>Curating only the finest properties in prime locations with exceptional design and outstanding amenities.</p>
+                <div class="content-text">
+                    <small>Our Vision</small>
+                    <h2>Elevating life’s possibilities</h2>
+                    <p>Sakanta imagines a future where families from around the world can own, share, and celebrate homes across Indonesia’s most beloved destinations — from Bali’s ocean breeze to Lombok’s serene hills. <br><br>A life where every stay brings connection, comfort, and meaning.
+                    </p>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Vision Section -->
-    <section class="vision-section">
-        <div class="vision-container">
-            <div class="vision-content">
-                <small>OUR VISION</small>
-                <h2>Building the Future of Shared Luxury</h2>
-                <p>We envision a world where owning a piece of paradise is within reach for everyone who dreams of it. Where families can create traditions, professionals can find respite, and investors can build wealth through tangible, beautiful assets.</p>
-                <p>Through technology, transparency, and trust, we're transforming how people think about second homes — not as a luxury reserved for the elite, but as a smart, accessible way to enjoy exceptional properties.</p>
-                <p>Our goal is to become Indonesia's leading co-ownership platform, expanding to 100+ premium properties across the archipelago, while maintaining the personal touch and attention to detail that makes Sakanta special.</p>
+            <!-- Row 4 - Image Right -->
+            <div class="content-row reverse">
+                <div class="content-image">
+                    <img src="/images/hero2.jpg" alt="Flexible Ownership">
+                </div>
+                <div class="content-text">
+                    <small>Our People</small>
+                    <h2>Meet the minds behind the homes</h2>
+                    <p>We’re a team of builders, thinkers, and dreamers inspired by Indonesia’s natural beauty and cultural grace.
+                    From hospitality to technology, every member of Sakanta shares one mission — to craft ownership experiences that feel effortless, personal, and deeply human.</p>
+                </div>
             </div>
-            <div class="vision-image">
-                <img src="/images/homevilla2.jpg" alt="Sakanta Vision">
-            </div>
-        </div>
-    </section>
 
-    <!-- Team Section -->
-    <section class="team-section">
-        <div class="team-container">
-            <div class="team-header">
-                <h2>Meet Our Team</h2>
-                <p>The passionate people behind Sakanta</p>
-            </div>
-            <div class="team-grid">
-                <div class="team-member">
-                    <div class="member-image">
-                        <img src="/images/person1.jpg" alt="Team Member">
-                    </div>
-                    <div class="member-info">
-                        <h3>Johnny Anderson</h3>
-                        <p>Founder & CEO</p>
-                    </div>
+            <!-- Row 5 - Image Left -->
+            <div class="content-row">
+                <div class="content-image">
+                    <img src="/images/hero.jpg" alt="Community">
                 </div>
-                <div class="team-member">
-                    <div class="member-image">
-                        <img src="/images/person2.jpg" alt="Team Member">
-                    </div>
-                    <div class="member-info">
-                        <h3>Michael Chen</h3>
-                        <p>Head of Property</p>
-                    </div>
-                </div>
-                <div class="team-member">
-                    <div class="member-image">
-                        <img src="/images/person3.jpg" alt="Team Member">
-                    </div>
-                    <div class="member-info">
-                        <h3>Anderson Wijaya</h3>
-                        <p>Director of Operations</p>
-                    </div>
+                <div class="content-text">
+                    <small>Our Journey</small>
+                    <h2>From dream to destination</h2>
+                    <p>It all began with one question: Why should second-home ownership be out of reach for most people?
+                    That question shaped Sakanta — a movement to make owning a dream home more possible and purposeful. <br><br>Every family that joins Sakanta becomes part of this story — creating shared memories, lasting connections, and a new way of living beautifully.
+                    </p>
                 </div>
             </div>
         </div>
@@ -738,9 +471,15 @@
                 <div class="carousel-wrapper-cta">
                     <div class="carousel-track-cta" id="carouselTrackCTA">
                         @forelse($listings as $property)
-                        <a href="{{ route('property.detail', $property->slug) }}" class="property-card-cta">
+                        <a href="{{ route('property.detail', $property->slug) }}" class="property-card-cta {{ $property->status !== 'available' ? 'faded' : '' }}">
                             <div class="property-image-cta">
                                 <img src="{{ asset($property->main_image ?? '/images/villa1.jpg') }}" alt="{{ $property->title }}">
+                                
+                                @if($property->status === 'coming_soon')
+                                    <div class="status-badge coming-soon">Coming Soon</div>
+                                @elseif($property->status === 'fully_owned')
+                                    <div class="status-badge sold-out">Sold Out</div>
+                                @endif
                                 
                                 @auth
                                 <button class="like-btn-cta {{ Auth::user()->hasLiked($property->id) ? 'liked' : '' }}" 
@@ -763,8 +502,40 @@
                                 </div>
                                 <p class="property-location-text-cta">{{ $property->location->name ?? $property->city }}</p>
                                 <p class="property-price-text-cta">{{ $property->formatted_price }}</p>
-                                <p class="property-specs-cta">1/{{ $property->total_shares }} Ownership</p>
-                                <p class="property-specs-cta">{{ $property->bedrooms }} BDS  |  {{ $property->bathrooms }} BA  |  {{ number_format($property->building_area, 0) }} FT</p>
+                                <p class="property-specs-cta">{{ $property->ownership ?? '1/4 Ownership' }}</p>
+                                <p class="property-specs-cta" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12px; color: #666; font-family: 'Work Sans', sans-serif;">
+                                    <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                        <img src="{{ asset('images/icons/bedroom.png') }}" alt="Bedroom" style="width: 25px; height: 25px; object-fit: contain;">
+                                        {{ $property->bedrooms }}
+                                    </span>
+                                    <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                                    <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                        <img src="{{ asset('images/icons/bathroom.png') }}" alt="Bathroom" style="width: 25px; height: 25px; object-fit: contain;">
+                                        {{ $property->bathrooms }}
+                                    </span>
+                                    <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                                    <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#064852" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M3 21h18"/>
+                                            <path d="M5 21V7l8-4v18"/>
+                                            <path d="M19 21V11l-6-4"/>
+                                            <rect x="7" y="10" width="2" height="2"/>
+                                            <rect x="7" y="14" width="2" height="2"/>
+                                            <rect x="7" y="18" width="2" height="2"/>
+                                            <rect x="15" y="14" width="2" height="2"/>
+                                            <rect x="15" y="18" width="2" height="2"/>
+                                        </svg>
+                                        {{ number_format($property->building_area, 0) }} FT²
+                                    </span>
+                                    <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                                    <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#064852" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="3" y="3" width="18" height="18" rx="1" stroke-dasharray="2,2"/>
+                                            <path d="M3 3l-2 -2M21 3l2 -2M3 21l-2 2M21 21l2 2"/>
+                                        </svg>
+                                        {{ number_format($property->land_area, 0) }} FT²
+                                    </span>
+                                </p>
                             </div>
                         </a>
                         @empty
@@ -823,8 +594,8 @@
             position: relative;
             z-index: 1;
             cursor: pointer;
-            flex: 0 0 calc((100% - 60px) / 3);
-            min-width: calc((100% - 60px) / 3);
+            /* Width will be set by JavaScript - responsive */
+            flex-shrink: 0;
             height: fit-content;
             text-decoration: none;
             color: inherit;
@@ -850,6 +621,36 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-family: 'Work Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 20;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .status-badge.coming-soon {
+            background: #f39c12;
+            color: white;
+        }
+
+        .status-badge.sold-out {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .property-card-cta.faded {
+            opacity: 0.7;
         }
 
         /* Like Button */
@@ -899,45 +700,54 @@
         }
 
         .property-name-cta {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 400;
             color: #064852;
             margin: 0;
             line-height: 1.3;
             font-family: 'Esther', serif;
             text-align: left;
+            flex: 1;
         }
 
         .property-icon-cta {
-            width: 24px;
-            height: 24px;
+            width: 30px;
+            height: 30px;
             flex-shrink: 0;
             color: #064852;
+        }
+
+        .property-icon-cta svg {
+            width: 100%;
+            height: 100%;
+            stroke: currentColor;
+            stroke-width: 1.5;
         }
 
         .property-location-text-cta {
             font-size: 13px;
             color: #5a8aaa;
-            margin: 0 0 8px 0;
+            margin: 0 0 10px 0;
             font-family: 'Work Sans', sans-serif;
             text-align: left;
         }
 
         .property-price-text-cta {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 600;
             color: #064852;
-            margin: 0 0 8px 0;
+            margin: 0 0 10px 0;
             font-family: 'Work Sans', sans-serif;
             text-align: left;
         }
 
         .property-specs-cta {
             font-size: 12px;
-            color: #064852;
-            margin: 0 0 3px 0;
+            color: #666;
+            margin: 0 0 4px 0;
             font-family: 'Work Sans', sans-serif;
             text-align: left;
+            line-height: 1.4;
         }
 
         /* Carousel Navigation Buttons */
@@ -972,15 +782,11 @@
         @media (max-width: 1024px) {
             .carousel-container-cta {
                 gap: 15px;
+                padding: 0 40px;
             }
 
             .carousel-track-cta {
                 gap: 20px;
-            }
-
-            .property-card-cta {
-                flex: 0 0 calc((100% - 40px) / 2);
-                min-width: calc((100% - 40px) / 2);
             }
 
             .property-image-cta {
@@ -991,10 +797,11 @@
         @media (max-width: 768px) {
             .carousel-container-cta {
                 gap: 12px;
+                padding: 0 30px;
             }
 
             .carousel-track-cta {
-                gap: 15px;
+                gap: 15px !important; /* Force on mobile */
             }
 
             .carousel-nav-btn-cta {
@@ -1004,62 +811,142 @@
             }
 
             .property-card-cta {
-                flex: 0 0 100%;
-                min-width: 100%;
+                /* Width will be set to 100% by JavaScript */
+                flex: 0 0 100% !important;
+                min-width: 100% !important;
             }
 
             .property-image-cta {
-                height: 220px;
+                height: 300px !important;
             }
 
             .property-name-cta {
-                font-size: 16px;
+                font-size: 18px;
             }
 
             .property-specs-cta {
                 font-size: 11px;
             }
         }
+
+        @media (max-width: 480px) {
+            .carousel-container-cta {
+                padding: 0 20px;
+            }
+
+            .property-image-cta {
+                height: 250px !important;
+            }
+
+            .property-info-card-cta {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .carousel-container-cta {
+                padding: 0 15px;
+            }
+
+            .property-image-cta {
+                height: 220px !important;
+            }
+
+            .property-name-cta {
+                font-size: 16px;
+            }
+        }
     </style>
 
     <script>
-        // CTA Carousel functionality
+        // CTA Carousel functionality with RESPONSIVE support
         let currentSlideCTA = 0;
         const trackCTA = document.getElementById('carouselTrackCTA');
         const wrapperCTA = document.querySelector('.carousel-wrapper-cta');
         const cardsCTA = document.querySelectorAll('.property-card-cta');
         const prevBtnCTA = document.getElementById('prevBtnCTA');
         const nextBtnCTA = document.getElementById('nextBtnCTA');
-        const cardsPerSlideCTA = 3;
-        const gapCTA = 30;
         const totalCardsCTA = cardsCTA.length;
-        const totalSlidesCTA = Math.ceil(totalCardsCTA / cardsPerSlideCTA);
+
+        // Responsive cards per slide
+        function getCardsPerSlideCTA() {
+            const screenWidth = window.innerWidth;
+            if (screenWidth <= 768) {
+                return 1; // Mobile: 1 card
+            } else if (screenWidth <= 1024) {
+                return 2; // Tablet: 2 cards
+            } else {
+                return 3; // Desktop: 3 cards
+            }
+        }
+
+        // Responsive gap
+        function getGapCTA() {
+            const screenWidth = window.innerWidth;
+            if (screenWidth <= 480) {
+                return 12;
+            } else if (screenWidth <= 768) {
+                return 15;
+            } else if (screenWidth <= 1024) {
+                return 20;
+            } else {
+                return 30;
+            }
+        }
 
         function updateCarouselCTA() {
             if (totalCardsCTA === 0 || !wrapperCTA || !trackCTA) return;
 
+            const cardsPerSlide = getCardsPerSlideCTA();
+            const gap = getGapCTA();
+            const totalSlides = Math.ceil(totalCardsCTA / cardsPerSlide);
+
+            // Reset slide if out of bounds
+            if (currentSlideCTA >= totalSlides) {
+                currentSlideCTA = totalSlides - 1;
+            }
+            if (currentSlideCTA < 0) {
+                currentSlideCTA = 0;
+            }
+
+            // Set gap on track
+            trackCTA.style.gap = `${gap}px`;
+
             const wrapperWidth = wrapperCTA.offsetWidth;
-            const cardWidth = (wrapperWidth - (gapCTA * 2)) / 3;
+            let cardWidth;
             
+            if (cardsPerSlide === 1) {
+                cardWidth = wrapperWidth; // Full width for mobile
+            } else if (cardsPerSlide === 2) {
+                cardWidth = (wrapperWidth - gap) / 2;
+            } else {
+                cardWidth = (wrapperWidth - (gap * 2)) / 3;
+            }
+            
+            // Set width for all cards
             cardsCTA.forEach(card => {
                 card.style.width = cardWidth + 'px';
                 card.style.minWidth = cardWidth + 'px';
                 card.style.flexBasis = cardWidth + 'px';
             });
 
-            const slideWidth = cardWidth + gapCTA;
-            const offset = -currentSlideCTA * slideWidth * cardsPerSlideCTA;
+            // Calculate offset
+            const slideWidth = cardWidth + gap;
+            const offset = -currentSlideCTA * slideWidth * cardsPerSlide;
             
             trackCTA.style.transform = `translateX(${offset}px)`;
 
+            // Update button states
             if (prevBtnCTA) prevBtnCTA.disabled = currentSlideCTA === 0;
-            if (nextBtnCTA) nextBtnCTA.disabled = currentSlideCTA === totalSlidesCTA - 1;
+            if (nextBtnCTA) nextBtnCTA.disabled = currentSlideCTA === totalSlides - 1;
         }
 
         function slideCarouselCTA(direction) {
+            const cardsPerSlide = getCardsPerSlideCTA();
+            const totalSlides = Math.ceil(totalCardsCTA / cardsPerSlide);
             const newSlide = currentSlideCTA + direction;
             
-            if (newSlide >= 0 && newSlide < totalSlidesCTA) {
+            if (newSlide >= 0 && newSlide < totalSlides) {
                 currentSlideCTA = newSlide;
                 updateCarouselCTA();
             }
@@ -1067,14 +954,14 @@
 
         // Initialize carousel only if elements exist
         if (trackCTA && wrapperCTA && cardsCTA.length > 0) {
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', function() {
-                    setTimeout(updateCarouselCTA, 50);
+            // Use requestAnimationFrame for better initialization
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    updateCarouselCTA();
                 });
-            } else {
-                setTimeout(updateCarouselCTA, 50);
-            }
+            });
 
+            // Update on resize with debounce
             let resizeTimeoutCTA;
             window.addEventListener('resize', function() {
                 clearTimeout(resizeTimeoutCTA);
@@ -1178,6 +1065,13 @@
 
         window.addEventListener('load', updateButtons);
     </script>
+
+    <!-- Contact Form Component -->
+    @include('components.contact-form', [
+        'title' => "Don't Miss Out",
+        'subtitle' => "Be the first to hear about new homes, exclusive listings, and upcoming releases.",
+        'pageSource' => 'about'
+    ])
 
     @include('layouts.footer')
 </body>

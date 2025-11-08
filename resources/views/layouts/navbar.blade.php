@@ -2,14 +2,68 @@
 <nav id="navbar" class="nav-hero">
     <div class="logo">
         <a href="/" style="display: flex; align-items: center; text-decoration: none;">
-            <img id="navbar-logo" src="/images/Logo-06.png" alt="Sakanta Logo">
+            <img id="navbar-logo" src="/images/Logo-06.png" alt="Sakanta Logo" style="height: 48px !important;">
         </a>
     </div>
-    <div class="nav-center">
+
+    <!-- Hamburger Menu -->
+    <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Mobile Menu Backdrop -->
+    <div class="mobile-backdrop" id="mobileBackdrop" onclick="toggleMobileMenu()"></div>
+
+    <div class="nav-center" id="navCenter">
+        <!-- Search Bar - Now positioned first, larger and wider -->
+        <div class="search-bar" style="position: relative;">
+            <input type="text" id="navbar-search" placeholder="Search location or property..." 
+                   class="navbar-search-input"
+                   oninput="performSearch(this.value)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); pointer-events: none; opacity: 0.7;">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            
+            <!-- Search Results Dropdown -->
+            <div id="search-results" style="position: absolute; top: 55px; left: 0; right: 0; background: white; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.2); max-height: 340px; overflow-y: auto; display: none; z-index: 1002; min-width: 350px;">
+                <!-- Results will be populated here -->
+            </div>
+        </div>
+        
+        <span class="separator">|</span>
         <a href="/">HOME</a>
         <a href="/listings">LISTINGS</a>
         <a href="/about">ABOUT</a>
-        <a href="/faq">FAQs</a>
+        <a href="/how-it-works">HOW IT WORKS</a>
+
+        <!-- Mobile Only: Auth Section -->
+        <div class="mobile-auth-section">
+            @auth
+                <a href="{{ route('profile') }}" class="mobile-menu-item">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>My Profile</span>
+                </a>
+                <form action="{{ route('logout') }}" method="POST" style="margin: 0; padding: 0;">
+                    @csrf
+                    <button type="submit" class="mobile-menu-item mobile-logout">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        <span>Sign Out</span>
+                    </button>
+                </form>
+            @else
+                <a href="{{ route('signin') }}" class="mobile-sign-in">SIGN IN</a>
+            @endauth
+        </div>
     </div>
     <div class="nav-right">
         <!-- Language Switcher Globe -->
@@ -83,6 +137,54 @@
 </nav>
 
 <script>
+function toggleMobileMenu() {
+    const navCenter = document.getElementById('navCenter');
+    const hamburger = document.getElementById('hamburger');
+    const backdrop = document.getElementById('mobileBackdrop');
+    
+    navCenter.classList.toggle('active');
+    hamburger.classList.toggle('active');
+    backdrop.classList.toggle('active');
+    
+    // Prevent body scroll when menu is open
+    if (navCenter.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = '';
+    }
+}
+
+// Close mobile menu when clicking on a link
+document.querySelectorAll('.nav-center a').forEach(link => {
+    link.addEventListener('click', () => {
+        const navCenter = document.getElementById('navCenter');
+        const hamburger = document.getElementById('hamburger');
+        const backdrop = document.getElementById('mobileBackdrop');
+        
+        navCenter.classList.remove('active');
+        hamburger.classList.remove('active');
+        backdrop.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(event) {
+    const navCenter = document.getElementById('navCenter');
+    const hamburger = document.getElementById('hamburger');
+    const backdrop = document.getElementById('mobileBackdrop');
+    
+    if (navCenter && hamburger && 
+        !navCenter.contains(event.target) && 
+        !hamburger.contains(event.target) &&
+        navCenter.classList.contains('active')) {
+        navCenter.classList.remove('active');
+        hamburger.classList.remove('active');
+        backdrop.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+});
+
 function toggleLanguageMenu() {
     const menu = document.getElementById('langMenu');
     const isVisible = menu.style.visibility === 'visible';
@@ -134,6 +236,98 @@ document.addEventListener('click', function(event) {
         menu.style.opacity = '0';
         menu.style.visibility = 'hidden';
         menu.style.transform = 'translateY(-10px)';
+    }
+});
+
+// Search functionality
+let searchTimeout;
+function performSearch(query) {
+    const resultsDiv = document.getElementById('search-results');
+    
+    // Clear previous timeout
+    clearTimeout(searchTimeout);
+    
+    // Hide results if query is empty
+    if (query.trim().length === 0) {
+        resultsDiv.style.display = 'none';
+        return;
+    }
+    
+    // Show loading state
+    resultsDiv.style.display = 'block';
+    resultsDiv.innerHTML = '<div style="padding: 20px; text-align: center; color: #999; font-size: 13px;">Searching...</div>';
+    
+    // Debounce search
+    searchTimeout = setTimeout(() => {
+        fetch(`/api/search?q=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.locations.length === 0 && data.properties.length === 0) {
+                    resultsDiv.innerHTML = '<div style="padding: 20px; text-align: center; color: #999; font-size: 13px;">No results found</div>';
+                    return;
+                }
+                
+                let html = '';
+                
+                // Locations - tanpa header
+                if (data.locations.length > 0) {
+                    data.locations.forEach(location => {
+                        html += `
+                            <a href="/location/${location.slug}" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; text-decoration: none; color: #333; transition: background 0.2s; border-bottom: 1px solid #f0f0f0;" onmouseover="this.style.background='#f8f9fa'" onmouseout="this.style.background='transparent'">
+                                <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#064852" stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    <div style="font-weight: 600; font-size: 14px; color: #064852;">${location.name}</div>
+                                </div>
+                                <div style="font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">location</div>
+                            </a>
+                        `;
+                    });
+                }
+                
+                // Properties - tanpa header
+                if (data.properties.length > 0) {
+                    data.properties.forEach(property => {
+                        html += `
+                            <a href="/property/${property.slug}" style="display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; text-decoration: none; color: #333; transition: background 0.2s; border-bottom: 1px solid #f0f0f0;" onmouseover="this.style.background='#f8f9fa'" onmouseout="this.style.background='transparent'">
+                                <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
+                                    ${property.main_image ? 
+                                        `<img src="${property.main_image}" alt="${property.name}" style="width: 45px; height: 45px; object-fit: cover; border-radius: 8px;">` :
+                                        `<div style="width: 45px; height: 45px; background: #e0e0e0; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2">
+                                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                            </svg>
+                                        </div>`
+                                    }
+                                    <div>
+                                        <div style="font-weight: 600; font-size: 14px; color: #064852;">${property.name}</div>
+                                        <div style="font-size: 11px; color: #999;">${property.location_name || 'No location'}</div>
+                                    </div>
+                                </div>
+                                <div style="font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; white-space: nowrap; margin-left: 10px;">property</div>
+                            </a>
+                        `;
+                    });
+                }
+                
+                resultsDiv.innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Search error:', error);
+                resultsDiv.innerHTML = '<div style="padding: 20px; text-align: center; color: #e74c3c; font-size: 13px;">Error loading results</div>';
+            });
+    }, 300); // 300ms debounce
+}
+
+// Close search results when clicking outside
+document.addEventListener('click', function(event) {
+    const searchBar = document.querySelector('.search-bar');
+    const resultsDiv = document.getElementById('search-results');
+    
+    if (searchBar && !searchBar.contains(event.target)) {
+        resultsDiv.style.display = 'none';
     }
 });
 </script>
@@ -270,6 +464,7 @@ document.addEventListener('click', function(event) {
         align-items: center;
     }
 
+    /* Base logo size - KEEP 48px */
     .logo img {
         height: 48px !important;
         width: auto !important;
@@ -277,15 +472,25 @@ document.addEventListener('click', function(event) {
         transition: all 0.3s ease;
     }
 
-    /* Logo size adjustment for light mode - MUCH BIGGER for better visibility */
+    /* Ensure all navbar states have same logo size */
+    nav .logo img,
+    nav.nav-hero .logo img {
+        height: 48px !important;
+    }
+
+    /* Logo size - nav-light (krem) - BESARKAN sedikit untuk match mode lain */
     nav.nav-light .logo img {
-        height: 56px !important;
+        height: 52px !important; /* Slightly bigger */
         filter: drop-shadow(0 2px 4px rgba(6, 72, 82, 0.3));
     }
 
     nav.nav-dark .logo img {
         height: 48px !important;
         filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+    }
+
+    nav.nav-visible .logo img {
+        height: 48px !important;
     }
 
     .logo a:hover img {
@@ -343,6 +548,105 @@ document.addEventListener('click', function(event) {
 
     nav.nav-dark .nav-center .separator {
         color: white;
+    }
+
+    /* Search Bar Styling - Larger and more prominent */
+    .search-bar {
+        position: relative;
+    }
+
+    .search-bar input,
+    .navbar-search-input {
+        padding: 12px 45px 12px 20px;
+        border-radius: 25px;
+        border: 1px solid rgba(255,255,255,0.3);
+        background: rgba(255,255,255,0.1);
+        color: white;
+        font-size: 13px;
+        letter-spacing: 0.5px;
+        width: 300px;
+        transition: all 0.3s;
+        font-family: 'Work Sans', sans-serif;
+        font-weight: 400;
+    }
+
+    .search-bar input::placeholder,
+    .navbar-search-input::placeholder {
+        color: rgba(255,255,255,0.7);
+        font-weight: 400;
+    }
+
+    .search-bar input:focus,
+    .navbar-search-input:focus {
+        outline: none;
+        width: 350px;
+        background: rgba(255,255,255,0.2);
+        border-color: rgba(255,255,255,0.5);
+    }
+
+    /* Search bar adaptation for light mode */
+    nav.nav-light .search-bar input,
+    nav.nav-light .navbar-search-input {
+        border: 2px solid #064852 !important;
+        background: rgba(6, 72, 82, 0.05);
+        color: #064852;
+    }
+
+    nav.nav-light .search-bar input::placeholder,
+    nav.nav-light .navbar-search-input::placeholder {
+        color: rgba(6, 72, 82, 0.5);
+    }
+
+    nav.nav-light .search-bar input:focus,
+    nav.nav-light .navbar-search-input:focus {
+        background: rgba(6, 72, 82, 0.1);
+        border: 2px solid #064852 !important;
+    }
+
+    nav.nav-light .search-bar svg {
+        stroke: #064852 !important;
+    }
+
+    /* Search bar adaptation for dark mode */
+    nav.nav-dark .search-bar input,
+    nav.nav-dark .navbar-search-input {
+        border-color: rgba(255,255,255,0.3);
+        background: rgba(255,255,255,0.1);
+        color: white;
+    }
+
+    nav.nav-dark .search-bar input::placeholder,
+    nav.nav-dark .navbar-search-input::placeholder {
+        color: rgba(255,255,255,0.7);
+    }
+
+    nav.nav-dark .search-bar input:focus,
+    nav.nav-dark .navbar-search-input:focus {
+        background: rgba(255,255,255,0.2);
+        border-color: rgba(255,255,255,0.5);
+    }
+
+    nav.nav-dark .search-bar svg {
+        stroke: white !important;
+    }
+
+    /* Custom scrollbar for search results */
+    #search-results::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    #search-results::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 0 12px 12px 0;
+    }
+
+    #search-results::-webkit-scrollbar-thumb {
+        background: #064852;
+        border-radius: 3px;
+    }
+
+    #search-results::-webkit-scrollbar-thumb:hover {
+        background: #053640;
     }
 
     /* Language Switcher Globe */
@@ -532,6 +836,309 @@ document.addEventListener('click', function(event) {
     .social-icon svg {
         stroke-width: 0 !important;
         vector-effect: non-scaling-stroke;
+    }
+
+    /* Mobile Hamburger Menu */
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 5px;
+        cursor: pointer;
+        padding: 0;
+        z-index: 1002;
+        position: relative;
+    }
+
+    .hamburger span {
+        width: 25px;
+        height: 3px;
+        background: white;
+        transition: all 0.3s;
+        border-radius: 2px;
+        display: block;
+        margin: 0;
+    }
+
+    nav.nav-light .hamburger span {
+        background: #064852;
+    }
+
+    nav.nav-dark .hamburger span {
+        background: white;
+    }
+
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+        transform-origin: right center;
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+        transform-origin: right center;
+    }
+
+    /* Mobile Menu Backdrop */
+    .mobile-backdrop {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+    }
+
+    .mobile-backdrop.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* Mobile Auth Section - Hidden on desktop */
+    .mobile-auth-section {
+        display: none;
+    }
+
+    .mobile-menu-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 15px 0;
+        width: 100%;
+        color: white !important;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        font-size: 14px;
+        font-weight: 500;
+        font-family: 'Work Sans', sans-serif;
+        background: transparent;
+        border-left: none;
+        border-right: none;
+        border-top: none;
+        cursor: pointer;
+        text-align: left;
+    }
+
+    .mobile-menu-item svg {
+        flex-shrink: 0;
+    }
+
+    .mobile-logout {
+        color: #ff6b6b !important;
+    }
+
+    .mobile-sign-in {
+        display: block;
+        padding: 14px 0;
+        margin-top: 20px;
+        text-align: center;
+        background: rgba(255,255,255,0.1);
+        border: 2px solid white;
+        color: white !important;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        border-radius: 50px;
+        transition: all 0.3s;
+        font-family: 'Work Sans', sans-serif;
+    }
+
+    .mobile-sign-in:hover {
+        background: white;
+        color: #064852 !important;
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 1024px) {
+        nav {
+            padding: 15px 30px;
+        }
+
+        .nav-center {
+            gap: 20px;
+        }
+
+        .nav-center a {
+            font-size: 11px;
+        }
+
+        .search-bar input {
+            width: 220px;
+        }
+
+        .search-bar input:focus {
+            width: 260px;
+        }
+    }
+
+    @media (max-width: 968px) {
+        nav {
+            padding: 15px 20px;
+        }
+
+        .hamburger {
+            display: flex;
+            margin-left: auto;
+            padding: 0;
+        }
+
+        .mobile-backdrop {
+            display: block;
+        }
+
+        .nav-center {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            height: 100vh;
+            width: 300px;
+            background: #064852;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 100px 30px 30px;
+            transition: right 0.3s ease;
+            z-index: 1001;
+            gap: 0;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+        }
+
+        .nav-center.active {
+            right: 0;
+        }
+
+        .nav-center a {
+            color: white !important;
+            padding: 15px 0;
+            width: 100%;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-center a::after {
+            display: none;
+        }
+
+        .nav-center .separator {
+            display: none;
+        }
+
+        .search-bar {
+            width: 100%;
+            margin-bottom: 20px;
+            order: -1;
+        }
+
+        .search-bar input {
+            width: 100%;
+        }
+
+        .search-bar input:focus {
+            width: 100%;
+        }
+
+        #search-results {
+            min-width: auto;
+            width: 100%;
+        }
+
+        .mobile-auth-section {
+            display: block;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .nav-right {
+            gap: 10px;
+        }
+
+        .nav-right .language-switcher,
+        .nav-right .user-dropdown,
+        .nav-right .book-now-btn {
+            display: none;
+        }
+
+        .social-icon {
+            width: 35px;
+            height: 35px;
+        }
+
+        .logo img {
+            height: 40px !important;
+        }
+
+        nav.nav-light .logo img {
+            height: 40px !important;
+        }
+
+        nav.nav-hero .logo img,
+        nav.nav-visible .logo img {
+            height: 40px !important;
+        }
+    }
+
+    @media (max-width: 480px) {
+        nav {
+            padding: 12px 15px;
+        }
+
+        .nav-center {
+            width: 250px;
+            padding: 80px 20px 20px;
+        }
+
+        .nav-center a {
+            font-size: 12px;
+            padding: 12px 0;
+        }
+
+        .logo img {
+            height: 35px !important;
+        }
+
+        nav.nav-light .logo img {
+            height: 35px !important;
+        }
+
+        nav.nav-hero .logo img,
+        nav.nav-visible .logo img {
+            height: 35px !important;
+        }
+
+        .social-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        .social-icon svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .book-now-btn,
+        .user-btn {
+            padding: 8px 18px;
+            font-size: 10px;
+        }
+
+        .user-btn span {
+            display: none;
+        }
+
+        .lang-btn svg {
+            width: 18px;
+            height: 18px;
+        }
     }
 </style>
 
