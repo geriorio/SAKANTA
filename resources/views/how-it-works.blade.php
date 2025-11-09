@@ -485,7 +485,7 @@
                 <p class="step-description">
                     Sakanta is more than co-ownership — it's your invitation to belong to a new way of living.
                 </p>
-                <a href="https://wa.me/6281234567890?text=Hi%20Sakanta,%20I%20would%20like%20to%20book%20a%20private%20consultation" target="_blank" class="step-cta-button">Book a Private Consultation</a>
+                <button type="button" class="step-cta-button" onclick="openConsultationModal()">Book a Private Consultation</button>
             </div>
         </div>
     </section>
@@ -660,5 +660,524 @@
     </style>
 
     @include('components.whatsapp-contact')
+
+    <!-- Consultation Modal -->
+    <div class="modal-overlay" id="consultationModal">
+        <div class="modal-container">
+            <button class="modal-close" onclick="closeConsultationModal()">&times;</button>
+            
+            <div class="modal-header">
+                <h2>Book a Private Consultation</h2>
+                <p>Be the first to hear about new homes, exclusive listings, and upcoming releases.</p>
+            </div>
+
+            <form action="{{ route('contact.submit') }}" method="POST" class="modal-form" id="consultationForm">
+                @csrf
+                <input type="hidden" name="page_source" value="how-it-works-consultation">
+
+                <!-- User Type Selection -->
+                <div class="form-group-radio">
+                    <label class="form-label-main">Select one of the following</label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="user_type" value="buyer" {{ old('user_type') == 'buyer' || !old('user_type') ? 'checked' : '' }} required>
+                            <span>I am a buyer</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="user_type" value="seller" {{ old('user_type') == 'seller' ? 'checked' : '' }} required>
+                            <span>I am a seller</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="user_type" value="agent" {{ old('user_type') == 'agent' ? 'checked' : '' }} required>
+                            <span>I'm an agent or broker</span>
+                        </label>
+                    </div>
+                    @error('user_type')
+                        <span class="error-message">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <!-- Full Name and Email -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="modal_full_name">Full Name <span class="required">*</span></label>
+                        <input type="text" id="modal_full_name" name="full_name" value="{{ old('full_name') }}" required>
+                        @error('full_name')
+                            <span class="error-message">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="modal_email">Email <span class="required">*</span></label>
+                        <input type="email" id="modal_email" name="email" value="{{ old('email') }}" required>
+                        @error('email')
+                            <span class="error-message">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+
+                <!-- Message -->
+                <div class="form-group">
+                    <label for="modal_message">Message (optional)</label>
+                    <textarea id="modal_message" name="message" rows="4" placeholder="Tell us how we can help you...">{{ old('message') }}</textarea>
+                    @error('message')
+                        <span class="error-message">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="modal-submit-btn">SUBMIT</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Pop-up Notification -->
+    @if(session('success') || session('info') || $errors->any())
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-container">
+            <div class="popup-icon {{ session('success') ? 'success' : ($errors->any() ? 'error' : 'info') }}">
+                @if(session('success'))
+                    <img src="{{ asset('images/success.png') }}" alt="Success">
+                @elseif($errors->any())
+                    <img src="{{ asset('images/fail.png') }}" alt="Error">
+                @else
+                    <img src="{{ asset('images/wait.png') }}" alt="Info">
+                @endif
+            </div>
+            <h3 class="popup-title">
+                @if(session('success'))
+                    Success!
+                @elseif($errors->any())
+                    Validation Error
+                @else
+                    Already Registered
+                @endif
+            </h3>
+            <p class="popup-message">
+                @if(session('success'))
+                    {{ session('success') }}
+                @elseif(session('info'))
+                    {{ session('info') }}
+                @else
+                    @foreach($errors->all() as $error)
+                        {{ $error }}@if(!$loop->last)<br>@endif
+                    @endforeach
+                @endif
+            </p>
+            <button class="popup-btn" onclick="closePopup()">OK</button>
+        </div>
+    </div>
+    @endif
+
+    <style>
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-container {
+            background: #F7EFE2;
+            border-radius: 16px;
+            padding: 50px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            animation: slideUp 0.4s ease;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            font-size: 36px;
+            color: #064852;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg);
+            color: #e74c3c;
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .modal-header h2 {
+            font-size: 36px;
+            font-weight: 400;
+            color: #064852;
+            margin-bottom: 15px;
+            font-family: 'Esther', serif;
+            line-height: 1.3;
+        }
+
+        .modal-header p {
+            font-size: 15px;
+            color: #064852;
+            font-family: 'Work Sans', sans-serif;
+            line-height: 1.6;
+        }
+
+        .modal-form {
+            background: transparent;
+        }
+
+        .modal-form .form-label-main {
+            display: block;
+            font-size: 14px;
+            color: #064852;
+            margin-bottom: 15px;
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 500;
+        }
+
+        .modal-form .form-group-radio {
+            margin-bottom: 30px;
+        }
+
+        .modal-form .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .modal-form .radio-option {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-family: 'Work Sans', sans-serif;
+            font-size: 15px;
+            color: #064852;
+        }
+
+        .modal-form .radio-option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            cursor: pointer;
+            accent-color: #064852;
+        }
+
+        .modal-form .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .modal-form .form-group {
+            margin-bottom: 25px;
+        }
+
+        .modal-form .form-group label {
+            display: block;
+            font-size: 14px;
+            color: #064852;
+            margin-bottom: 8px;
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 500;
+        }
+
+        .modal-form .required {
+            color: #e74c3c;
+        }
+
+        .modal-form .form-group input,
+        .modal-form .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid rgba(6, 72, 82, 0.2);
+            border-radius: 6px;
+            font-size: 15px;
+            font-family: 'Work Sans', sans-serif;
+            color: #064852;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .modal-form .form-group input:focus,
+        .modal-form .form-group textarea:focus {
+            outline: none;
+            border-color: #064852;
+            background: white;
+        }
+
+        .modal-form .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .modal-submit-btn {
+            width: 100%;
+            padding: 15px 40px;
+            background: #064852;
+            color: white;
+            border: none;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-family: 'Work Sans', sans-serif;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+
+        .modal-submit-btn:hover {
+            background: #053640;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(6, 72, 82, 0.3);
+        }
+
+        .error-message {
+            display: block;
+            color: #e74c3c;
+            font-size: 13px;
+            margin-top: 5px;
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        /* Pop-up Notification Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .popup-container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.4s ease;
+            position: relative;
+        }
+
+        .popup-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .popup-title {
+            font-size: 28px;
+            font-weight: 400;
+            color: #064852;
+            margin-bottom: 15px;
+            font-family: 'Esther', serif;
+        }
+
+        .popup-message {
+            font-size: 16px;
+            color: #064852;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        .popup-btn {
+            background: #064852;
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        .popup-btn:hover {
+            background: #053640;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(6, 72, 82, 0.3);
+        }
+
+        /* Responsive Modal */
+        @media (max-width: 768px) {
+            .modal-container {
+                padding: 40px 30px;
+                max-width: 95%;
+            }
+
+            .modal-header h2 {
+                font-size: 28px;
+            }
+
+            .modal-header p {
+                font-size: 14px;
+            }
+
+            .modal-form .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .popup-container {
+                padding: 30px 25px;
+                max-width: 90%;
+            }
+
+            .popup-icon {
+                width: 80px;
+                height: 80px;
+            }
+
+            .popup-title {
+                font-size: 24px;
+            }
+
+            .popup-message {
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .modal-container {
+                padding: 30px 20px;
+            }
+
+            .modal-header h2 {
+                font-size: 24px;
+            }
+
+            .modal-close {
+                top: 15px;
+                right: 15px;
+                font-size: 30px;
+            }
+        }
+    </style>
+
+    <script>
+        function openConsultationModal() {
+            document.getElementById('consultationModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeConsultationModal() {
+            const modal = document.getElementById('consultationModal');
+            modal.style.animation = 'fadeOut 0.3s ease';
+            setTimeout(() => {
+                modal.classList.remove('active');
+                modal.style.animation = '';
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        function closePopup() {
+            const overlay = document.querySelector('.popup-overlay');
+            if (overlay) {
+                overlay.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                }, 300);
+            }
+        }
+
+        // Close on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('consultationModal');
+                if (modal && modal.classList.contains('active')) {
+                    closeConsultationModal();
+                }
+                
+                const popup = document.querySelector('.popup-overlay');
+                if (popup) {
+                    closePopup();
+                }
+            }
+        });
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.id === 'consultationModal') {
+                closeConsultationModal();
+            }
+            
+            if (e.target.classList.contains('popup-overlay')) {
+                closePopup();
+            }
+        });
+
+        // Auto-open modal if there are validation errors
+        @if($errors->any())
+            window.addEventListener('DOMContentLoaded', function() {
+                openConsultationModal();
+            });
+        @endif
+    </script>
 </body>
 </html>
