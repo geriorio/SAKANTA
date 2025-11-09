@@ -262,6 +262,8 @@
             }
         }
     </script>
+
+    @include('components.whatsapp-contact')
 </body>
 </html>
 

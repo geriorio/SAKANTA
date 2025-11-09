@@ -230,6 +230,56 @@
             text-align: left;
         }
 
+        /* Section 5: CTA Section */
+        .section-five {
+            background: #064852;
+            padding: 120px 80px;
+            margin-bottom: 80px;
+            text-align: center;
+        }
+
+        .section-five-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .section-five-headline {
+            font-family: 'Esther', 'Georgia', serif;
+            font-size: 48px;
+            font-weight: 400;
+            color: #F7EFE2;
+            margin-bottom: 30px;
+            line-height: 1.3;
+        }
+
+        .section-five-desc {
+            font-family: 'Work Sans', sans-serif;
+            font-size: 18px;
+            line-height: 1.8;
+            color: rgba(247, 239, 226, 0.9);
+            margin-bottom: 40px;
+        }
+
+        .section-five-btn {
+            display: inline-block;
+            padding: 18px 45px;
+            border: 2px solid #F7EFE2;
+            color: #F7EFE2;
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-family: "Work Sans", sans-serif;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-radius: 3px;
+        }
+
+        .section-five-btn:hover {
+            background: #F7EFE2;
+            color: #064852;
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .section-two-container {
@@ -266,6 +316,11 @@
                 padding: 60px 40px;
             }
 
+            .section-five {
+                padding: 60px 40px;
+                margin-bottom: 60px;
+            }
+
             .section-one-title {
                 font-size: 38px;
             }
@@ -290,6 +345,14 @@
                 grid-template-columns: 1fr;
                 gap: 40px;
             }
+
+            .section-five-headline {
+                font-size: 36px;
+            }
+
+            .section-five-desc {
+                font-size: 16px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -298,6 +361,11 @@
             .section-three,
             .section-four {
                 padding: 50px 25px;
+            }
+
+            .section-five {
+                padding: 50px 25px;
+                margin-bottom: 50px;
             }
 
             .section-one-title {
@@ -326,6 +394,19 @@
 
             .section-three-btn {
                 padding: 12px 30px;
+                font-size: 11px;
+            }
+
+            .section-five-headline {
+                font-size: 28px;
+            }
+
+            .section-five-desc {
+                font-size: 15px;
+            }
+
+            .section-five-btn {
+                padding: 14px 35px;
                 font-size: 11px;
             }
         }
@@ -512,6 +593,21 @@
         </div>
     </section>
 
+    <!-- Section 5: CTA Section -->
+    <section class="section-five">
+        <div class="section-five-container">
+            <h2 class="section-five-headline">Ready to make your dream home a reality?</h2>
+            <p class="section-five-desc">
+                Owning a luxury second home doesn't have to stay a dream.<br>
+                With Sakanta, you can co-own a fully managed, high-end property — and enjoy the privacy, comfort, and cultural richness of Indonesia's finest destinations.<br>
+                Start your journey today and see how effortless co-ownership can be.
+            </p>
+            <a href="{{ route('listings') }}#location-section" class="section-five-btn">Explore Co-Ownership</a>
+        </div>
+    </section>
+
     @include('layouts.footer')
+
+    @include('components.whatsapp-contact')
 </body>
 </html>

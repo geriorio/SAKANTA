@@ -90,21 +90,6 @@
             color: #064852;
         }
 
-        .email-icon {
-            position: fixed;
-            left: 50px;
-            bottom: 50px;
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-            cursor: pointer;
-        }
-
         /* Hero Section */
         .hero-section {
             height: 100vh;
@@ -169,25 +154,19 @@
         }
 
         .scroll-icon {
-            width: 30px;
-            height: 50px;
-            border: 2px solid white;
-            border-radius: 15px;
-            margin: 20px auto;
+            width: 100px;
+            height: 100px;
+            margin: 80px auto 20px auto;
             position: relative;
+            background-image: url('/images/KV-05.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
         }
 
         .scroll-icon::before {
             content: '';
-            position: absolute;
-            top: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 8px;
-            background: white;
-            border-radius: 2px;
-            animation: scroll 2s infinite;
+            display: none;
         }
 
         @keyframes scroll {
@@ -779,13 +758,7 @@
 
     @include('layouts.navbar')
 
-    <!-- Email Icon -->
-    <div class="email-icon">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-            <polyline points="22,6 12,13 2,6"></polyline>
-        </svg>
-    </div>
+    @include('components.whatsapp-contact')
 
     <!-- Hero Section -->
     <section class="hero-section">
@@ -802,7 +775,7 @@
     <section class="section2">
         <div class="section2-container">
             <div class="section2-image">
-                <img src="/images/home section 2.jpg" alt="Sakanta Villa">
+                <img src="/images/Image-04.png" alt="Sakanta Villa">
             </div>
             <div class="section2-content">
                 <h2>Escape the rush.<br>Find connection.<br>Live it all.</h2>
@@ -832,7 +805,7 @@
                 <a href="{{ route('listings') }}#locationCarousel" class="section3-button">View All Homes</a>
             </div>
             <div class="section3-image">
-                <img src="/images/home section 3.jpg" alt="Sakanta Villa">
+                <img src="/images/Image-01.png" alt="Sakanta Villa">
 
             </div>
         </div>
@@ -918,7 +891,7 @@
 
             <!-- Right Card - Premium -->
             <div class="card-item">
-                <img src="{{ asset('images/villa3.jpg') }}" alt="Premium">
+                <img src="{{ asset('images/villa5.jpg') }}" alt="Premium">
                 <div class="card-overlay">
                     <h3 class="card-title">Premium</h3>
                 </div>

@@ -42,21 +42,6 @@
             font-weight: 600 !important;
         }
 
-        .email-icon {
-            position: fixed;
-            left: 50px;
-            bottom: 50px;
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-            cursor: pointer;
-        }
-
         /* Hero Section */
         .hero-listings {
             height: 100vh;
@@ -277,24 +262,32 @@
             justify-content: space-between;
             align-items: start;
             margin-bottom: 15px;
+            position: relative;
+            min-height: 30px;
         }
 
         .property-name {
             font-size: 28px;
             font-weight: 400;
             color: #064852;
+            flex: 1;
+            padding-right: 10px;
         }
 
         .property-icon {
-            width: 40px;
-            height: 40px;
+            width: 100px;
+            height: 100px;
+            background-image: url('/images/KV-13.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            position: absolute;
+            top: -35px;
+            right: -10px;
         }
 
         .property-icon svg {
-            width: 100%;
-            height: 100%;
-            stroke: #064852;
-            stroke-width: 1.5;
+            display: none;
         }
 
         .property-location-text {
@@ -685,13 +678,6 @@
                 text-align: center;
                 max-width: 100%;
             }
-
-            .email-icon {
-                left: 20px;
-                bottom: 20px;
-                width: 45px;
-                height: 45px;
-            }
         }
 
         @media (max-width: 480px) {
@@ -744,13 +730,6 @@
 
             .ownership-label {
                 font-size: 14px;
-            }
-
-            .email-icon {
-                left: 15px;
-                bottom: 15px;
-                width: 42px;
-                height: 42px;
             }
         }
 
@@ -819,13 +798,7 @@
 <body>
     @include('layouts.navbar')
 
-    <!-- Email Icon -->
-    <div class="email-icon">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-            <polyline points="22,6 12,13 2,6"></polyline>
-        </svg>
-    </div>
+    @include('components.whatsapp-contact')
 
     <!-- Hero Section -->
     <section class="hero-listings">
@@ -837,7 +810,7 @@
     </section>
 
     <!-- Location Section -->
-    <section class="location-section">
+    <section class="location-section" id="location-section">
         <p class="location-section-label">EXPLORE DESTINATIONS</p>
         <h2>Choose Your Dream Location</h2>
         

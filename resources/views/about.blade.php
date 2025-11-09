@@ -31,21 +31,6 @@
             color: #2c3e50;
         }
 
-        .email-icon {
-            position: fixed;
-            left: 50px;
-            bottom: 50px;
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-            cursor: pointer;
-        }
-
         /* Hero Section */
         .hero-about {
             height: 100vh;
@@ -360,13 +345,7 @@
 <body>
     @include('layouts.navbar')
 
-    <!-- Email Icon -->
-    <div class="email-icon">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-            <polyline points="22,6 12,13 2,6"></polyline>
-        </svg>
-    </div>
+    @include('components.whatsapp-contact')
 
     <!-- Hero Section -->
     <section class="hero-about">
@@ -413,7 +392,7 @@
             <!-- Row 3 - Image Left -->
             <div class="content-row">
                 <div class="content-image">
-                    <img src="/images/villa1.jpg" alt="Luxury Living">
+                    <img src="/images/Image-05.png" alt="Luxury Living">
                 </div>
                 <div class="content-text">
                     <small>Our Vision</small>
@@ -494,11 +473,7 @@
                             <div class="property-info-card-cta">
                                 <div class="property-header-cta">
                                     <h3 class="property-name-cta">{{ $property->title }}</h3>
-                                    <div class="property-icon-cta">
-                                        <svg viewBox="0 0 50 50" fill="none">
-                                            <path d="M 10 25 L 25 10 L 40 25 L 25 40 Z" stroke="currentColor" fill="none"/>
-                                        </svg>
-                                    </div>
+                                    <div class="property-icon-cta"></div>
                                 </div>
                                 <p class="property-location-text-cta">{{ $property->location->name ?? $property->city }}</p>
                                 <p class="property-price-text-cta">{{ $property->formatted_price }}</p>
@@ -697,6 +672,8 @@
             margin-bottom: 12px;
             gap: 10px;
             text-align: left;
+            position: relative;
+            min-height: 24px;
         }
 
         .property-name-cta {
@@ -708,20 +685,25 @@
             font-family: 'Esther', serif;
             text-align: left;
             flex: 1;
+            padding-right: 10px;
         }
 
         .property-icon-cta {
-            width: 30px;
-            height: 30px;
+            width: 100px;
+            height: 100px;
             flex-shrink: 0;
             color: #064852;
+            background-image: url('/images/KV-13.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            position: absolute;
+            top: -35px;
+            right: -10px;
         }
 
         .property-icon-cta svg {
-            width: 100%;
-            height: 100%;
-            stroke: currentColor;
-            stroke-width: 1.5;
+            display: none;
         }
 
         .property-location-text-cta {

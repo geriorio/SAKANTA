@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Property;
 use App\Models\Location;
+use App\Models\Faq;
 use Illuminate\Http\Request;
 
 class PropertyController extends Controller
@@ -43,7 +44,14 @@ class PropertyController extends Controller
             abort(404, 'Article not found for this location');
         }
         
-        return view('location-article', compact('location', 'article'));
+        // Get ownership FAQ - find FAQ with slug containing 'owner' or 'co-owner'
+        $ownershipFaq = Faq::where('slug', 'like', '%owner%')
+            ->orWhere('slug', 'like', '%co-owner%')
+            ->orWhere('title', 'like', '%ownership%')
+            ->orWhere('title', 'like', '%co-owner%')
+            ->first();
+        
+        return view('location-article', compact('location', 'article', 'ownershipFaq'));
     }
 
     public function index(Request $request)

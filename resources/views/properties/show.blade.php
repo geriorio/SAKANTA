@@ -1873,7 +1873,7 @@
         <section class="section5">
             <div class="section5-container">
                 <div class="section5-image">
-                    <img src="/images/home section 2.jpg" alt="Sakanta Villa">
+                    <img src="/images/Image-04.png" alt="Sakanta Villa">
                 </div>
                 <div class="section5-content">
                     <h2>Ready to make it yours?</h2>
@@ -1895,7 +1895,7 @@
                     <a href="{{ route('faq') }}" class="cta-button">Explore the Full Story</a>
                 </div>
                 <div class="section6-image">
-                    <img src="/images/home section 2.jpg" alt="Sakanta Property">
+                    <img src="/images/Image-05.png" alt="Sakanta Property">
                 </div>
             </div>
         </section>
@@ -2247,5 +2247,7 @@
             document.getElementById('surroundingsLightboxCounter').textContent = `${currentSurroundingsIndex + 1} / ${surroundingsData.length}`;
         }
     </script>
+
+    @include('components.whatsapp-contact')
 </body>
 </html>

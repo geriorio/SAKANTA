@@ -339,6 +339,8 @@
             align-items: flex-start;
             margin-bottom: 12px;
             gap: 10px;
+            position: relative;
+            min-height: 24px;
         }
         
         .property-name {
@@ -348,20 +350,26 @@
             font-family: 'Esther', serif;
             line-height: 1.3;
             margin: 0;
+            flex: 1;
+            padding-right: 10px;
         }
         
         .property-icon {
-            width: 24px;
-            height: 24px;
+            width: 100px;
+            height: 100px;
             flex-shrink: 0;
             color: #064852;
+            background-image: url('/images/KV-13.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            position: absolute;
+            top: -35px;
+            right: -10px;
         }
         
         .property-icon svg {
-            width: 100%;
-            height: 100%;
-            stroke: #064852;
-            stroke-width: 1.5;
+            display: none;
         }
         
         .property-location-text {
@@ -677,11 +685,7 @@
                                 <div class="property-info-card">
                                     <div class="property-header">
                                         <h3 class="property-name">{{ $property->title }}</h3>
-                                        <div class="property-icon">
-                                            <svg viewBox="0 0 50 50" fill="none">
-                                                <path d="M 10 25 L 25 10 L 40 25 L 25 40 Z" stroke="currentColor" fill="none"/>
-                                            </svg>
-                                        </div>
+                                        <div class="property-icon"></div>
                                     </div>
                                     <p class="property-location-text">{{ $property->location->name ?? $property->city }}</p>
                                     <p class="property-price-text">{{ $property->formatted_price }}</p>
@@ -935,6 +939,7 @@
 
     @include('layouts.footer')
 
+    @include('components.whatsapp-contact')
 </body>
 </html>
 

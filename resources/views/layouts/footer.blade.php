@@ -1,5 +1,11 @@
 <!-- Footer -->
 <footer class="footer">
+    <!-- Top Icons -->
+    <div class="footer-top-icons">
+        <img src="/images/KV-13.png" alt="Sakanta Icon" class="footer-icon">
+        <img src="/images/KV-13.png" alt="Sakanta Icon" class="footer-icon">
+    </div>
+    
     <div class="footer-container">
         <div class="footer-content">
             <!-- Left Column -->
@@ -84,6 +90,25 @@
         background: #F7EFE2;
         padding: 80px 60px 40px;
         font-family: 'Esther', serif;
+        position: relative;
+    }
+
+    .footer-top-icons {
+        position: absolute;
+        top: -100px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 30px;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+    }
+
+    .footer-icon {
+        width: 200px;
+        height: 200px;
+        object-fit: contain;
     }
 
     .footer-container {
@@ -285,6 +310,16 @@
             padding: 60px 30px 30px;
         }
 
+        .footer-top-icons {
+            top: -80px;
+            gap: 20px;
+        }
+
+        .footer-icon {
+            width: 150px;
+            height: 150px;
+        }
+
         .footer-content {
             flex-direction: column;
             gap: 50px;
@@ -312,6 +347,16 @@
     @media (max-width: 768px) {
         .footer {
             padding: 60px 20px 30px;
+        }
+
+        .footer-top-icons {
+            top: -60px;
+            gap: 15px;
+        }
+
+        .footer-icon {
+            width: 120px;
+            height: 120px;
         }
 
         .footer-content {
@@ -343,6 +388,16 @@
             padding: 50px 15px 25px;
         }
 
+        .footer-top-icons {
+            top: -50px;
+            gap: 10px;
+        }
+
+        .footer-icon {
+            width: 100px;
+            height: 100px;
+        }
+
         .footer-logo {
             font-size: 24px;
             margin-bottom: 25px;
@@ -368,6 +423,16 @@
     @media (max-width: 360px) {
         .footer {
             padding: 40px 12px 20px;
+        }
+
+        .footer-top-icons {
+            top: -40px;
+            gap: 8px;
+        }
+
+        .footer-icon {
+            width: 80px;
+            height: 80px;
         }
 
         .footer-logo {

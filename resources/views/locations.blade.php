@@ -28,26 +28,12 @@
         body {
             font-family: 'Esther', 'Georgia', serif;
             color: #2c3e50;
+            background: #F7EFE2;
         }
         
         .area-guide-btn, .ownership-btn {
             font-family: 'Work Sans', sans-serif !important;
             font-weight: 600 !important;
-        }
-
-        .email-icon {
-            position: fixed;
-            left: 50px;
-            bottom: 50px;
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-            cursor: pointer;
         }
 
         /* Hero Section */
@@ -273,6 +259,8 @@
             align-items: flex-start;
             margin-bottom: 12px;
             gap: 10px;
+            position: relative;
+            min-height: 24px;
         }
 
         .property-name {
@@ -282,20 +270,24 @@
             line-height: 1.3;
             flex: 1;
             font-family: 'Esther', 'Georgia', serif;
+            padding-right: 10px;
         }
 
         .property-icon {
-            width: 30px;
-            height: 30px;
+            width: 100px;
+            height: 100px;
             flex-shrink: 0;
-            margin-top: 2px;
+            background-image: url('/images/KV-13.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            position: absolute;
+            top: -35px;
+            right: -10px;
         }
 
         .property-icon svg {
-            width: 100%;
-            height: 100%;
-            stroke: #064852;
-            stroke-width: 1.5;
+            display: none;
         }
 
         .property-location-text {
@@ -390,6 +382,7 @@
         .area-guide {
             background: #064852;
             padding: 120px 80px;
+            margin-bottom: 80px;
             text-align: center;
         }
 
@@ -526,6 +519,7 @@
 
             .area-guide {
                 padding: 80px 40px;
+                margin-bottom: 60px;
             }
 
             .area-guide h2 {
@@ -579,6 +573,7 @@
 
             .area-guide {
                 padding: 60px 20px;
+                margin-bottom: 50px;
             }
 
             .area-guide h2 {
@@ -599,13 +594,7 @@
 <body>
     @include('layouts.navbar')
 
-    <!-- Email Icon -->
-    <div class="email-icon">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-            <polyline points="22,6 12,13 2,6"></polyline>
-        </svg>
-    </div>
+    @include('components.whatsapp-contact')
 
     <!-- Hero Section -->
     <section class="hero-location">
@@ -657,11 +646,7 @@
                         <div class="property-info-card">
                             <div class="property-header">
                                 <h3 class="property-name">{{ $property->title }}</h3>
-                                <div class="property-icon">
-                                    <svg viewBox="0 0 50 50" fill="none">
-                                        <path d="M 10 25 L 25 10 L 40 25 L 25 40 Z" stroke="currentColor" fill="none"/>
-                                    </svg>
-                                </div>
+                                <div class="property-icon"></div>
                             </div>
                             <p class="property-location-text">{{ $property->location->name ?? $property->city }}</p>
                             <p class="property-price-text">{{ $property->formatted_price }}</p>

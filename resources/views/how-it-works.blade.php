@@ -469,7 +469,7 @@
                 <a href="/listings" class="step-cta-button">Explore Listings</a>
             </div>
             <div class="step-image">
-                <img src="{{ asset('images/homevilla2.jpg') }}" alt="Designed for the soul">
+                <img src="{{ asset('images/Image-02.png') }}" alt="Designed for the soul">
             </div>
         </div>
     </section>
@@ -478,7 +478,7 @@
     <section class="step-section light-section">
         <div class="step-row">
             <div class="step-image">
-                <img src="{{ asset('images/homevilla.jpg') }}" alt="Begin your journey">
+                <img src="{{ asset('images/Image-03.png') }}" alt="Begin your journey">
             </div>
             <div class="step-content">
                 <h2 class="step-title">Begin your journey toward shared serenity.</h2>
@@ -509,44 +509,42 @@
         </div>
         
         <!-- Right Side - Content (50%) -->
-        <div class="footer-content" style="flex: 1; padding: 100px 80px; display: flex; flex-direction: column; justify-content: center; background: #F7EFE2; box-sizing: border-box;">
+        <div class="footer-content" style="flex: 1; padding: 80px 80px 60px 80px; display: flex; flex-direction: column; justify-content: center; background: #F7EFE2; box-sizing: border-box;">
             <!-- Logo/Icon -->
-            <div style="margin-bottom: 40px;">
-                <svg width="80" height="30" viewBox="0 0 80 30" fill="none">
-                    <rect x="7.5" y="7.5" width="10" height="10" transform="rotate(45 7.5 7.5)" stroke="#064852" stroke-width="2" fill="none"/>
-                    <rect x="32.5" y="7.5" width="10" height="10" transform="rotate(45 32.5 7.5)" stroke="#064852" stroke-width="2" fill="none"/>
-                </svg>
+            <div style="margin-bottom: 25px; display: flex; gap: 20px; align-items: center;">
+                <img src="{{ asset('images/KV-13.png') }}" alt="Sakanta Icon" style="width: 120px; height: 120px; object-fit: contain;">
+                <img src="{{ asset('images/KV-13.png') }}" alt="Sakanta Icon" style="width: 120px; height: 120px; object-fit: contain;">
             </div>
             
             <!-- Text Content -->
-            <p style="font-family: 'Work Sans', sans-serif; font-size: 16px; line-height: 1.9; margin-bottom: 25px; font-weight: 400; color: #064852; max-width: 550px;">
+            <p style="font-family: 'Work Sans', sans-serif; font-size: 15px; line-height: 1.7; margin-bottom: 20px; font-weight: 400; color: #064852; max-width: 550px;">
                 Sakanta is more than a new model of property ownership — it's an invitation to rediscover balance. We believe that true luxury lies in stillness, connection, and the ability to feel at home wherever you are. Every Sakanta home is a shared sanctuary, crafted for those who value both privacy and presence.
             </p>
             
-            <p style="font-family: 'Work Sans', sans-serif; font-size: 16px; line-height: 1.9; margin-bottom: 50px; font-weight: 400; color: #064852; max-width: 550px;">
+            <p style="font-family: 'Work Sans', sans-serif; font-size: 15px; line-height: 1.7; margin-bottom: 35px; font-weight: 400; color: #064852; max-width: 550px;">
                 Through thoughtful design, trusted management, and a spirit of togetherness, Sakanta turns ownership into an effortless experience. Here, you don't just buy a place — you belong to one.
             </p>
             
             <!-- Live It All -->
-            <h2 style="font-family: 'Esther', serif; font-size: 64px; font-weight: 400; margin-bottom: 40px; letter-spacing: 2px; line-height: 1.1; color: #064852;">
+            <h2 style="font-family: 'Esther', serif; font-size: 56px; font-weight: 400; margin-bottom: 30px; letter-spacing: 2px; line-height: 1.1; color: #064852;">
                 Live It All
             </h2>
             
             <!-- Social Icons -->
-            <div style="display: flex; gap: 18px; margin-bottom: 40px;">
-                <a href="#" style="width: 45px; height: 45px; border: 2px solid #064852; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; color: #064852; transition: all 0.3s; flex-shrink: 0;">
-                    <span style="font-family: 'Work Sans', sans-serif; font-size: 18px; font-weight: 600;">f</span>
+            <div style="display: flex; gap: 15px; margin-bottom: 30px;">
+                <a href="#" style="width: 40px; height: 40px; border: 2px solid #064852; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; color: #064852; transition: all 0.3s; flex-shrink: 0;">
+                    <span style="font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;">f</span>
                 </a>
-                <a href="#" style="width: 45px; height: 45px; border: 2px solid #064852; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; color: #064852; transition: all 0.3s; flex-shrink: 0;">
-                    <span style="font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;">in</span>
+                <a href="#" style="width: 40px; height: 40px; border: 2px solid #064852; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; color: #064852; transition: all 0.3s; flex-shrink: 0;">
+                    <span style="font-family: 'Work Sans', sans-serif; font-size: 14px; font-weight: 600;">in</span>
                 </a>
-                <a href="#" style="width: 45px; height: 45px; border: 2px solid #064852; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; color: #064852; transition: all 0.3s; flex-shrink: 0;">
-                    <span style="font-family: 'Work Sans', sans-serif; font-size: 18px; font-weight: 600;">@</span>
+                <a href="#" style="width: 40px; height: 40px; border: 2px solid #064852; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; color: #064852; transition: all 0.3s; flex-shrink: 0;">
+                    <span style="font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;">@</span>
                 </a>
             </div>
             
             <!-- Copyright -->
-            <p style="font-family: 'Work Sans', sans-serif; font-size: 12px; color: #064852; opacity: 0.7; letter-spacing: 1px; text-transform: uppercase; margin: 0;">
+            <p style="font-family: 'Work Sans', sans-serif; font-size: 11px; color: #064852; opacity: 0.7; letter-spacing: 1px; text-transform: uppercase; margin: 0;">
                 © All right reserved — SAKANTA
             </p>
         </div>
@@ -573,6 +571,15 @@
             .footer-content h2 {
                 font-size: 48px !important;
             }
+
+            .footer-content > div:first-child img {
+                width: 100px !important;
+                height: 100px !important;
+            }
+
+            .footer-content > div:first-child {
+                gap: 15px !important;
+            }
         }
 
         @media (max-width: 768px) {
@@ -592,6 +599,15 @@
             .footer-content p {
                 font-size: 15px !important;
             }
+
+            .footer-content > div:first-child img {
+                width: 90px !important;
+                height: 90px !important;
+            }
+
+            .footer-content > div:first-child {
+                gap: 12px !important;
+            }
         }
 
         @media (max-width: 480px) {
@@ -609,9 +625,13 @@
                 line-height: 1.7 !important;
             }
 
-            .footer-content > div:first-child svg {
-                width: 60px !important;
-                height: 25px !important;
+            .footer-content > div:first-child img {
+                width: 70px !important;
+                height: 70px !important;
+            }
+
+            .footer-content > div:first-child {
+                gap: 10px !important;
             }
         }
 
@@ -627,7 +647,18 @@
             .footer-content p {
                 font-size: 13px !important;
             }
+
+            .footer-content > div:first-child img {
+                width: 60px !important;
+                height: 60px !important;
+            }
+
+            .footer-content > div:first-child {
+                gap: 8px !important;
+            }
         }
     </style>
+
+    @include('components.whatsapp-contact')
 </body>
 </html>
