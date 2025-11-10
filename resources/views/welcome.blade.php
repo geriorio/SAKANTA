@@ -125,6 +125,8 @@
             align-items: center;
             position: relative;
             z-index: 2;
+            margin-top: 80px;
+            margin-bottom: 40px;
         }
 
         .hero-logo img {
@@ -156,7 +158,7 @@
         .scroll-icon {
             width: 100px;
             height: 100px;
-            margin: 80px auto 20px auto;
+            margin: 10px auto 20px auto;
             position: relative;
             background-image: url('/images/KV-05.svg');
             background-size: contain;
@@ -763,7 +765,7 @@
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="hero-logo">
-            <img src="/images/Logo-05.png" alt="Sakanta Logo" style="max-width: 600px; width: 80%; height: auto; margin-bottom: 100px;">
+            <img src="/images/Logo-05.png" alt="Sakanta Logo" style="max-width: 600px; width: 80%; height: auto;">
         </div>
         <div class="scroll-down" onclick="document.querySelector('.section2').scrollIntoView({ behavior: 'smooth' })" style="cursor: pointer;">
             <div class="scroll-icon"></div>
