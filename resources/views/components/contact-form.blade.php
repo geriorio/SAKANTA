@@ -433,7 +433,6 @@
                 padding: 0;
             }
         }
-        }
 </style>
 
 <script>

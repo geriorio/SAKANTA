@@ -425,6 +425,19 @@
             }
         }
     </style>
+
+    <!-- Override button style for dark background section -->
+    <style>
+        .cta-section .explore-properties-btn {
+            border-color: white !important;
+            color: white !important;
+        }
+
+        .cta-section .explore-properties-btn:hover {
+            background: white !important;
+            color: #064852 !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -447,7 +460,7 @@
             </div>
             <div class="step-content">
                 <div class="step-number">This is how co-owning with Sakanta works</div>
-                <h2 class="step-title">Ownership made effortless.</h2>
+                <h2 class="step-title">Ownership made effortless</h2>
                 <p class="step-description">
                     Each home is divided into shares, with every co-owner receiving real, deed-backed ownership.
                     Sakanta handles everything — from legal setup and home maintenance to stay scheduling and resale support — ensuring you enjoy the benefits without the burden.
@@ -461,7 +474,7 @@
     <section class="step-section reverse dark-section">
         <div class="step-row">
             <div class="step-content">
-                <h2 class="step-title">Designed for the soul, inspired by place.</h2>
+                <h2 class="step-title">Designed for the soul, inspired by place</h2>
                 <p class="step-description">
                 Every Sakanta property blends wellness, culture, and design to create a restorative experience.
                 Morning yoga overlooking rice terraces, private dinners with local chefs, and artfully crafted interiors — every moment is curated for calm and connection.
@@ -481,7 +494,7 @@
                 <img src="{{ asset('images/Image-03.png') }}" alt="Begin your journey">
             </div>
             <div class="step-content">
-                <h2 class="step-title">Begin your journey toward shared serenity.</h2>
+                <h2 class="step-title">Begin your journey toward shared serenity</h2>
                 <p class="step-description">
                     Sakanta is more than co-ownership — it's your invitation to belong to a new way of living.
                 </p>

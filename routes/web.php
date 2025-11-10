@@ -18,7 +18,7 @@ Route::get('/', function () {
     $locations = \App\Models\Location::limit(5)->get();
     $listings = \App\Models\Property::inRandomOrder()->get();
     return view('welcome', compact('locations', 'listings'));
-})->name('home');
+})->name('welcome');
 
 // Newsletter Subscribe
 Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
@@ -31,6 +31,8 @@ Route::get('/api/search', [PropertyController::class, 'search'])->name('api.sear
 
 // Listings/Detail Page - Dynamic from database
 Route::get('/listings', [PropertyController::class, 'listings'])->name('listings');
+Route::get('/locations', [PropertyController::class, 'listings'])->name('locations');
+Route::get('/all-listings', [PropertyController::class, 'allListings'])->name('all.listings');
 Route::get('/location/{location:slug}', [PropertyController::class, 'showLocation'])->name('location.show');
 Route::get('/location/{location:slug}/properties', [PropertyController::class, 'showLocation'])->name('location.properties');
 Route::get('/location/{location:slug}/article', [PropertyController::class, 'showArticle'])->name('location.article');

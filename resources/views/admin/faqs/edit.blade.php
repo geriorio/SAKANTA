@@ -31,7 +31,7 @@
 </div>
 @endif
 
-<form action="{{ route('admin.faqs.update', $faq->id) }}" method="POST" class="card">
+<form action="{{ route('admin.faqs.update', $faq->id) }}" method="POST" enctype="multipart/form-data" class="card">
     @csrf
     @method('PUT')
 

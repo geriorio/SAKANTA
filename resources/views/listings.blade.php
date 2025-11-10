@@ -969,7 +969,7 @@
     <section class="area-guide dark-section">
         <h2>Not Sure Where To<br>Hang Your Hat?</h2>
         <p>Every place whispers a different kind of peace.</p>
-        <a href="#" class="area-guide-btn">AREA GUIDES</a>
+        <a href="{{ route('all.listings') }}" class="area-guide-btn">AREA GUIDES</a>
     </section>
 
     <!-- Section 5 - Ownership -->
@@ -980,8 +980,8 @@
             </div>
             <div class="ownership-content">
                 <p class="ownership-label">EXPLORE SAKANTA OWNERSHIP</p>
-                <h2>Thoughtfully designed spaces that give you order and flexibility: private nooks to work or rest; communal areas to gather, dine, laugh.</h2>
-                <a href="#" class="ownership-btn">LEARN MORE →</a>
+                <h2>Thoughtfully designed spaces that give you order and flexibility: private nooks to work or rest; communal areas to gather, dine, laugh</h2>
+                <a href="{{ route('faq.show', 'become-a-co-owner') }}" class="ownership-btn">LEARN MORE →</a>
             </div>
         </div>
     </section>

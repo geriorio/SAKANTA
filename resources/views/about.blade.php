@@ -244,6 +244,8 @@
             font-weight: 600;
             transition: all 0.3s;
             font-family: 'Work Sans', sans-serif;
+            margin-top: 20px;
+            margin-bottom: 60px;
         }
 
         .cta-btn:hover {
@@ -527,7 +529,7 @@
             @endif
         
         <div class="cta-container">
-            <a href="/listings" class="cta-btn">EXPLORE PROPERTIES</a>
+            <a href="{{ route('all.listings') }}" class="cta-btn">EXPLORE HOMES</a>
         </div>
     </section>
 

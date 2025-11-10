@@ -266,6 +266,38 @@
         color: #999;
     }
 
+    /* Explore Button */
+    .explore-properties-btn {
+        display: inline-block;
+        margin: 20px auto 60px;
+        padding: 15px 40px;
+        background: transparent;
+        color: #064852;
+        text-decoration: none;
+        border-radius: 0;
+        font-family: 'Work Sans', sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transition: all 0.3s ease;
+        text-align: center;
+        border: 2px solid #064852;
+    }
+
+    .explore-properties-btn:hover {
+        background: #064852;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(6, 72, 82, 0.3);
+    }
+
+    .button-container {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 60px;
+    }
+
     /* Responsive */
     @media (max-width: 1024px) {
         .carousel-container {
@@ -537,6 +569,12 @@
                 </svg>
             </button>
         </div>
+
+        <!-- Explore Homes Button -->
+        <div class="button-container">
+            <a href="{{ route('all.listings') }}" class="explore-properties-btn">Explore Homes</a>
+        </div>
+
         @else
         <div class="no-properties">
             <p>No listings available at the moment.</p>

@@ -1573,7 +1573,7 @@
     <section class="hero-property" style="background-image: url('{{ asset($property->main_image ?? '/images/villa1.jpg') }}');">
         <div class="hero-content">
             <h1>{{ $property->title }}@if($property->subtitle),<br>{{ $property->subtitle }}@endif</h1>
-            <a href="#" class="view-gallery-btn">VIEW GALLERY</a>
+            <a href="#photosGrid" class="view-gallery-btn" onclick="event.preventDefault(); document.getElementById('photosGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });">VIEW GALLERY</a>
         </div>
     </section>
 

@@ -22,6 +22,36 @@ class PropertyController extends Controller
     }
 
     /**
+     * Display all listings from all locations
+     */
+    public function allListings(Request $request)
+    {
+        $query = Property::query();
+        
+        // Filter by location
+        if ($request->filled('location')) {
+            $query->where('location_id', $request->location);
+        }
+        
+        // Sort by price
+        if ($request->filled('sort')) {
+            if ($request->sort === 'price_asc') {
+                $query->orderBy('price', 'asc');
+            } elseif ($request->sort === 'price_desc') {
+                $query->orderBy('price', 'desc');
+            }
+        } else {
+            // Default sort by latest
+            $query->latest();
+        }
+        
+        $properties = $query->get();
+        $locations = Location::withCount('properties')->get();
+        
+        return view('all-listings', compact('properties', 'locations'));
+    }
+
+    /**
      * Display properties for a specific location
      */
     public function showLocation(Location $location)

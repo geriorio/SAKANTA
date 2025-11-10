@@ -422,23 +422,27 @@
         
         .browse-btn {
             display: inline-block;
-            background: #064852;
-            color: white;
-            padding: 16px 40px;
-            border-radius: 50px;
+            background: transparent;
+            color: #064852;
+            padding: 15px 40px;
+            border-radius: 0;
             text-decoration: none;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             transition: all 0.3s;
-            letter-spacing: 1.2px;
+            letter-spacing: 2px;
             text-transform: uppercase;
             font-family: 'Work Sans', sans-serif;
+            border: 2px solid #064852;
+            margin-top: 20px;
+            margin-bottom: 60px;
         }
         
         .browse-btn:hover {
-            background: #a8c68f;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(44,95,127,0.3);
+            background: #064852;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(6, 72, 82, 0.3);
         }
 
         /* Responsive */
@@ -749,7 +753,7 @@
                 </svg>
                 <h3>No Favorites Yet</h3>
                 <p>Start exploring and save properties you love!</p>
-                <a href="{{ route('listings') }}" class="browse-btn">Browse Properties</a>
+                <a href="{{ route('all.listings') }}" class="browse-btn">Browse Properties</a>
             </div>
         @endif
     </section>

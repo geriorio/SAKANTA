@@ -790,7 +790,7 @@
         <div class="section3-container">
             <div class="section3-content">
                 
-                <h2>Discover your next sanctuary.</h2>
+                <h2>Discover your next sanctuary</h2>
                 <small>From Bali’s hidden enclaves to Lombok’s untouched shores — explore properties designed for serenity, privacy, and balance.</small>
                 <ul class="section3-list">
                     @foreach($locations as $location)
@@ -802,7 +802,7 @@
                     </li>
                     @endforeach
                 </ul>
-                <a href="{{ route('listings') }}#locationCarousel" class="section3-button">View All Homes</a>
+                <a href="{{ route('all.listings') }}" class="section3-button">View All Homes</a>
             </div>
             <div class="section3-image">
                 <img src="/images/Image-01.png" alt="Sakanta Villa">
@@ -818,7 +818,7 @@
                 <img src="/images/Stamp-01.png" alt="Sakanta Stamp">
             </div>
             <div class="section4-content">
-                <h2>Thoughtfully designed spaces that give you order and flexibility: private nooks to work or rest; communal areas to gather, dine, laugh.</h2>
+                <h2>Thoughtfully designed spaces that give you order and flexibility: private nooks to work or rest; communal areas to gather, dine, laugh</h2>
                 <div class="section4-features">
                     <div class="feature-card">
                         <div class="feature-icon">
@@ -864,14 +864,13 @@
 
     <!-- Three Cards Section -->
     <section class="three-cards-section">
-        <h2 class="three-cards-headline">Luxury that feels like yours — because it is.</h2>
+        <h2 class="three-cards-headline">Luxury that feels like yours — because it is</h2>
         
         <div class="three-cards-container">
             <!-- Left Card - Personalized -->
             <div class="card-item">
                 <img src="{{ asset('images/villa1.jpg') }}" alt="Personalized">
                 <div class="card-overlay">
-                    <h3 class="card-title">Personalized</h3>
                 </div>
                 <div class="card-popup">
                     <h3>Togetherness</h3>
@@ -893,7 +892,6 @@
             <div class="card-item">
                 <img src="{{ asset('images/villa5.jpg') }}" alt="Premium">
                 <div class="card-overlay">
-                    <h3 class="card-title">Premium</h3>
                 </div>
                 <div class="card-popup">
                     <h3>Seamless Experience</h3>

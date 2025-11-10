@@ -37,20 +37,35 @@
             <!-- Right Column - Navigation -->
             <div class="footer-nav">
                 <div class="footer-nav-column">
-                    <h4 class="footer-nav-title">About us</h4>
+                    <a href="{{ route('about') }}" style="text-decoration: none;">
+                        <h4 class="footer-nav-title">About us</h4>
+                    </a>
                     <h4 class="footer-nav-title">Blog</h4>
                     <h4 class="footer-nav-title">Careers</h4>
-                    <h4 class="footer-nav-title">Contact us</h4>
+                    <a href="https://wa.me/6281234567890?text=Hello%20Sakanta,%20I%20would%20like%20to%20know%20more%20about%20co-ownership" target="_blank" style="text-decoration: none;">
+                        <h4 class="footer-nav-title">Contact us</h4>
+                    </a>
                 </div>
                 <div class="footer-nav-column">
-                    <h4 class="footer-nav-title">Destination</h4>
-                    <h4 class="footer-nav-title">Homes</h4>
+                    <a href="{{ route('locations') }}" style="text-decoration: none;">
+                        <h4 class="footer-nav-title">Destination</h4>
+                    </a>
+                    <a href="{{ route('welcome') }}" style="text-decoration: none;">
+                        <h4 class="footer-nav-title">Homes</h4>
+                    </a>
                     <h4 class="footer-nav-title">Sails</h4>
                 </div>
                 <div class="footer-nav-column">
-                    <h4 class="footer-nav-title">How it works</h4>
-                    <h4 class="footer-nav-title">Agents</h4>
-                    <a href="/faq" style="text-decoration: none;">
+                    <a href="{{ route('how-it-works') }}" style="text-decoration: none;">
+                        <h4 class="footer-nav-title">How it works</h4>
+                    </a>
+                    <a href="{{ route('all.listings') }}" style="text-decoration: none;">
+                        <h4 class="footer-nav-title">All Listings</h4>
+                    </a>
+                    <a href="{{ route('faq.show', 'property-agents-partnerships') }}" style="text-decoration: none;">
+                        <h4 class="footer-nav-title">Agents</h4>
+                    </a>
+                    <a href="{{ route('faq') }}" style="text-decoration: none;">
                         <h4 class="footer-nav-title">FAQ</h4>
                     </a>
                 </div>
@@ -103,12 +118,14 @@
         align-items: center;
         justify-content: center;
         z-index: 10;
+        pointer-events: none; /* Allow clicks to pass through to elements below */
     }
 
     .footer-icon {
         width: 200px;
         height: 200px;
         object-fit: contain;
+        margin-bottom: 20px;
     }
 
     .footer-container {
@@ -318,6 +335,7 @@
         .footer-icon {
             width: 150px;
             height: 150px;
+            margin-bottom: 15px;
         }
 
         .footer-content {
@@ -357,6 +375,7 @@
         .footer-icon {
             width: 120px;
             height: 120px;
+            margin-bottom: 12px;
         }
 
         .footer-content {
@@ -396,6 +415,7 @@
         .footer-icon {
             width: 100px;
             height: 100px;
+            margin-bottom: 10px;
         }
 
         .footer-logo {
@@ -433,6 +453,7 @@
         .footer-icon {
             width: 80px;
             height: 80px;
+            margin-bottom: 8px;
         }
 
         .footer-logo {
