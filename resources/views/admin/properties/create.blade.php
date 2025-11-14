@@ -29,6 +29,12 @@
                 <label>Subtitle</label>
                 <input type="text" name="subtitle" class="form-control" value="{{ old('subtitle') }}" placeholder="Optional subtitle">
             </div>
+
+            <div class="form-group">
+                <label>Shares Booked</label>
+                <input type="text" name="shares_booked" class="form-control" value="{{ old('shares_booked') }}" placeholder="e.g., 3/10">
+                <small class="form-text text-muted">Format: "3/10" untuk menampilkan "3/10 Committed"</small>
+            </div>
         </div>
 
         <div class="form-group">

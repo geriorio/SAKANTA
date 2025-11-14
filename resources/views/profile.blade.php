@@ -716,7 +716,7 @@
                                                 <rect x="15" y="14" width="2" height="2"/>
                                                 <rect x="15" y="18" width="2" height="2"/>
                                             </svg>
-                                            {{ number_format($property->building_area, 0) }} FT²
+                                            {{ number_format($property->building_area, 0) }} m²
                                         </span>
                                         <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
                                         <span style="display: inline-flex; align-items: center; gap: 4px;">
@@ -724,7 +724,7 @@
                                                 <rect x="3" y="3" width="18" height="18" rx="1" stroke-dasharray="2,2"/>
                                                 <path d="M3 3l-2 -2M21 3l2 -2M3 21l-2 2M21 21l2 2"/>
                                             </svg>
-                                            {{ number_format($property->land_area, 0) }} FT²
+                                            {{ number_format($property->land_area, 0) }} m²
                                         </span>
                                     </p>
                                 </div>

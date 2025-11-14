@@ -13,49 +13,7 @@ use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\Admin\LocationController as AdminLocationController;
 use Illuminate\Support\Facades\Route;
 
-// Homepage
-Route::get('/', function () {
-    $locations = \App\Models\Location::limit(5)->get();
-    $listings = \App\Models\Property::inRandomOrder()->get();
-    return view('welcome', compact('locations', 'listings'));
-})->name('welcome');
-
-// Newsletter Subscribe
-Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
-
-// Contact Form Submit
-Route::post('/contact/submit', [ContactFormController::class, 'submit'])->name('contact.submit');
-
-// Search API
-Route::get('/api/search', [PropertyController::class, 'search'])->name('api.search');
-
-// Listings/Detail Page - Dynamic from database
-Route::get('/listings', [PropertyController::class, 'listings'])->name('listings');
-Route::get('/locations', [PropertyController::class, 'listings'])->name('locations');
-Route::get('/all-listings', [PropertyController::class, 'allListings'])->name('all.listings');
-Route::get('/location/{location:slug}', [PropertyController::class, 'showLocation'])->name('location.show');
-Route::get('/location/{location:slug}/properties', [PropertyController::class, 'showLocation'])->name('location.properties');
-Route::get('/location/{location:slug}/article', [PropertyController::class, 'showArticle'])->name('location.article');
-
-// Property Detail Page (Dynamic by slug)
-Route::get('/property/{property:slug}', [PropertyController::class, 'show'])->name('property.detail');
-
-// About Page
-Route::get('/about', function () {
-    $listings = \App\Models\Property::inRandomOrder()->get();
-    return view('about', compact('listings'));
-})->name('about');
-
-// How It Works Page
-Route::get('/how-it-works', function () {
-    $properties = \App\Models\Property::inRandomOrder()->get();
-    return view('how-it-works', compact('properties'));
-})->name('how-it-works');
-
-// FAQ Pages - Dynamic from database
-Route::get('/faq', [FaqController::class, 'index'])->name('faq');
-Route::get('/faq/{faq:slug}', [FaqController::class, 'show'])->name('faq.show');
-
+// Public Routes (No Auth Required)
 // Google Authentication Routes
 Route::get('/signin', function () {
     return view('signin');
@@ -64,8 +22,52 @@ Route::get('/signin', function () {
 Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->name('auth.google');
 Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
 
-// Profile Routes (harus login)
-Route::middleware('auth')->group(function () {
+// Protected Routes (User Must Be Authenticated)
+Route::middleware('userAuth')->group(function () {
+    // Homepage
+    Route::get('/', function () {
+        $locations = \App\Models\Location::limit(5)->get();
+        $listings = \App\Models\Property::inRandomOrder()->get();
+        return view('welcome', compact('locations', 'listings'));
+    })->name('welcome');
+
+    // Newsletter Subscribe
+    Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
+
+    // Contact Form Submit
+    Route::post('/contact/submit', [ContactFormController::class, 'submit'])->name('contact.submit');
+
+    // Search API
+    Route::get('/api/search', [PropertyController::class, 'search'])->name('api.search');
+
+    // Listings/Detail Page - Dynamic from database
+    Route::get('/listings', [PropertyController::class, 'listings'])->name('listings');
+    Route::get('/locations', [PropertyController::class, 'listings'])->name('locations');
+    Route::get('/all-listings', [PropertyController::class, 'allListings'])->name('all.listings');
+    Route::get('/location/{location:slug}', [PropertyController::class, 'showLocation'])->name('location.show');
+    Route::get('/location/{location:slug}/properties', [PropertyController::class, 'showLocation'])->name('location.properties');
+    Route::get('/location/{location:slug}/article', [PropertyController::class, 'showArticle'])->name('location.article');
+
+    // Property Detail Page (Dynamic by slug)
+    Route::get('/property/{property:slug}', [PropertyController::class, 'show'])->name('property.detail');
+
+    // About Page
+    Route::get('/about', function () {
+        $listings = \App\Models\Property::inRandomOrder()->get();
+        return view('about', compact('listings'));
+    })->name('about');
+
+    // How It Works Page
+    Route::get('/how-it-works', function () {
+        $properties = \App\Models\Property::inRandomOrder()->get();
+        return view('how-it-works', compact('properties'));
+    })->name('how-it-works');
+
+    // FAQ Pages - Dynamic from database
+    Route::get('/faq', [FaqController::class, 'index'])->name('faq');
+    Route::get('/faq/{faq:slug}', [FaqController::class, 'show'])->name('faq.show');
+
+    // Profile Routes
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     
@@ -73,17 +75,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/property/{property}/like', [PropertyLikeController::class, 'toggle'])->name('property.like');
 });
 
-// Authentication Routes (old - kept for backward compatibility)
-Route::middleware('guest')->group(function () {
-    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-    Route::post('/register', [AuthController::class, 'register']);
-});
 
-Route::middleware('auth')->group(function () {
-    Route::post('/logout-old', [AuthController::class, 'logout'])->name('logout.old');
-});
 
 // Admin Routes
 Route::prefix('admin')->group(function () {
@@ -141,5 +133,11 @@ Route::prefix('admin')->group(function () {
             'update' => 'admin.articles.update',
             'destroy' => 'admin.articles.destroy',
         ]);
+
+        // User Management
+        Route::get('/users', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('admin.users.index');
+        Route::post('/users', [\App\Http\Controllers\Admin\UserController::class, 'store'])->name('admin.users.store');
+        Route::patch('/users/{id}/toggle', [\App\Http\Controllers\Admin\UserController::class, 'toggleActive'])->name('admin.users.toggle');
+        Route::delete('/users/{id}', [\App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('admin.users.destroy');
     });
 });

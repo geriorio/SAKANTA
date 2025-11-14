@@ -28,10 +28,11 @@
         <h1>🏠 Admin Dashboard - Sakanta</h1>
         <div class="nav">
             <span>Welcome, {{ Auth::user()->name }}</span>
-            <a href="{{ route('admin.properties.index') }}">Manage Properties</a>
-            <a href="{{ route('admin.locations.index') }}">Manage Locations</a>
-            <a href="{{ route('admin.faqs.index') }}">Manage FAQs</a>
-            <a href="{{ route('admin.articles.index') }}">Manage Articles</a>
+            <a href="{{ route('admin.properties.index') }}">Properties</a>
+            <a href="{{ route('admin.locations.index') }}">Locations</a>
+            <a href="{{ route('admin.faqs.index') }}">FAQs</a>
+            <a href="{{ route('admin.articles.index') }}">Articles</a>
+            <a href="{{ route('admin.users.index') }}">Users</a>
             <a href="/">View Website</a>
             <form method="POST" action="{{ route('admin.logout') }}" style="display: inline;">
                 @csrf
@@ -60,6 +61,10 @@
                     <h3>{{ \App\Models\LocationArticle::count() }}</h3>
                     <p>Location Articles</p>
                 </div>
+                <div class="stat-card">
+                    <h3>{{ \App\Models\User::count() }}</h3>
+                    <p>Registered Users</p>
+                </div>
             </div>
         </div>
 
@@ -81,6 +86,10 @@
                 <a href="{{ route('admin.articles.create') }}" 
                    style="display: inline-block; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 5px; text-decoration: none; font-weight: 600;">
                     + Add New Article
+                </a>
+                <a href="{{ route('admin.users.index') }}" 
+                   style="display: inline-block; background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 5px; text-decoration: none; font-weight: 600;">
+                    👥 Manage Users
                 </a>
             </div>
         </div>

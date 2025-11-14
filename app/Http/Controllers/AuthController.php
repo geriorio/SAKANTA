@@ -14,7 +14,9 @@ class AuthController extends Controller
      */
     public function redirectToGoogle()
     {
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')
+            ->with(['prompt' => 'select_account'])
+            ->redirect();
     }
 
     /**
@@ -25,30 +27,26 @@ class AuthController extends Controller
         try {
             $googleUser = Socialite::driver('google')->user();
             
-            // Cari atau buat user
-            $user = User::where('google_id', $googleUser->id)
-                        ->orWhere('email', $googleUser->email)
-                        ->first();
+            // Cek apakah email sudah terdaftar di database
+            $user = User::where('email', $googleUser->email)->first();
 
-            if ($user) {
-                // Update google_id dan avatar jika belum ada
-                if (!$user->google_id) {
-                    $user->google_id = $googleUser->id;
-                }
-                if (!$user->avatar || $user->avatar !== $googleUser->avatar) {
-                    $user->avatar = $googleUser->avatar;
-                }
-                $user->save();
-            } else {
-                // Buat user baru
-                $user = User::create([
-                    'name' => $googleUser->name,
-                    'email' => $googleUser->email,
-                    'google_id' => $googleUser->id,
-                    'avatar' => $googleUser->avatar,
-                    'password' => bcrypt(uniqid()), // Random password untuk keamanan
-                ]);
+            if (!$user) {
+                // Email belum terdaftar - tolak akses
+                return redirect('/signin')->with('error', 'Your email is not registered. Please contact admin to get access.');
             }
+
+            // Cek apakah user aktif
+            if (!$user->is_active) {
+                return redirect('/signin')->with('error', 'Your account is inactive. Please contact admin.');
+            }
+
+            // Update google_id dan avatar
+            if (!$user->google_id) {
+                $user->google_id = $googleUser->id;
+            }
+            $user->avatar = $googleUser->avatar;
+            $user->name = $googleUser->name; // Update nama jika berubah di Google
+            $user->save();
 
             // Login user
             Auth::login($user, true);

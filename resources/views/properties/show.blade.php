@@ -1591,6 +1591,13 @@
                             <span class="property-ownership">{{ $property->ownership }}</span>
                         @endif
                     </p>
+                    @if($property->shares_booked)
+                        <div style="margin-top: 12px;">
+                            <span style="display: inline-block; padding: 6px 14px; background: #064852; color: white; font-size: 11px; font-weight: 600; border-radius: 14px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Work Sans', sans-serif;">
+                                {{ $property->shares_booked }} Committed
+                            </span>
+                        </div>
+                    @endif
                 </div>
             </div>
 
@@ -1691,7 +1698,7 @@
                                 <rect x="15" y="14" width="2" height="2"/>
                                 <rect x="15" y="18" width="2" height="2"/>
                             </svg>
-                            {{ number_format($property->building_area, 0) }} FT²
+                            {{ number_format($property->building_area, 0) }} m²
                         </span>
                         
                         <span class="spec-separator">|</span>
@@ -1702,7 +1709,7 @@
                                 <rect x="3" y="3" width="18" height="18" stroke-dasharray="2 2"/>
                                 <path d="M3 3 L8 8 M21 3 L16 8 M3 21 L8 16 M21 21 L16 16"/>
                             </svg>
-                            {{ number_format($property->land_area, 0) }} FT²
+                            {{ number_format($property->land_area, 0) }} m²
                         </span>
                         
                         <span class="spec-separator">|</span>
@@ -1730,7 +1737,7 @@
                             <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
                             <circle cx="12" cy="10" r="3"/>
                         </svg>
-                        {{ $property->address }}, {{ $property->location->name ?? $property->city }}, {{ $property->province }}
+                        {{ $property->address }}
                     </p>
                     
                     <a href="#map-section" class="check-maps-btn">CHECK MAPS →</a>
@@ -1943,7 +1950,7 @@
                                         <rect x="15" y="14" width="2" height="2"/>
                                         <rect x="15" y="18" width="2" height="2"/>
                                     </svg>
-                                    {{ number_format($relatedProperty->building_area, 0) }} FT²
+                                    {{ number_format($relatedProperty->building_area, 0) }} m²
                                 </span>
                                 <span class="spec-separator">|</span>
                                 <!-- Land Size -->

@@ -12,6 +12,7 @@ class Property extends Model
         'title',
         'subtitle',
         'slug',
+        'shares_booked',
         'description', 
         'address',
         'city',

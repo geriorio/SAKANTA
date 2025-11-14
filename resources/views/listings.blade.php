@@ -853,7 +853,231 @@
         </div>
     </section>
 
+    <!-- All Properties Grid Section -->
+    <section class="listings-section" style="padding: 80px 5%; background: #F7EFE2;">
+        <div class="listings-grid" id="propertiesGrid" style="max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;">
+            @foreach($listings->take(3) as $property)
+                <a href="{{ route('property.detail', $property->slug) }}" class="property-card" style="background: white; border-radius: 15px; overflow: hidden; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s; position: relative; z-index: 1; cursor: pointer; text-decoration: none; color: inherit; display: flex; flex-direction: column; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <div class="property-image" style="width: 100%; height: 300px; position: relative; overflow: hidden;">
+                        <img src="{{ asset($property->main_image ?? '/images/villa1.jpg') }}" alt="{{ $property->title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        
+                        @auth
+                        <button class="like-btn {{ Auth::user()->hasLiked($property->id) ? 'liked' : '' }}" 
+                                data-property-id="{{ $property->id}}"
+                                onclick="event.preventDefault(); event.stopPropagation(); toggleLike(this, {{ $property->id }})"
+                                style="position: absolute; top: 20px; right: 20px; width: 48px; height: 48px; border-radius: 50%; background: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s; z-index: 20;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="{{ Auth::user()->hasLiked($property->id) ? '#e74c3c' : 'none' }}" stroke="{{ Auth::user()->hasLiked($property->id) ? '#e74c3c' : '#666' }}" stroke-width="2">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            </svg>
+                        </button>
+                        @endauth
+                    </div>
+                    <div class="property-info-card" style="padding: 25px;">
+                        <div class="property-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; gap: 10px; position: relative; min-height: 24px;">
+                            <h3 class="property-name" style="font-family: 'Esther', serif; font-size: 18px; color: #064852; margin: 0; font-weight: 400; line-height: 1.3; flex: 1; padding-right: 10px;">
+                                {{ $property->title }}
+                                @if($property->shares_booked)
+                                    <span style="display: inline-block; margin-left: 8px; padding: 4px 10px; background: #064852; color: white; font-size: 10px; font-weight: 600; border-radius: 12px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Work Sans', sans-serif; vertical-align: middle;">
+                                        {{ $property->shares_booked }} Committed
+                                    </span>
+                                @endif
+                            </h3>
+                            <div class="property-icon" style="width: 100px; height: 100px; flex-shrink: 0; color: #064852; background-image: url('/images/KV-13.png'); background-size: contain; background-repeat: no-repeat; background-position: center; position: absolute; top: -35px; right: -10px;"></div>
+                        </div>
+                        <p class="property-location-text" style="font-family: 'Work Sans', sans-serif; font-size: 14px; color: #7a9ca5; margin: 4px 0;">{{ $property->location->name ?? $property->city }}</p>
+                        <p class="property-price-text" style="font-family: 'Work Sans', sans-serif; font-size: 18px; color: #064852; margin: 8px 0; font-weight: 600;">{{ $property->formatted_price }}</p>
+                        <p class="property-specs" style="font-family: 'Work Sans', sans-serif; font-size: 14px; color: #064852; margin: 4px 0;">{{ $property->ownership ?? '1/4 Ownership' }}</p>
+                        <p class="property-specs" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12px; color: #666; font-family: 'Work Sans', sans-serif; margin-top: 12px;">
+                            <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                <img src="{{ asset('images/icons/bedroom.png') }}" alt="Bedroom" style="width: 25px; height: 25px; object-fit: contain;">
+                                {{ $property->bedrooms }}
+                            </span>
+                            <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                            <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                <img src="{{ asset('images/icons/bathroom.png') }}" alt="Bathroom" style="width: 25px; height: 25px; object-fit: contain;">
+                                {{ $property->bathrooms }}
+                            </span>
+                            <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                            <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#064852" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 21h18"/>
+                                    <path d="M5 21V7l8-4v18"/>
+                                    <path d="M19 21V11l-6-4"/>
+                                    <rect x="7" y="10" width="2" height="2"/>
+                                    <rect x="7" y="14" width="2" height="2"/>
+                                    <rect x="7" y="18" width="2" height="2"/>
+                                    <rect x="15" y="14" width="2" height="2"/>
+                                    <rect x="15" y="18" width="2" height="2"/>
+                                </svg>
+                                {{ number_format($property->building_area, 0) }} m²
+                            </span>
+                            <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                            <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#064852" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="3" width="18" height="18" rx="1" stroke-dasharray="2,2"/>
+                                    <path d="M3 3l-2 -2M21 3l2 -2M3 21l-2 2M21 21l2 2"/>
+                                </svg>
+                                {{ number_format($property->land_area, 0) }} m²
+                            </span>
+                        </p>
+                    </div>
+                </a>
+            @endforeach
 
+            @foreach($listings->skip(3) as $property)
+                <a href="{{ route('property.detail', $property->slug) }}" class="property-card additional-property" style="display: none; background: white; border-radius: 15px; overflow: hidden; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s; position: relative; z-index: 1; cursor: pointer; text-decoration: none; color: inherit; flex-direction: column; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <div class="property-image" style="width: 100%; height: 300px; position: relative; overflow: hidden;">
+                        <img src="{{ asset($property->main_image ?? '/images/villa1.jpg') }}" alt="{{ $property->title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        
+                        @auth
+                        <button class="like-btn {{ Auth::user()->hasLiked($property->id) ? 'liked' : '' }}" 
+                                data-property-id="{{ $property->id}}"
+                                onclick="event.preventDefault(); event.stopPropagation(); toggleLike(this, {{ $property->id }})"
+                                style="position: absolute; top: 20px; right: 20px; width: 48px; height: 48px; border-radius: 50%; background: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s; z-index: 20;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="{{ Auth::user()->hasLiked($property->id) ? '#e74c3c' : 'none' }}" stroke="{{ Auth::user()->hasLiked($property->id) ? '#e74c3c' : '#666' }}" stroke-width="2">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            </svg>
+                        </button>
+                        @endauth
+                    </div>
+                    <div class="property-info-card" style="padding: 25px;">
+                        <div class="property-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; gap: 10px; position: relative; min-height: 24px;">
+                            <h3 class="property-name" style="font-family: 'Esther', serif; font-size: 18px; color: #064852; margin: 0; font-weight: 400; line-height: 1.3; flex: 1; padding-right: 10px;">
+                                {{ $property->title }}
+                                @if($property->shares_booked)
+                                    <span style="display: inline-block; margin-left: 8px; padding: 4px 10px; background: #064852; color: white; font-size: 10px; font-weight: 600; border-radius: 12px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Work Sans', sans-serif; vertical-align: middle;">
+                                        {{ $property->shares_booked }} Committed
+                                    </span>
+                                @endif
+                            </h3>
+                            <div class="property-icon" style="width: 100px; height: 100px; flex-shrink: 0; color: #064852; background-image: url('/images/KV-13.png'); background-size: contain; background-repeat: no-repeat; background-position: center; position: absolute; top: -35px; right: -10px;"></div>
+                        </div>
+                        <p class="property-location-text" style="font-family: 'Work Sans', sans-serif; font-size: 14px; color: #7a9ca5; margin: 4px 0;">{{ $property->location->name ?? $property->city }}</p>
+                        <p class="property-price-text" style="font-family: 'Work Sans', sans-serif; font-size: 18px; color: #064852; margin: 8px 0; font-weight: 600;">{{ $property->formatted_price }}</p>
+                        <p class="property-specs" style="font-family: 'Work Sans', sans-serif; font-size: 14px; color: #064852; margin: 4px 0;">{{ $property->ownership ?? '1/4 Ownership' }}</p>
+                        <p class="property-specs" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12px; color: #666; font-family: 'Work Sans', sans-serif; margin-top: 12px;">
+                            <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                <img src="{{ asset('images/icons/bedroom.png') }}" alt="Bedroom" style="width: 25px; height: 25px; object-fit: contain;">
+                                {{ $property->bedrooms }}
+                            </span>
+                            <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                            <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                <img src="{{ asset('images/icons/bathroom.png') }}" alt="Bathroom" style="width: 25px; height: 25px; object-fit: contain;">
+                                {{ $property->bathrooms }}
+                            </span>
+                            <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                            <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#064852" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 21h18"/>
+                                    <path d="M5 21V7l8-4v18"/>
+                                    <path d="M19 21V11l-6-4"/>
+                                    <rect x="7" y="10" width="2" height="2"/>
+                                    <rect x="7" y="14" width="2" height="2"/>
+                                    <rect x="7" y="18" width="2" height="2"/>
+                                    <rect x="15" y="14" width="2" height="2"/>
+                                    <rect x="15" y="18" width="2" height="2"/>
+                                </svg>
+                                {{ number_format($property->building_area, 0) }} m²
+                            </span>
+                            <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                            <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#064852" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="3" width="18" height="18" rx="1" stroke-dasharray="2,2"/>
+                                    <path d="M3 3l-2 -2M21 3l2 -2M3 21l-2 2M21 21l2 2"/>
+                                </svg>
+                                {{ number_format($property->land_area, 0) }} m²
+                            </span>
+                        </p>
+                    </div>
+                </a>
+            @endforeach
+        </div>
+
+        @if($listings->count() > 3)
+        <div style="text-align: center; margin-top: 40px;">
+            <button id="viewMoreBtn" onclick="showMoreProperties()" style="background: #F7EFE2; color: #064852; border: 2px solid #064852; padding: 14px 40px; font-size: 16px; font-family: 'Work Sans', sans-serif; font-weight: 600; border-radius: 0; cursor: pointer; transition: all 0.3s ease;">
+                VIEW MORE
+            </button>
+            <button id="viewLessBtn" onclick="showLessProperties()" style="display: none; background: #F7EFE2; color: #064852; border: 2px solid #064852; padding: 14px 40px; font-size: 16px; font-family: 'Work Sans', sans-serif; font-weight: 600; border-radius: 0; cursor: pointer; transition: all 0.3s ease;">
+                VIEW LESS
+            </button>
+        </div>
+        @endif
+    </section>
+
+    <style>
+        .property-card:hover {
+            transform: translateY(-12px);
+            z-index: 100;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .like-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 1024px) {
+            .listings-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .listings-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+
+    <script>
+        // View More/Less Properties Functions
+        function showMoreProperties() {
+            const additionalProperties = document.querySelectorAll('.additional-property');
+            additionalProperties.forEach(property => {
+                property.style.display = 'flex';
+            });
+            document.getElementById('viewMoreBtn').style.display = 'none';
+            document.getElementById('viewLessBtn').style.display = 'inline-block';
+        }
+
+        function showLessProperties() {
+            const additionalProperties = document.querySelectorAll('.additional-property');
+            additionalProperties.forEach(property => {
+                property.style.display = 'none';
+            });
+            document.getElementById('viewMoreBtn').style.display = 'inline-block';
+            document.getElementById('viewLessBtn').style.display = 'none';
+            
+            // Scroll to properties grid
+            document.querySelector('.listings-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function toggleLike(button, propertyId) {
+            button.classList.toggle('liked');
+            
+            const svg = button.querySelector('svg');
+            if (button.classList.contains('liked')) {
+                svg.setAttribute('fill', '#e74c3c');
+                svg.setAttribute('stroke', '#e74c3c');
+            } else {
+                svg.setAttribute('fill', 'none');
+                svg.setAttribute('stroke', '#666');
+            }
+            
+            // AJAX call to save like status
+            fetch(`/property/${propertyId}/like`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                },
+                body: JSON.stringify({})
+            }).catch(error => {
+                console.log('Like action logged');
+            });
+        }
+    </script>
 
     <script>
         let currentLocationSlide = 0;
@@ -986,16 +1210,31 @@
         </div>
     </section>
 
-    <!-- Featured Listings Carousel -->
-    @include('components.featured-listings', [
-        'listings' => $listings ?? collect(),
-        'title' => 'Hot Listings',
-        'description' => 'Discover our finest investment opportunities across all locations'
-    ])
-
     @include('layouts.footer')
     
     <script>
+        // View More/Less Properties Functions
+        function showMoreProperties() {
+            const additionalProperties = document.querySelectorAll('.additional-property');
+            additionalProperties.forEach(property => {
+                property.style.display = 'block';
+            });
+            document.getElementById('viewMoreBtn').style.display = 'none';
+            document.getElementById('viewLessBtn').style.display = 'inline-block';
+        }
+
+        function showLessProperties() {
+            const additionalProperties = document.querySelectorAll('.additional-property');
+            additionalProperties.forEach(property => {
+                property.style.display = 'none';
+            });
+            document.getElementById('viewMoreBtn').style.display = 'inline-block';
+            document.getElementById('viewLessBtn').style.display = 'none';
+            
+            // Scroll to properties grid
+            document.querySelector('.all-properties-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
         // AJAX Like/Unlike Function
         function toggleLike(button, propertyId) {
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');

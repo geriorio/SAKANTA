@@ -30,6 +30,12 @@
                 <label>Subtitle</label>
                 <input type="text" name="subtitle" class="form-control" value="{{ old('subtitle', $property->subtitle) }}" placeholder="Optional subtitle">
             </div>
+
+            <div class="form-group">
+                <label>Shares Booked</label>
+                <input type="text" name="shares_booked" class="form-control" value="{{ old('shares_booked', $property->shares_booked) }}" placeholder="e.g., 3/10">
+                <small class="form-text text-muted">Format: "3/10" untuk menampilkan "3/10 Committed"</small>
+            </div>
         </div>
 
         <div class="form-group">
@@ -88,12 +94,12 @@
             </div>
 
             <div class="form-group">
-                <label>Land Area (FT²) *</label>
+                <label>Land Area (m²) *</label>
                 <input type="number" name="land_area" class="form-control" value="{{ old('land_area', $property->land_area) }}" step="0.01" required>
             </div>
 
             <div class="form-group">
-                <label>Building Area (FT²) *</label>
+                <label>Building Area (m²) *</label>
                 <input type="number" name="building_area" class="form-control" value="{{ old('building_area', $property->building_area) }}" step="0.01" required>
             </div>
 

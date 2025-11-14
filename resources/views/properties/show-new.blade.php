@@ -340,12 +340,12 @@
 
                     <div class="detail-item">
                         <h3>Building size</h3>
-                        <p>{{ number_format($property->building_area, 0) }} FT²</p>
+                        <p>{{ number_format($property->building_area, 0) }} m²</p>
                     </div>
 
                     <div class="detail-item">
                         <h3>Land size</h3>
-                        <p>{{ number_format($property->land_area, 0) }} FT²</p>
+                        <p>{{ number_format($property->land_area, 0) }} m²</p>
                     </div>
 
                     <div class="detail-item">

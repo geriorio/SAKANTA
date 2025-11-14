@@ -295,7 +295,26 @@
 
             <!-- Title -->
             <h1 class="title">Welcome to Sakanta</h1>
-            <p class="subtitle">Sign in to unlock exclusive features and save your favorite properties</p>
+            <p class="subtitle">Sign in with your registered Google account to continue</p>
+
+            <!-- Alert Messages -->
+            @if(session('error'))
+            <div style="background: #fee; color: #c33; padding: 15px; border-radius: 10px; margin-bottom: 20px; font-size: 14px; border: 1px solid #fcc;">
+                {{ session('error') }}
+            </div>
+            @endif
+
+            @if(session('info'))
+            <div style="background: #e7f3ff; color: #0066cc; padding: 15px; border-radius: 10px; margin-bottom: 20px; font-size: 14px; border: 1px solid #b3d9ff;">
+                {{ session('info') }}
+            </div>
+            @endif
+
+            @if(session('success'))
+            <div style="background: #e8f5e9; color: #2e7d32; padding: 15px; border-radius: 10px; margin-bottom: 20px; font-size: 14px; border: 1px solid #c8e6c9;">
+                {{ session('success') }}
+            </div>
+            @endif
 
             <!-- Google Sign In Button -->
             <a href="{{ route('auth.google') }}" class="google-btn">
@@ -315,33 +334,10 @@
                 <div class="divider-line"></div>
             </div>
 
-            <!-- Benefits -->
-            <div class="benefits">
-                <h3 class="benefits-title">Why Sign In?</h3>
-                <ul class="benefits-list">
-                    <li class="benefit-item">
-                        <span class="benefit-dot"></span>
-                        <span>Save and track your favorite properties</span>
-                    </li>
-                    <li class="benefit-item">
-                        <span class="benefit-dot"></span>
-                        <span>Get personalized property recommendations</span>
-                    </li>
-                    <li class="benefit-item">
-                        <span class="benefit-dot"></span>
-                        <span>Access exclusive investment opportunities</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Back to Home -->
-            <div class="back-link-container">
-                <a href="{{ route('home') }}" class="back-link">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M19 12H5M12 19l-7-7 7-7"/>
-                    </svg>
-                    <span>Back to Home</span>
-                </a>
+            <!-- Footer Note -->
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #f0f0f0; font-size: 13px; color: #999;">
+                Only registered users can access Sakanta.<br>
+                Contact admin if you need access.
             </div>
 
         </div>
