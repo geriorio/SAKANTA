@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>All Listings - SAKANTA</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/Logo-02.png') }}?v=2">
+    <title>{{ $category === 'home' ? 'Sakanta Home' : 'Sakanta Sail' }} - All Listings - SAKANTA</title>
     
     <!-- Google Fonts - Work Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,10 +33,83 @@
             background: #F7EFE2;
         }
 
+        /* Hero Section */
+        .hero-section {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0.3) 0%,
+                rgba(0, 0, 0, 0.2) 50%,
+                rgba(0, 0, 0, 0.3) 100%
+            );
+            z-index: 1;
+        }
+
+        .hero-section.hero-yacht::before {
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0.5) 0%,
+                rgba(0, 0, 0, 0.4) 50%,
+                rgba(0, 0, 0, 0.5) 100%
+            );
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 60px;
+            max-width: 1200px;
+            margin-top: 0;
+        }
+
+        .hero-logo {
+            max-width: 350px;
+            height: auto;
+            margin: 0 auto 50px auto;
+            filter: brightness(0) invert(1);
+            display: block;
+        }
+
+        .hero-title {
+            font-family: 'Esther', serif;
+            font-size: 42px;
+            font-weight: 400;
+            color: white;
+            line-height: 1.4;
+            letter-spacing: 1px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
         /* Header Section */
         .page-header {
             text-align: center;
-            padding: 120px 60px 60px 60px;
+            padding: 80px 60px 60px 60px;
             background: #F7EFE2;
         }
 
@@ -61,7 +135,7 @@
         /* Filter Section */
         .filter-section {
             max-width: 1400px;
-            margin: 0 auto 40px auto;
+            margin: 80px auto 40px auto;
             padding: 0 60px;
         }
 
@@ -367,8 +441,26 @@
         }
 
         @media (max-width: 968px) {
+            .hero-section {
+                height: 100vh;
+            }
+
+            .hero-content {
+                padding: 0 40px;
+                margin-top: 0;
+            }
+
+            .hero-logo {
+                max-width: 280px;
+                margin-bottom: 40px;
+            }
+
+            .hero-title {
+                font-size: 32px;
+            }
+
             .page-header {
-                padding: 100px 40px 50px 40px;
+                padding: 60px 40px 50px 40px;
             }
 
             .page-header h1 {
@@ -420,8 +512,26 @@
         }
 
         @media (max-width: 768px) {
+            .hero-section {
+                height: 100vh;
+            }
+
+            .hero-content {
+                padding: 0 30px;
+                margin-top: 0;
+            }
+
+            .hero-logo {
+                max-width: 240px;
+                margin-bottom: 35px;
+            }
+
+            .hero-title {
+                font-size: 28px;
+            }
+
             .page-header {
-                padding: 80px 30px 40px 30px;
+                padding: 50px 30px 40px 30px;
             }
 
             .page-header h1 {
@@ -455,8 +565,26 @@
         }
 
         @media (max-width: 480px) {
+            .hero-section {
+                height: 100vh;
+            }
+
+            .hero-content {
+                padding: 0 20px;
+                margin-top: 0;
+            }
+
+            .hero-logo {
+                max-width: 200px;
+                margin-bottom: 30px;
+            }
+
+            .hero-title {
+                font-size: 24px;
+            }
+
             .page-header {
-                padding: 70px 20px 30px 20px;
+                padding: 40px 20px 30px 20px;
             }
 
             .page-header h1 {
@@ -535,26 +663,41 @@
 <body>
     @include('layouts.navbar-simple')
 
-    <!-- Page Header -->
-    <section class="page-header">
-        <h1>All Listings</h1>
-        <p>Explore our complete collection of exclusive properties across all locations. Find your perfect sanctuary.</p>
+    <!-- Hero Section -->
+    <section class="hero-section {{ $category === 'yacht' ? 'hero-yacht' : '' }}">
+        @if($category === 'home')
+            <img src="/images/homehero.avif" alt="Sakanta Home" class="hero-background">
+        @else
+            <img src="/images/yachthero.avif" alt="Sakanta Sail" class="hero-background">
+        @endif
+        
+        <div class="hero-content">
+            @if($category === 'home')
+                <img src="/images/logohome.png" alt="Sakanta Home Logo" class="hero-logo">
+                <h1 class="hero-title">Find your place in paradise — thoughtfully curated luxury villas for effortless co-ownership.</h1>
+            @else
+                <img src="/images/logosail.png" alt="Sakanta Sail Logo" class="hero-logo">
+                <h1 class="hero-title">Set sail on your terms — access world-class yachts without the full-ownership burden.</h1>
+            @endif
+        </div>
     </section>
 
     <!-- Filter Section -->
     <div class="filter-section">
-        <form method="GET" action="{{ route('all.listings') }}" class="filter-container">
-            <div class="filter-group">
-                <label for="location">Location</label>
-                <select name="location" id="location" class="filter-select">
-                    <option value="">All Locations</option>
-                    @foreach($locations as $location)
-                        <option value="{{ $location->id }}" {{ request('location') == $location->id ? 'selected' : '' }}>
-                            {{ $location->name }} ({{ $location->properties_count }})
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+        <form method="GET" action="{{ $category === 'yacht' ? route('yacht.listings') : route('all.listings') }}" class="filter-container">
+            @if($category === 'home')
+                <div class="filter-group">
+                    <label for="location">Location</label>
+                    <select name="location" id="location" class="filter-select">
+                        <option value="">All Locations</option>
+                        @foreach($locations as $location)
+                            <option value="{{ $location->id }}" {{ request('location') == $location->id ? 'selected' : '' }}>
+                                {{ $location->name }} ({{ $location->properties_count }})
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+            @endif
 
             <div class="filter-group">
                 <label for="sort">Sort By Price</label>
@@ -565,20 +708,21 @@
                 </select>
             </div>
 
+            <input type="hidden" name="category" value="{{ $category }}">
             <button type="submit" class="filter-button">Apply Filters</button>
-            <a href="{{ route('all.listings') }}" class="reset-button">Reset</a>
+            <a href="{{ $category === 'yacht' ? route('yacht.listings') : route('all.listings') }}" class="reset-button">Reset</a>
         </form>
     </div>
 
     <!-- Listings Grid -->
     <section class="listings-section">
         @if($properties->count() > 0)
-            <p class="result-count">Showing {{ $properties->count() }} {{ $properties->count() == 1 ? 'property' : 'properties' }}</p>
+            <p class="result-count">Showing {{ $properties->count() }} {{ $properties->count() == 1 ? ($category === 'yacht' ? 'yacht' : 'property') : ($category === 'yacht' ? 'yachts' : 'properties') }}</p>
             <div class="listings-grid">
                 @foreach($properties as $property)
-                    <a href="{{ route('property.detail', $property->slug) }}" class="property-card">
+                    <a href="{{ $category === 'yacht' ? route('yacht.detail', $property->slug) : route('property.detail', $property->slug) }}" class="property-card">
                         <div class="property-image">
-                            <img src="{{ asset($property->main_image ?? '/images/villa1.jpg') }}" alt="{{ $property->title }}">
+                            <img src="{{ asset($property->main_image ?? '/images/villa1.jpg') }}" alt="{{ $category === 'yacht' ? $property->name : $property->title }}">
                             
                             @if($property->status === 'coming_soon')
                                 <div class="status-badge coming-soon">Coming Soon</div>
@@ -587,6 +731,7 @@
                             @endif
                             
                             @auth
+                            @if($category === 'home')
                             <button class="like-btn {{ Auth::user()->hasLiked($property->id) ? 'liked' : '' }}" 
                                     data-property-id="{{ $property->id}}"
                                     onclick="event.preventDefault(); event.stopPropagation(); toggleLike(this, {{ $property->id }})">
@@ -594,56 +739,98 @@
                                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                                 </svg>
                             </button>
+                            @elseif($category === 'yacht')
+                            <button class="like-btn {{ Auth::user()->hasLikedYacht($property->id) ? 'liked' : '' }}" 
+                                    data-yacht-id="{{ $property->id}}"
+                                    onclick="event.preventDefault(); event.stopPropagation(); toggleYachtLike(this, {{ $property->id }})">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="{{ Auth::user()->hasLikedYacht($property->id) ? '#e74c3c' : 'none' }}" stroke="{{ Auth::user()->hasLikedYacht($property->id) ? '#e74c3c' : '#666' }}" stroke-width="2">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                </svg>
+                            </button>
+                            @endif
                             @endauth
                         </div>
                         <div class="property-info-card">
                             <div class="property-header">
                                 <h3 class="property-name">
-                                    {{ $property->title }}
-                                    @if($property->shares_booked)
+                                    {{ $category === 'yacht' ? $property->name : $property->title }}
+                                    @if($property->shares_committed ?? $property->shares_booked)
                                         <span style="display: inline-block; margin-left: 8px; padding: 4px 10px; background: #064852; color: white; font-size: 10px; font-weight: 600; border-radius: 12px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Work Sans', sans-serif;">
-                                            {{ $property->shares_booked }} Committed
+                                            {{ $property->shares_committed ?? $property->shares_booked }} Committed
                                         </span>
                                     @endif
                                 </h3>
                                 <div class="property-icon"></div>
                             </div>
-                            <p class="property-location-text">{{ $property->location->name ?? $property->city }}</p>
-                            <p class="property-price-text">{{ $property->formatted_price }}</p>
-                            <p class="property-specs">{{ $property->ownership ?? '1/4 Ownership' }}</p>
-                            <p class="property-specs" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12px; color: #666; font-family: 'Work Sans', sans-serif;">
-                                <span style="display: inline-flex; align-items: center; gap: 4px;">
-                                    <img src="{{ asset('images/icons/bedroom.png') }}" alt="Bedroom" style="width: 25px; height: 25px; object-fit: contain;">
-                                    {{ $property->bedrooms }}
-                                </span>
-                                <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
-                                <span style="display: inline-flex; align-items: center; gap: 4px;">
-                                    <img src="{{ asset('images/icons/bathroom.png') }}" alt="Bathroom" style="width: 25px; height: 25px; object-fit: contain;">
-                                    {{ $property->bathrooms }}
-                                </span>
-                                <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
-                                <span style="display: inline-flex; align-items: center; gap: 4px;">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#064852" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M3 21h18"/>
-                                        <path d="M5 21V7l8-4v18"/>
-                                        <path d="M19 21V11l-6-4"/>
-                                        <rect x="7" y="10" width="2" height="2"/>
-                                        <rect x="7" y="14" width="2" height="2"/>
-                                        <rect x="7" y="18" width="2" height="2"/>
-                                        <rect x="15" y="14" width="2" height="2"/>
-                                        <rect x="15" y="18" width="2" height="2"/>
-                                    </svg>
-                                    {{ number_format($property->building_area, 0) }} m²
-                                </span>
-                                <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
-                                <span style="display: inline-flex; align-items: center; gap: 4px;">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#064852" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <rect x="3" y="3" width="18" height="18" rx="1" stroke-dasharray="2,2"/>
-                                        <path d="M3 3l-2 -2M21 3l2 -2M3 21l-2 2M21 21l2 2"/>
-                                    </svg>
-                                    {{ number_format($property->land_area, 0) }} m²
-                                </span>
-                            </p>
+                            
+                            @if($category === 'yacht')
+                                <p class="property-price-text">{{ $property->formatted_price }}</p>
+                                <p class="property-specs">{{ $property->ownership ?? '1/4 Ownership' }}</p>
+                                <p class="property-specs" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12px; color: #666; font-family: 'Work Sans', sans-serif;">
+                                    @if($property->length_overall)
+                                    <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                        <img src="{{ asset('images/Icon-22.png') }}" alt="LOA" style="width: 24px; height: 24px; object-fit: contain;">
+                                        {{ $property->length_overall }}
+                                    </span>
+                                    @endif
+                                    @if($property->cruising_speed)
+                                    <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                                    <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                        <img src="{{ asset('images/Icon-24.png') }}" alt="Cruising Speed" style="width: 24px; height: 24px; object-fit: contain;">
+                                        {{ $property->cruising_speed }}
+                                    </span>
+                                    @endif
+                                    @if($property->maximum_passengers)
+                                    <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                                    <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#064852" stroke-width="1.5">
+                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                            <circle cx="9" cy="7" r="4"/>
+                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                        </svg>
+                                        {{ $property->maximum_passengers }} Guests
+                                    </span>
+                                    @endif
+                                </p>
+                            @else
+                                <p class="property-location-text">{{ $property->location->name ?? $property->city }}</p>
+                                <p class="property-price-text">{{ $property->formatted_price }}</p>
+                                <p class="property-specs">{{ $property->ownership ?? '1/4 Ownership' }}</p>
+                                <p class="property-specs" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12px; color: #666; font-family: 'Work Sans', sans-serif;">
+                                    <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                        <img src="{{ asset('images/icons/bedroom.png') }}" alt="Bedroom" style="width: 25px; height: 25px; object-fit: contain;">
+                                        {{ $property->bedrooms }}
+                                    </span>
+                                    <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                                    <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                        <img src="{{ asset('images/icons/bathroom.png') }}" alt="Bathroom" style="width: 25px; height: 25px; object-fit: contain;">
+                                        {{ $property->bathrooms }}
+                                    </span>
+                                    <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                                    <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#064852" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M3 21h18"/>
+                                            <path d="M5 21V7l8-4v18"/>
+                                            <path d="M19 21V11l-6-4"/>
+                                            <rect x="7" y="10" width="2" height="2"/>
+                                            <rect x="7" y="14" width="2" height="2"/>
+                                            <rect x="7" y="18" width="2" height="2"/>
+                                            <rect x="15" y="14" width="2" height="2"/>
+                                            <rect x="15" y="18" width="2" height="2"/>
+                                        </svg>
+                                        {{ number_format($property->building_area, 0) }} m²
+                                    </span>
+                                    <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                                    <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#064852" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <rect x="3" y="3" width="18" height="18" rx="1" stroke-dasharray="2,2"/>
+                                            <path d="M3 3l-2 -2M21 3l2 -2M3 21l-2 2M21 21l2 2"/>
+                                        </svg>
+                                        {{ number_format($property->land_area, 0) }} m²
+                                    </span>
+                                </p>
+                            @endif
                         </div>
                     </a>
                 @endforeach
@@ -659,37 +846,100 @@
     @include('components.whatsapp-contact')
 
     <script>
-        // Set navbar to light mode immediately
+        // Navbar mode change on scroll - same as other pages
         document.addEventListener('DOMContentLoaded', function() {
             const navbar = document.querySelector('.navbar-simple');
-            const navbarLogo = document.getElementById('navbar-logo');
+            const navbarLogo = document.getElementById('navbar-detail-logo');
+            const searchIcon = document.getElementById('search-icon-simple');
             
+            // Set to hero mode on load
             if (navbar) {
-                navbar.classList.remove('nav-hero', 'nav-dark');
-                navbar.classList.add('nav-light');
+                navbar.classList.add('nav-hero');
+                navbar.classList.remove('nav-light', 'nav-dark');
+            }
+            if (navbarLogo) {
+                navbarLogo.src = '/images/Logo-06.png';
+            }
+            if (searchIcon) {
+                searchIcon.setAttribute('stroke', 'white');
             }
             
-            // Set logo to dark version
-            if (navbarLogo) {
-                navbarLogo.src = '/images/Logo-01.png';
-            }
+            // Change on scroll
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const windowHeight = window.innerHeight;
+                
+                if (scrollTop < windowHeight * 0.6) {
+                    // Hero section - transparent
+                    navbar.classList.add('nav-hero');
+                    navbar.classList.remove('nav-light', 'nav-dark');
+                    if (navbarLogo) navbarLogo.src = '/images/Logo-06.png';
+                    if (searchIcon) searchIcon.setAttribute('stroke', 'white');
+                } else {
+                    // Scrolled down - cream background
+                    navbar.classList.remove('nav-hero', 'nav-dark');
+                    navbar.classList.add('nav-light');
+                    if (navbarLogo) navbarLogo.src = '/images/Logo-04.png';
+                    if (searchIcon) searchIcon.setAttribute('stroke', '#064852');
+                }
+            });
         });
 
         function toggleLike(button, propertyId) {
-            button.classList.toggle('liked');
-            
             // AJAX call to save like status
-            fetch('/api/property/like', {
+            fetch(`/property/${propertyId}/like`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                },
-                body: JSON.stringify({
-                    property_id: propertyId
-                })
-            }).catch(error => {
-                console.log('Like action logged');
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Toggle button state based on response
+                    if (data.liked) {
+                        button.classList.add('liked');
+                        button.querySelector('svg').setAttribute('fill', '#e74c3c');
+                        button.querySelector('svg').setAttribute('stroke', '#e74c3c');
+                    } else {
+                        button.classList.remove('liked');
+                        button.querySelector('svg').setAttribute('fill', 'none');
+                        button.querySelector('svg').setAttribute('stroke', '#666');
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error toggling like:', error);
+            });
+        }
+
+        function toggleYachtLike(button, yachtId) {
+            // AJAX call to save yacht like status
+            fetch(`/yacht/${yachtId}/like`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Toggle button state based on response
+                    if (data.liked) {
+                        button.classList.add('liked');
+                        button.querySelector('svg').setAttribute('fill', '#e74c3c');
+                        button.querySelector('svg').setAttribute('stroke', '#e74c3c');
+                    } else {
+                        button.classList.remove('liked');
+                        button.querySelector('svg').setAttribute('fill', 'none');
+                        button.querySelector('svg').setAttribute('stroke', '#666');
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error toggling yacht like:', error);
             });
         }
     </script>

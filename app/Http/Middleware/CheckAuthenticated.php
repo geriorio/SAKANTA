@@ -15,15 +15,17 @@ class CheckAuthenticated
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Jika user belum login, redirect ke signin
+        // Jika user belum login, redirect ke intro
         if (!auth()->check()) {
-            return redirect('/signin')->with('info', 'Please sign in to continue.');
+            return redirect()->route('auth.intro')->with('info', 'Please sign in to continue.');
         }
 
         // Jika user tidak aktif, logout dan redirect
         if (!auth()->user()->is_active) {
             auth()->logout();
-            return redirect('/signin')->with('error', 'Your account is inactive. Please contact admin.');
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect()->route('auth.intro')->with('error', 'Your account is inactive. Please contact admin.');
         }
 
         return $next($request);

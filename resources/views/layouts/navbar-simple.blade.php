@@ -296,10 +296,6 @@
         border: 2px solid #064852 !important;
     }
 
-    .navbar-simple.nav-light .search-bar svg {
-        stroke: #064852 !important;
-    }
-
     /* Search bar adaptation for dark mode */
     .navbar-simple.nav-dark .search-bar input,
     .navbar-simple.nav-dark .navbar-search-input {
@@ -319,10 +315,7 @@
         border-color: rgba(255,255,255,0.5);
     }
 
-    .navbar-simple.nav-dark .search-bar svg {
-        stroke: white !important;
-    }
-
+    /* Nav Right - Social & Auth */
     /* Custom scrollbar for search results */
     #search-results-simple::-webkit-scrollbar {
         width: 6px;
@@ -740,7 +733,7 @@
             <input type="text" id="navbar-search-simple" placeholder="Search location or property..." 
                    class="navbar-search-input"
                    oninput="performSearchSimple(this.value)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); pointer-events: none; opacity: 0.7;">
+            <svg id="search-icon-simple" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); pointer-events: none; opacity: 0.7;">
                 <circle cx="11" cy="11" r="8"></circle>
                 <path d="m21 21-4.35-4.35"></path>
             </svg>
@@ -752,8 +745,8 @@
         </div>
         
         <span class="separator">|</span>
-        <a href="/">HOME</a>
-        <a href="/listings">LISTINGS</a>
+        <a href="/listings">HOMES</a>
+        <a href="/yacht-listings">SAIL</a>
         <a href="/about">ABOUT</a>
         <a href="/how-it-works">HOW IT WORKS</a>
 
@@ -1043,12 +1036,38 @@
 
     // Force nav-light and logo dark on load
     document.addEventListener('DOMContentLoaded', function() {
+        const searchIcon = document.getElementById('search-icon-simple');
         if (navbar) {
             navbar.classList.remove('nav-hero', 'nav-dark', 'nav-hidden');
             navbar.classList.add('nav-light', 'nav-visible');
         }
         if (logo) {
             logo.src = '/images/Logo-04.png';
+        }
+        // Set search icon to dark by default
+        if (searchIcon) {
+            searchIcon.setAttribute('stroke', '#064852');
+        }
+        
+        // Check if page has nav-hero override (like all-listings)
+        // If navbar gets set to nav-hero by page script, change icon to white
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.attributeName === 'class') {
+                    const searchIcon = document.getElementById('search-icon-simple');
+                    if (navbar.classList.contains('nav-hero')) {
+                        if (searchIcon) searchIcon.setAttribute('stroke', 'white');
+                    } else if (navbar.classList.contains('nav-light')) {
+                        if (searchIcon) searchIcon.setAttribute('stroke', '#064852');
+                    } else if (navbar.classList.contains('nav-dark')) {
+                        if (searchIcon) searchIcon.setAttribute('stroke', 'white');
+                    }
+                }
+            });
+        });
+        
+        if (navbar) {
+            observer.observe(navbar, { attributes: true });
         }
     });
 

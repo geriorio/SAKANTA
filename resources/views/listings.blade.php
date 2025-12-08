@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/Logo-02.png') }}?v=2">
     <title>Listings - SAKANTA</title>
     
     <!-- Google Fonts - Work Sans -->
@@ -995,16 +996,38 @@
 
         @if($listings->count() > 3)
         <div style="text-align: center; margin-top: 40px;">
-            <button id="viewMoreBtn" onclick="showMoreProperties()" style="background: #F7EFE2; color: #064852; border: 2px solid #064852; padding: 14px 40px; font-size: 16px; font-family: 'Work Sans', sans-serif; font-weight: 600; border-radius: 0; cursor: pointer; transition: all 0.3s ease;">
+            <button id="viewMoreBtn" onclick="showMoreProperties()" class="view-toggle-btn">
                 VIEW MORE
             </button>
-            <button id="viewLessBtn" onclick="showLessProperties()" style="display: none; background: #F7EFE2; color: #064852; border: 2px solid #064852; padding: 14px 40px; font-size: 16px; font-family: 'Work Sans', sans-serif; font-weight: 600; border-radius: 0; cursor: pointer; transition: all 0.3s ease;">
+            <button id="viewLessBtn" onclick="showLessProperties()" class="view-toggle-btn" style="display: none;">
                 VIEW LESS
             </button>
         </div>
         @endif
     </section>
 
+    <!-- Original inline styles moved to stylesheet above -->
+    <style>
+        .view-toggle-btn {
+            background: #F7EFE2;
+            color: #064852;
+            border: 2px solid #064852;
+            padding: 14px 40px;
+            font-size: 16px;
+            font-family: 'Work Sans', sans-serif;
+            font-weight: 600;
+            border-radius: 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .view-toggle-btn:hover {
+            background: #064852;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(6, 72, 82, 0.3);
+        }
+    </style>
     <style>
         .property-card:hover {
             transform: translateY(-12px);

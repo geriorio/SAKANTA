@@ -2,7 +2,7 @@
 <nav id="navbar" class="nav-hero">
     <div class="logo">
         <a href="/" style="display: flex; align-items: center; text-decoration: none;">
-            <img id="navbar-logo" src="/images/Logo-06.png" alt="Sakanta Logo" style="height: 48px !important;">
+            <img id="navbar-logo" src="/images/Logo-06.png" alt="Sakanta Logo" style="height: 48px !important; width: auto !important; object-fit: contain !important;">
         </a>
     </div>
 
@@ -22,7 +22,7 @@
             <input type="text" id="navbar-search" placeholder="Search location or property..." 
                    class="navbar-search-input"
                    oninput="performSearch(this.value)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); pointer-events: none; opacity: 0.7;">
+            <svg id="search-icon-main" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); pointer-events: none; opacity: 0.7;">
                 <circle cx="11" cy="11" r="8"></circle>
                 <path d="m21 21-4.35-4.35"></path>
             </svg>
@@ -34,8 +34,8 @@
         </div>
         
         <span class="separator">|</span>
-        <a href="/">HOME</a>
-        <a href="/listings">LISTINGS</a>
+        <a href="/listings">HOMES</a>
+        <a href="/yacht-listings">SAIL</a>
         <a href="/about">ABOUT</a>
         <a href="/how-it-works">HOW IT WORKS</a>
 
@@ -474,33 +474,37 @@ document.addEventListener('click', function(event) {
         align-items: center;
     }
 
-    /* Base logo size - KEEP 48px */
+    /* Base logo size - KEEP 48px consistent for all modes */
     .logo img {
         height: 48px !important;
         width: auto !important;
+        object-fit: contain !important;
         filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
         transition: all 0.3s ease;
     }
 
-    /* Ensure all navbar states have same logo size */
+    /* Default size for hero and dark modes */
     nav .logo img,
-    nav.nav-hero .logo img {
+    nav.nav-hero .logo img,
+    nav.nav-dark .logo img,
+    nav.nav-visible .logo img {
         height: 48px !important;
+        width: auto !important;
+        object-fit: contain !important;
     }
 
-    /* Logo size - nav-light (krem) - BESARKAN sedikit untuk match mode lain */
+    /* FORCE larger size for nav-light (krem) mode to compensate for Logo-04.png being smaller */
     nav.nav-light .logo img {
-        height: 52px !important; /* Slightly bigger */
+        height: 56px !important;
+        width: auto !important;
+        object-fit: contain !important;
         filter: drop-shadow(0 2px 4px rgba(6, 72, 82, 0.3));
     }
 
-    nav.nav-dark .logo img {
-        height: 48px !important;
+    /* Shadow/filter for dark modes */
+    nav.nav-dark .logo img,
+    nav.nav-hero .logo img {
         filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
-    }
-
-    nav.nav-visible .logo img {
-        height: 48px !important;
     }
 
     .logo a:hover img {
@@ -613,10 +617,6 @@ document.addEventListener('click', function(event) {
         border: 2px solid #064852 !important;
     }
 
-    nav.nav-light .search-bar svg {
-        stroke: #064852 !important;
-    }
-
     /* Search bar adaptation for dark mode */
     nav.nav-dark .search-bar input,
     nav.nav-dark .navbar-search-input {
@@ -634,10 +634,6 @@ document.addEventListener('click', function(event) {
     nav.nav-dark .navbar-search-input:focus {
         background: rgba(255,255,255,0.2);
         border-color: rgba(255,255,255,0.5);
-    }
-
-    nav.nav-dark .search-bar svg {
-        stroke: white !important;
     }
 
     /* Custom scrollbar for search results */
@@ -1083,17 +1079,21 @@ document.addEventListener('click', function(event) {
             height: 35px;
         }
 
-        .logo img {
-            height: 40px !important;
-        }
-
-        nav.nav-light .logo img {
-            height: 40px !important;
-        }
-
+        .logo img,
+        nav .logo img,
         nav.nav-hero .logo img,
+        nav.nav-dark .logo img,
         nav.nav-visible .logo img {
             height: 40px !important;
+            width: auto !important;
+            object-fit: contain !important;
+        }
+
+        /* Compensate for Logo-04.png being smaller in light mode */
+        nav.nav-light .logo img {
+            height: 46px !important;
+            width: auto !important;
+            object-fit: contain !important;
         }
     }
 
@@ -1168,12 +1168,16 @@ document.addEventListener('click', function(event) {
         // Get all sections
         const sections = document.querySelectorAll('section, .section2, .section3, .section4, .section5');
         
-        // Check if we're at hero section (ONLY at top - transparent ONLY on hero)
-        if (scrollTop < windowHeight * 0.5) {
+        // Check if we're at hero section - stay transparent for 85% of viewport height
+        // This ensures navbar remains transparent throughout hero section
+        if (scrollTop < windowHeight * 0.85) {
             navbar.classList.remove('nav-light', 'nav-dark');
             navbar.classList.add('nav-hero');
-            // Use Logo-06 (white) for transparent hero
-            if (navbarLogo) navbarLogo.src = '/images/Logo-06.png';
+            // Use Logo-06 (white) for transparent hero with standard size
+            if (navbarLogo) {
+                navbarLogo.src = '/images/Logo-06.png';
+                navbarLogo.style.height = '48px';
+            }
             return;
         }
         
@@ -1202,8 +1206,11 @@ document.addEventListener('click', function(event) {
                 // DARK SECTION - navbar hijau/dark SOLID (bukan transparan)
                 navbar.classList.remove('nav-hero', 'nav-light');
                 navbar.classList.add('nav-dark');
-                // Use Logo-06 (white) for dark background
-                if (navbarLogo) navbarLogo.src = '/images/Logo-06.png';
+                // Use Logo-06 (white) for dark background with standard size
+                if (navbarLogo) {
+                    navbarLogo.src = '/images/Logo-06.png';
+                    navbarLogo.style.height = '48px';
+                }
             }
             // Check if section has LIGHT background (#F7EFE2)
             else if (bgColor.includes('247, 239, 226') || // rgb(247, 239, 226) = #F7EFE2
@@ -1216,14 +1223,20 @@ document.addEventListener('click', function(event) {
                 // LIGHT SECTION - navbar cream SOLID
                 navbar.classList.remove('nav-hero', 'nav-dark');
                 navbar.classList.add('nav-light');
-                // Use Logo-04 (dark) for light background
-                if (navbarLogo) navbarLogo.src = '/images/Logo-04.png';
+                // Use Logo-04 (dark) for light background with LARGER size to compensate
+                if (navbarLogo) {
+                    navbarLogo.src = '/images/Logo-04.png';
+                    navbarLogo.style.height = '56px';
+                }
             } else {
                 // Default - assume dark section
                 navbar.classList.remove('nav-hero', 'nav-light');
                 navbar.classList.add('nav-dark');
-                // Use Logo-06 (white) for dark background
-                if (navbarLogo) navbarLogo.src = '/images/Logo-06.png';
+                // Use Logo-06 (white) for dark background with standard size
+                if (navbarLogo) {
+                    navbarLogo.src = '/images/Logo-06.png';
+                    navbarLogo.style.height = '48px';
+                }
             }
         }
     }
@@ -1265,6 +1278,30 @@ document.addEventListener('click', function(event) {
     
     // Update color on load
     setTimeout(updateNavbarColor, 100);
+    
+    // Update search icon color based on navbar class
+    const searchIconMain = document.getElementById('search-icon-main');
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.attributeName === 'class') {
+                if (navbar.classList.contains('nav-hero')) {
+                    if (searchIconMain) searchIconMain.setAttribute('stroke', 'white');
+                } else if (navbar.classList.contains('nav-light')) {
+                    if (searchIconMain) searchIconMain.setAttribute('stroke', '#064852');
+                } else if (navbar.classList.contains('nav-dark')) {
+                    if (searchIconMain) searchIconMain.setAttribute('stroke', 'white');
+                }
+            }
+        });
+    });
+    
+    if (navbar && searchIconMain) {
+        observer.observe(navbar, { attributes: true });
+        // Set initial color
+        if (navbar.classList.contains('nav-hero')) {
+            searchIconMain.setAttribute('stroke', 'white');
+        }
+    }
 </script>
 
 

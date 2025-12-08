@@ -33,6 +33,7 @@
             <a href="{{ route('admin.faqs.index') }}">FAQs</a>
             <a href="{{ route('admin.articles.index') }}">Articles</a>
             <a href="{{ route('admin.users.index') }}">Users</a>
+            <a href="{{ route('admin.authorized-users.index') }}">Access Codes</a>
             <a href="/">View Website</a>
             <form method="POST" action="{{ route('admin.logout') }}" style="display: inline;">
                 @csrf
@@ -52,6 +53,10 @@
                 <div class="stat-card">
                     <h3>{{ \App\Models\Property::where('status', 'available')->count() }}</h3>
                     <p>Available Properties</p>
+                </div>
+                <div class="stat-card">
+                    <h3>{{ \App\Models\Yacht::count() }}</h3>
+                    <p>Total Yachts</p>
                 </div>
                 <div class="stat-card">
                     <h3>{{ \App\Models\Location::count() }}</h3>
@@ -75,6 +80,10 @@
                    style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 5px; text-decoration: none; font-weight: 600;">
                     + Add New Property
                 </a>
+                <a href="{{ route('admin.yachts.create') }}" 
+                   style="display: inline-block; background: linear-gradient(135deg, #5f72bd 0%, #9b23ea 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 5px; text-decoration: none; font-weight: 600;">
+                    ⚓ Add New Yacht
+                </a>
                 <a href="{{ route('admin.locations.create') }}" 
                    style="display: inline-block; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 5px; text-decoration: none; font-weight: 600;">
                     + Add New Location
@@ -90,6 +99,10 @@
                 <a href="{{ route('admin.users.index') }}" 
                    style="display: inline-block; background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 5px; text-decoration: none; font-weight: 600;">
                     👥 Manage Users
+                </a>
+                <a href="{{ route('admin.authorized-users.create') }}" 
+                   style="display: inline-block; background: linear-gradient(135deg, #ffa751 0%, #ffe259 100%); color: white; padding: 0.75rem 1.5rem; border-radius: 5px; text-decoration: none; font-weight: 600;">
+                    🔑 Generate Access Code
                 </a>
             </div>
         </div>

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ asset('images/Logo-02.png') }}?v=2">
     <title>@yield('title', 'Sakanta - Platform Co-Ownership Property Terdepan')</title>
     <meta name="description" content="@yield('description', 'Investasi property bersama dengan sistem co-ownership. Miliki saham property impian Anda mulai dari 1/8 bagian.')">
     
@@ -98,20 +99,20 @@
         }
         
         .navbar-transparent {
-            background: rgba(255, 255, 255, 0);
-            backdrop-filter: blur(0px);
-            border: 1px solid rgba(255, 255, 255, 0);
-            box-shadow: none;
+            background: rgba(255, 255, 255, 0) !important;
+            backdrop-filter: blur(0px) !important;
+            border: 1px solid rgba(255, 255, 255, 0) !important;
+            box-shadow: none !important;
             transition: all 0.3s ease;
         }
         
         .navbar-scrolled {
-            background: rgba(45, 51, 23, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(114, 116, 68, 0.3);
+            background: rgba(45, 51, 23, 0.95) !important;
+            backdrop-filter: blur(20px) !important;
+            border: 1px solid rgba(114, 116, 68, 0.3) !important;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), 
                         inset 0 1px 0 rgba(114, 116, 68, 0.3),
-                        0 0 30px rgba(45, 51, 23, 0.2);
+                        0 0 30px rgba(45, 51, 23, 0.2) !important;
         }
         
         .navbar-scrolled .navbar-logo-text {
@@ -958,7 +959,7 @@
     <!-- Cyber Grid Background -->
     <div class="fixed inset-0 cyber-grid opacity-20 pointer-events-none z-0"></div>
     <!-- Navigation -->
-    <nav class="fixed w-full top-0 z-50 navbar-transparent" x-data="{ open: false }" id="navbar">
+    <nav class="fixed w-full top-0 z-50 navbar-transparent" x-data="{ open: false }" id="navbar" style="background: transparent; border: none;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
@@ -1012,7 +1013,7 @@
                                 <a href="#dashboard" class="block px-4 py-2 text-sm text-gray-700 hover:bg-white/50 font-light">Dashboard</a>
                                 <a href="#investasi" class="block px-4 py-2 text-sm text-gray-700 hover:bg-white/50 font-light">Investasi Saya</a>
                                 <hr class="my-1 border-gray-200">
-                                <form method="POST" action="{{ route('logout') }}">
+                                <form method="POST" action="{{ route('logout') }}" id="logoutForm">
                                     @csrf
                                     <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 font-light">
                                         Logout
@@ -1055,7 +1056,7 @@
                     <hr class="my-3 border-sage/30">
                     <a href="#dashboard" class="block px-3 py-2 text-cream hover:bg-sage/20 rounded-lg font-light">Dashboard</a>
                     <a href="#investasi" class="block px-3 py-2 text-cream hover:bg-sage/20 rounded-lg font-light">Investasi Saya</a>
-                    <form method="POST" action="{{ route('logout') }}">
+                    <form method="POST" action="{{ route('logout') }}" id="logoutFormMobile">
                         @csrf
                         <button type="submit" class="block w-full text-left px-3 py-2 text-red-400 hover:bg-red-900/20 rounded-lg font-light">Logout</button>
                     </form>
@@ -1225,21 +1226,48 @@
         document.addEventListener('DOMContentLoaded', function() {
             const navbar = document.getElementById('navbar');
             
+            // Ensure navbar starts transparent with inline style
+            navbar.classList.add('navbar-transparent');
+            navbar.classList.remove('navbar-scrolled');
+            navbar.style.background = 'transparent';
+            navbar.style.border = 'none';
+            navbar.style.boxShadow = 'none';
+            
             function handleScroll() {
-                if (window.scrollY > 50) {
+                // Calculate 85% of viewport height as threshold
+                // This ensures navbar stays transparent throughout hero section
+                const heroThreshold = window.innerHeight * 0.85;
+                
+                if (window.scrollY > heroThreshold) {
                     navbar.classList.remove('navbar-transparent');
                     navbar.classList.add('navbar-scrolled');
+                    navbar.style.background = 'rgba(45, 51, 23, 0.95)';
+                    navbar.style.backdropFilter = 'blur(20px)';
+                    navbar.style.border = '1px solid rgba(114, 116, 68, 0.3)';
+                    navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(114, 116, 68, 0.3), 0 0 30px rgba(45, 51, 23, 0.2)';
                 } else {
                     navbar.classList.remove('navbar-scrolled');
                     navbar.classList.add('navbar-transparent');
+                    navbar.style.background = 'transparent';
+                    navbar.style.backdropFilter = 'none';
+                    navbar.style.border = 'none';
+                    navbar.style.boxShadow = 'none';
                 }
             }
             
-            // Set initial state
-            handleScroll();
+            // Listen for scroll events with throttle for performance
+            let scrollTimeout;
+            window.addEventListener('scroll', function() {
+                if (scrollTimeout) {
+                    window.cancelAnimationFrame(scrollTimeout);
+                }
+                scrollTimeout = window.requestAnimationFrame(function() {
+                    handleScroll();
+                });
+            });
             
-            // Listen for scroll events
-            window.addEventListener('scroll', handleScroll);
+            // Initial check after a short delay
+            setTimeout(handleScroll, 100);
         });
     </script>
     
@@ -1369,6 +1397,62 @@
                 history.scrollRestoration = 'manual';
             }
         })();
+
+        // Prevent back button to access protected pages after logout
+        (function() {
+            // Force reload from server when page is loaded from cache (back/forward button)
+            if (performance.navigation.type === 2 || performance.getEntriesByType('navigation')[0]?.type === 'back_forward') {
+                // Page accessed via back/forward button - force reload from server
+                window.location.reload(true);
+            }
+
+            @guest
+            // User is not logged in - completely prevent back navigation
+            window.history.forward();
+            window.onunload = function() { null };
+            @endguest
+        })();
+
+        @auth
+        // Handle logout - use AJAX to prevent history issues
+        const logoutForm = document.getElementById('logoutForm');
+        const logoutFormMobile = document.getElementById('logoutFormMobile');
+        
+        function handleLogout(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const formData = new FormData(form);
+            
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            }).then(() => {
+                // Clear all storage
+                sessionStorage.clear();
+                localStorage.clear();
+                
+                // Use replace to prevent back navigation
+                window.location.replace('{{ route("auth.intro") }}');
+            }).catch(() => {
+                // Even on error, redirect to intro
+                window.location.replace('{{ route("auth.intro") }}');
+            });
+            
+            return false;
+        }
+        
+        if (logoutForm) {
+            logoutForm.addEventListener('submit', handleLogout);
+        }
+        
+        if (logoutFormMobile) {
+            logoutFormMobile.addEventListener('submit', handleLogout);
+        }
+        @endauth
     </script>
     
     @stack('scripts')

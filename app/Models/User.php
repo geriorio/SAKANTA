@@ -67,4 +67,21 @@ class User extends Authenticatable
     {
         return $this->likedProperties()->where('property_id', $propertyId)->exists();
     }
+
+    /**
+     * Get yachts yang dilike oleh user
+     */
+    public function likedYachts()
+    {
+        return $this->belongsToMany(Yacht::class, 'yacht_likes')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Check apakah user sudah like yacht tertentu
+     */
+    public function hasLikedYacht($yachtId)
+    {
+        return $this->likedYachts()->where('yacht_id', $yachtId)->exists();
+    }
 }

@@ -18,7 +18,11 @@ class ProfileController extends Controller
         $likedProperties = $user->likedProperties()
                                 ->with('propertyShares')
                                 ->paginate(12);
+        
+        // Get yachts yang dilike oleh user dengan pagination
+        $likedYachts = $user->likedYachts()
+                            ->paginate(12);
 
-        return view('profile', compact('user', 'likedProperties'));
+        return view('profile', compact('user', 'likedProperties', 'likedYachts'));
     }
 }

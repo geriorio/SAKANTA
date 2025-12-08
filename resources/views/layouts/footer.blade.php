@@ -50,17 +50,16 @@
                     <a href="{{ route('locations') }}" style="text-decoration: none;">
                         <h4 class="footer-nav-title">Destination</h4>
                     </a>
-                    <a href="{{ route('welcome') }}" style="text-decoration: none;">
+                    <a href="{{ route('all.listings') }}" style="text-decoration: none;">
                         <h4 class="footer-nav-title">Homes</h4>
                     </a>
-                    <h4 class="footer-nav-title">Sails</h4>
+                    <a href="{{ route('yacht.listings') }}" style="text-decoration: none;">
+                        <h4 class="footer-nav-title">Sails</h4>
+                    </a>
                 </div>
                 <div class="footer-nav-column">
                     <a href="{{ route('how-it-works') }}" style="text-decoration: none;">
                         <h4 class="footer-nav-title">How it works</h4>
-                    </a>
-                    <a href="{{ route('all.listings') }}" style="text-decoration: none;">
-                        <h4 class="footer-nav-title">All Listings</h4>
                     </a>
                     <a href="{{ route('faq.show', 'property-agents-partnerships') }}" style="text-decoration: none;">
                         <h4 class="footer-nav-title">Agents</h4>

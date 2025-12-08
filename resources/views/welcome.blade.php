@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/Logo-02.png') }}?v=2">
     <title>SAKANTA - Luxury Villa Resort</title>
     
     <!-- Google Fonts - Work Sans -->
@@ -90,60 +91,131 @@
             color: #064852;
         }
 
-        /* Hero Section */
+        /* Split Hero Section */
         .hero-section {
             height: 100vh;
-            background: url('/images/hero4.jpg') center/cover no-repeat;
+            display: flex;
             position: relative;
+            overflow: hidden;
+        }
+
+        .hero-half {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: flex 0.6s ease;
+            text-decoration: none;
+        }
+
+        .hero-half:hover {
+            flex: 1.1;
+            text-decoration: none;
+        }
+
+        .hero-half img.hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .hero-half:hover img.hero-bg {
+            transform: scale(1.1);
+        }
+
+        .hero-half::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6));
+            transition: background 0.4s ease;
+            z-index: 1;
+        }
+
+        .hero-half:hover::before {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.7));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 50px 40px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
         }
 
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(
-                to bottom,
-                rgba(0, 0, 0, 0.25) 0%,
-                rgba(0, 0, 0, 0.15) 50%,
-                rgba(0, 0, 0, 0.25) 100%
-            );
-            z-index: 1;
+        .hero-content img.hero-logo-img {
+            width: 280px;
+            height: auto;
+            margin-bottom: 50px;
+            filter: brightness(0) invert(1);
+            opacity: 0.95;
+            display: block;
         }
 
-        .hero-logo {
-            text-align: center;
+        .hero-button {
+            display: inline-block;
+            padding: 18px 42px;
+            background: transparent;
+            border: 2px solid white;
             color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-            margin-top: 80px;
-            margin-bottom: 40px;
+            text-decoration: none !important;
+            font-family: 'Work Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            border-radius: 0;
         }
 
-        .hero-logo img {
-            filter: drop-shadow(0 10px 40px rgba(0, 0, 0, 0.8));
-            animation: logoFloat 4s ease-in-out infinite;
+        .hero-button:hover {
+            background: white;
+            color: #064852;
+            border-color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255,255,255,0.3);
+            text-decoration: none !important;
         }
 
-        @keyframes logoFloat {
-            0%, 100% {
-                transform: translateY(0px);
+        /* Responsive for Split Hero */
+        @media (max-width: 768px) {
+            .hero-section {
+                flex-direction: column;
             }
-            50% {
-                transform: translateY(-15px);
+
+            .hero-half {
+                min-height: 50vh;
+            }
+
+            .hero-half:hover {
+                flex: 1;
+            }
+
+            .hero-content img.hero-logo-img {
+                width: 200px;
+                margin-bottom: 30px;
+            }
+
+            .hero-button {
+                padding: 14px 32px;
+                font-size: 12px;
             }
         }
-
-
 
         .scroll-down {
             text-align: center;
@@ -762,15 +834,25 @@
 
     @include('components.whatsapp-contact')
 
-    <!-- Hero Section -->
+    <!-- Split Hero Section -->
     <section class="hero-section">
-        <div class="hero-logo">
-            <img src="/images/Logo-05.png" alt="Sakanta Logo" style="max-width: 600px; width: 80%; height: auto;">
-        </div>
-        <div class="scroll-down" onclick="document.querySelector('.section2').scrollIntoView({ behavior: 'smooth' })" style="cursor: pointer;">
-            <div class="scroll-icon"></div>
-            SCROLL DOWN<br>TO START YOUR JOURNEY
-        </div>
+        <!-- Sakanta Homes - Left Half -->
+        <a href="/listings" class="hero-half">
+            <img src="/images/home.jpg" alt="Sakanta Home" class="hero-bg">
+            <div class="hero-content">
+                <img src="/images/logohome.png" alt="Home Logo" class="hero-logo-img">
+                <div class="hero-button">EXPLORE HOMES</div>
+            </div>
+        </a>
+
+        <!-- Sakanta Sail - Right Half -->
+        <a href="/yacht-listings" class="hero-half">
+            <img src="/images/yacht.jpg" alt="Sakanta Sail" class="hero-bg">
+            <div class="hero-content">
+                <img src="/images/logosail.png" alt="Sail Logo" class="hero-logo-img">
+                <div class="hero-button">EXPLORE SAIL</div>
+            </div>
+        </a>
     </section>
 
     <!-- Section 2 -->

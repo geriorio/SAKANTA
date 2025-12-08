@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminAuthorizedUserController;
+use App\Http\Controllers\MembershipRequestController;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PropertyLikeController;
+use App\Http\Controllers\YachtLikeController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\ContactFormController;
@@ -14,16 +17,24 @@ use App\Http\Controllers\Admin\LocationController as AdminLocationController;
 use Illuminate\Support\Facades\Route;
 
 // Public Routes (No Auth Required)
-// Google Authentication Routes
-Route::get('/signin', function () {
-    return view('signin');
-})->name('signin');
+// Intro Page
+Route::get('/intro', [AuthController::class, 'showIntro'])->name('auth.intro');
 
-Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->name('auth.google');
-Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
+// Authentication Routes
+Route::get('/signin', [AuthController::class, 'showSignin'])->name('auth.signin');
+Route::post('/signin', [AuthController::class, 'signin'])->name('auth.signin.submit');
+Route::get('/signup', [AuthController::class, 'showSignup'])->name('auth.signup');
+Route::post('/signup', [AuthController::class, 'signup'])->name('auth.signup.submit');
+
+// Membership Request
+Route::post('/membership/request', [MembershipRequestController::class, 'submit'])->name('membership.request.submit');
+
+// Google Authentication Routes
+Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->name('auth.google.redirect');
+Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('auth.google.callback');
 
 // Protected Routes (User Must Be Authenticated)
-Route::middleware('userAuth')->group(function () {
+Route::middleware(['userAuth', 'prevent.back'])->group(function () {
     // Homepage
     Route::get('/', function () {
         $locations = \App\Models\Location::limit(5)->get();
@@ -44,12 +55,16 @@ Route::middleware('userAuth')->group(function () {
     Route::get('/listings', [PropertyController::class, 'listings'])->name('listings');
     Route::get('/locations', [PropertyController::class, 'listings'])->name('locations');
     Route::get('/all-listings', [PropertyController::class, 'allListings'])->name('all.listings');
+    Route::get('/yacht-listings', [PropertyController::class, 'yachtListings'])->name('yacht.listings');
     Route::get('/location/{location:slug}', [PropertyController::class, 'showLocation'])->name('location.show');
     Route::get('/location/{location:slug}/properties', [PropertyController::class, 'showLocation'])->name('location.properties');
     Route::get('/location/{location:slug}/article', [PropertyController::class, 'showArticle'])->name('location.article');
 
     // Property Detail Page (Dynamic by slug)
     Route::get('/property/{property:slug}', [PropertyController::class, 'show'])->name('property.detail');
+
+    // Yacht Detail Page (Dynamic by slug)
+    Route::get('/yacht/{yacht:slug}', [PropertyController::class, 'showYacht'])->name('yacht.detail');
 
     // About Page
     Route::get('/about', function () {
@@ -73,6 +88,9 @@ Route::middleware('userAuth')->group(function () {
     
     // Like/Unlike Property
     Route::post('/property/{property}/like', [PropertyLikeController::class, 'toggle'])->name('property.like');
+    
+    // Like/Unlike Yacht
+    Route::post('/yacht/{yacht}/like', [YachtLikeController::class, 'toggle'])->name('yacht.like');
 });
 
 
@@ -103,6 +121,20 @@ Route::prefix('admin')->group(function () {
         
         // Delete Property Additional Image
         Route::delete('/properties/{property}/images/{index}', [AdminPropertyController::class, 'deleteImage'])->name('admin.properties.deleteImage');
+
+        // Yacht Management
+        Route::resource('yachts', \App\Http\Controllers\Admin\YachtController::class)->names([
+            'index' => 'admin.yachts.index',
+            'create' => 'admin.yachts.create',
+            'store' => 'admin.yachts.store',
+            'show' => 'admin.yachts.show',
+            'edit' => 'admin.yachts.edit',
+            'update' => 'admin.yachts.update',
+            'destroy' => 'admin.yachts.destroy',
+        ]);
+        
+        // Delete Yacht Gallery Image
+        Route::delete('/yachts/{yacht}/images/{index}', [\App\Http\Controllers\Admin\YachtController::class, 'deleteImage'])->name('admin.yachts.deleteImage');
 
         // FAQ Management
         Route::resource('faqs', AdminFaqController::class)->names([
@@ -139,5 +171,16 @@ Route::prefix('admin')->group(function () {
         Route::post('/users', [\App\Http\Controllers\Admin\UserController::class, 'store'])->name('admin.users.store');
         Route::patch('/users/{id}/toggle', [\App\Http\Controllers\Admin\UserController::class, 'toggleActive'])->name('admin.users.toggle');
         Route::delete('/users/{id}', [\App\Http\Controllers\Admin\UserController::class, 'destroy'])->name('admin.users.destroy');
+
+        // Authorized Users Management
+        Route::resource('authorized-users', AdminAuthorizedUserController::class)->names([
+            'index' => 'admin.authorized-users.index',
+            'create' => 'admin.authorized-users.create',
+            'store' => 'admin.authorized-users.store',
+            'edit' => 'admin.authorized-users.edit',
+            'update' => 'admin.authorized-users.update',
+            'destroy' => 'admin.authorized-users.destroy',
+        ]);
+        Route::post('/authorized-users/{authorizedUser}/regenerate', [AdminAuthorizedUserController::class, 'regenerateCode'])->name('admin.authorized-users.regenerate');
     });
 });

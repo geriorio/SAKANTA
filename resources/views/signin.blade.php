@@ -23,102 +23,165 @@
         }
 
         body {
-            font-family: 'Work Sans', sans-serif;
-            min-height: 100vh;
+            font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #F7EFE2;
+            background: #000000;
             position: relative;
             overflow: hidden;
         }
 
-        /* Background Pattern */
-        body::before {
-            content: '';
+        /* Fullscreen Video Background */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .video-background video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        /* Video Overlay */
+        .video-overlay {
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('/images/hero.jpg');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.15;
-            z-index: 0;
-        }
-
-        /* Decorative Elements */
-        .deco-circle {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(6, 72, 82, 0.08);
-            z-index: 0;
-        }
-
-        .deco-circle-1 {
-            width: 400px;
-            height: 400px;
-            top: -150px;
-            right: -100px;
-        }
-
-        .deco-circle-2 {
-            width: 300px;
-            height: 300px;
-            bottom: -100px;
-            left: -80px;
-            background: rgba(168, 198, 143, 0.1);
-        }
-
-        /* Container */
-        .signin-container {
-            position: relative;
-            z-index: 1;
             width: 100%;
-            max-width: 450px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        /* Main Container */
+        .main-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 480px;
             padding: 20px;
         }
 
-        /* Card */
+
+        @keyframes gradientShift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(5%, 5%) rotate(180deg); }
+        }
+
+        /* Sign In Card */
         .signin-card {
-            background: white;
-            border-radius: 24px;
-            padding: 45px 40px 40px;
-            box-shadow: 0 30px 80px rgba(6, 72, 82, 0.12);
+            background: transparent;
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 48px 40px;
             text-align: center;
             position: relative;
-            backdrop-filter: blur(10px);
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         /* Logo */
         .logo {
-            margin-bottom: 25px;
-            animation: fadeInDown 0.6s ease;
+            margin-bottom: 24px;
+            animation: fadeInScale 0.6s ease 0.2s both;
+        }
+
+        .logo-wrapper {
+            display: inline-block;
         }
 
         .logo img {
-            height: 70px;
+            height: 48px;
             width: auto;
+            display: block;
         }
 
         /* Title */
         .title {
             font-family: 'Esther', serif;
-            font-size: 34px;
+            font-size: 28px;
             font-weight: 400;
-            color: #064852;
+            color: #ffffff;
             margin: 0 0 10px 0;
-            letter-spacing: 1px;
-            animation: fadeInUp 0.6s ease 0.1s both;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+            animation: fadeInScale 0.6s ease 0.3s both;
         }
 
         .subtitle {
-            font-size: 15px;
-            color: #666;
-            margin: 0 0 35px 0;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            margin: 0 0 32px 0;
             line-height: 1.5;
-            animation: fadeInUp 0.6s ease 0.2s both;
+            font-weight: 400;
+            animation: fadeInScale 0.6s ease 0.4s both;
+        }
+
+        /* Alert Messages */
+        .alert {
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            line-height: 1.4;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.4s ease;
+        }
+
+        .alert-error {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        .alert-info {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            color: #2563eb;
+            border: 1px solid #bfdbfe;
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            color: #16a34a;
+            border: 1px solid #bbf7d0;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Google Button */
@@ -126,171 +189,194 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 18px;
-            background: white;
-            border: 2px solid #F7EFE2;
-            padding: 18px 35px;
-            border-radius: 50px;
+            gap: 12px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 2px solid #e2e8f0;
+            padding: 15px 28px;
+            border-radius: 14px;
             text-decoration: none;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
-            color: #064852;
-            transition: all 0.3s ease;
+            color: #1e293b;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             width: 100%;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            animation: fadeInUp 0.6s ease 0.3s both;
+            box-shadow: 
+                0 4px 20px rgba(0, 0, 0, 0.06),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInScale 0.6s ease 0.5s both;
+        }
+
+        .google-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s;
+        }
+
+        .google-btn:hover::before {
+            left: 100%;
         }
 
         .google-btn:hover {
             border-color: #064852;
-            box-shadow: 0 8px 25px rgba(6, 72, 82, 0.2);
+            box-shadow: 
+                0 12px 40px rgba(6, 72, 82, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
             transform: translateY(-2px);
         }
 
+        .google-btn:active {
+            transform: translateY(0);
+            box-shadow: 
+                0 4px 20px rgba(6, 72, 82, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
         .google-icon {
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
+            z-index: 1;
+        }
+
+        .google-btn span {
+            z-index: 1;
         }
 
         /* Divider */
         .divider {
-            margin: 30px 0;
+            margin: 24px 0;
             display: flex;
             align-items: center;
-            gap: 18px;
-            animation: fadeInUp 0.6s ease 0.4s both;
+            gap: 16px;
+            animation: fadeInScale 0.6s ease 0.6s both;
         }
 
         .divider-line {
             flex: 1;
             height: 1px;
-            background: linear-gradient(to right, transparent, #e0e0e0, transparent);
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
         }
 
         .divider-text {
-            color: #999;
-            font-size: 12px;
-            font-weight: 500;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
         }
 
-        /* Benefits */
-        .benefits {
-            text-align: left;
-            margin-top: 25px;
-            animation: fadeInUp 0.6s ease 0.5s both;
+        /* Footer Note */
+        .footer-note {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.5;
+            animation: fadeInScale 0.6s ease 0.7s both;
         }
 
-        .benefits-title {
-            font-size: 16px;
+        .footer-note strong {
+            color: #ffffff;
             font-weight: 600;
-            color: #064852;
-            margin: 0 0 15px 0;
-            font-family: 'Esther', serif;
         }
 
-        .benefits-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .benefit-item {
-            padding: 10px 0;
-            font-size: 14px;
-            color: #666;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            line-height: 1.4;
-        }
-
-        .benefit-dot {
-            width: 7px;
-            height: 7px;
-            background: #a8c68f;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        /* Back Link */
-        .back-link-container {
-            margin-top: 30px;
-            padding-top: 25px;
-            border-top: 1px solid #f0f0f0;
-            animation: fadeInUp 0.6s ease 0.6s both;
-        }
-
-        .back-link {
-            color: #064852;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s;
+        /* Security Badge */
+        .security-badge {
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            margin-top: 20px;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-radius: 50px;
+            font-size: 12px;
+            color: #16a34a;
+            font-weight: 500;
+            animation: fadeInScale 0.6s ease 0.8s both;
         }
 
-        .back-link:hover {
-            opacity: 0.7;
-            transform: translateX(-3px);
+        .security-icon {
+            width: 16px;
+            height: 16px;
         }
 
         /* Animations */
-        @keyframes fadeInDown {
+        @keyframes fadeInScale {
             from {
                 opacity: 0;
-                transform: translateY(-20px);
+                transform: scale(0.95);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+                transform: scale(1);
             }
         }
 
         /* Responsive */
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
+            .main-container {
+                max-width: 90%;
+            }
+
             .signin-card {
-                padding: 45px 30px;
-                border-radius: 20px;
+                padding: 40px 32px;
             }
 
             .title {
-                font-size: 32px;
+                font-size: 26px;
+            }
+
+            .google-btn {
+                padding: 14px 24px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .signin-card {
+                padding: 36px 28px;
+                border-radius: 24px;
             }
 
             .logo img {
-                height: 70px;
+                height: 42px;
+            }
+
+            .title {
+                font-size: 24px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Decorative Elements -->
-    <div class="deco-circle deco-circle-1"></div>
-    <div class="deco-circle deco-circle-2"></div>
+    <!-- Fullscreen Video Background -->
+    <div class="video-background">
+        <video autoplay muted loop playsinline preload="auto">
+            <source src="{{ asset('videos/login2.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay"></div>
+    </div>
 
-    <div class="signin-container">
+    <div class="main-container">
+        <div class="signin-card">
+    <div class="main-container">
         <div class="signin-card">
             
             <!-- Logo -->
             <div class="logo">
-                <img src="/images/Logo-04.png" alt="Sakanta Logo">
+                <div class="logo-wrapper">
+                    <img src="/images/Logo-04.png" alt="Sakanta Logo">
+                </div>
             </div>
 
             <!-- Title -->
@@ -299,19 +385,28 @@
 
             <!-- Alert Messages -->
             @if(session('error'))
-            <div style="background: #fee; color: #c33; padding: 15px; border-radius: 10px; margin-bottom: 20px; font-size: 14px; border: 1px solid #fcc;">
+            <div class="alert alert-error">
+                <svg class="security-icon" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+                </svg>
                 {{ session('error') }}
             </div>
             @endif
 
             @if(session('info'))
-            <div style="background: #e7f3ff; color: #0066cc; padding: 15px; border-radius: 10px; margin-bottom: 20px; font-size: 14px; border: 1px solid #b3d9ff;">
+            <div class="alert alert-info">
+                <svg class="security-icon" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                </svg>
                 {{ session('info') }}
             </div>
             @endif
 
             @if(session('success'))
-            <div style="background: #e8f5e9; color: #2e7d32; padding: 15px; border-radius: 10px; margin-bottom: 20px; font-size: 14px; border: 1px solid #c8e6c9;">
+            <div class="alert alert-success">
+                <svg class="security-icon" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
                 {{ session('success') }}
             </div>
             @endif
@@ -335,12 +430,24 @@
             </div>
 
             <!-- Footer Note -->
-            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #f0f0f0; font-size: 13px; color: #999;">
-                Only registered users can access Sakanta.<br>
-                Contact admin if you need access.
+            <div class="footer-note">
+                <strong>Access is restricted to registered users only.</strong><br>
+                Please contact the administrator if you need access.
+            </div>
+
+            <!-- Security Badge -->
+            <div class="security-badge">
+                <svg class="security-icon" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                </svg>
+                <span>Secure Authentication</span>
+            </div>
+
+                </div>
             </div>
 
         </div>
+
     </div>
 
 </body>

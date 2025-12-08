@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/Logo-02.png') }}?v={{ time() }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('images/Logo-02.png') }}?v={{ time() }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/Logo-02.png') }}?v={{ time() }}">
     <title>{{ $property->title }} - SAKANTA</title>
     
     <!-- Google Fonts - Work Sans -->
@@ -319,8 +322,8 @@
 
         /* Perfect For Section - Horizontal Grid */
         .perfect-for-horizontal {
-            margin-top: 60px;
-            padding-top: 60px;
+            margin-top: 25px;
+            padding-top: 25px;
             border-top: 1px solid rgba(6, 72, 82, 0.1);
         }
 
@@ -371,8 +374,8 @@
 
         /* Additional Photos Section */
         .additional-photos-section {
-            margin-top: 60px;
-            padding-top: 60px;
+            margin-top: 25px;
+            padding-top: 25px;
             border-top: 1px solid rgba(6, 72, 82, 0.1);
         }
 
@@ -657,8 +660,8 @@
 
         /* Map Section */
         .map-section {
-            margin-top: 60px;
-            padding-top: 60px;
+            margin-top: 25px;
+            padding-top: 25px;
             border-top: 1px solid rgba(6, 72, 82, 0.1);
             scroll-margin-top: 100px;
         }
@@ -695,11 +698,10 @@
             padding: 15px 0;
         }
         .section5 {
-            min-height: 100vh;
             display: flex;
             align-items: center;
             background: #F7EFE2;
-            padding: 100px 80px;
+            padding: 60px 80px;
         }
 
         .section5-container {
@@ -707,7 +709,7 @@
             margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 100px;
+            gap: 40px;
             align-items: center;
         }
 
@@ -767,11 +769,10 @@
 
         /* Section 6 - Reversed Layout */
         .section6 {
-            min-height: 100vh;
             display: flex;
             align-items: center;
             background: #F7EFE2;
-            padding: 100px 80px;
+            padding: 60px 80px;
         }
 
         .section6-container {
@@ -779,7 +780,7 @@
             margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 100px;
+            gap: 40px;
             align-items: center;
         }
 
@@ -841,8 +842,8 @@
 
         /* Related Properties Section */
         .related-properties-section {
-            margin-top: 60px;
-            padding-top: 60px;
+            margin-top: 25px;
+            padding-top: 25px;
             border-top: 1px solid rgba(6, 72, 82, 0.1);
         }
 
@@ -1081,11 +1082,12 @@
             .section5-container,
             .section6-container {
                 grid-template-columns: 1fr;
-                gap: 60px;
+                gap: 40px;
             }
 
-            .section6-image img {
-                margin-left: 0;
+            .section5,
+            .section6 {
+                padding: 40px 40px;
             }
 
             .photos-grid {
@@ -1203,7 +1205,7 @@
 
             .section5,
             .section6 {
-                padding: 60px 30px;
+                padding: 50px 30px;
             }
 
             .section5-content h2,
@@ -1460,7 +1462,7 @@
 
             .section5,
             .section6 {
-                padding: 50px 20px;
+                padding: 40px 20px;
             }
 
             .section5-content h2,
@@ -1741,7 +1743,7 @@
                     </p>
                     
                     <a href="#map-section" class="check-maps-btn">CHECK MAPS →</a>
-
+                    
                     @if($property->description)
                     <div class="property-description-right">
                         {!! nl2br(e($property->description)) !!}
@@ -1869,7 +1871,7 @@
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                         <circle cx="12" cy="10" r="3"></circle>
                     </svg>
-                    {{ $property->address }}, {{ $property->location->name ?? $property->city }}, {{ $property->province }}
+                    {{ $property->address }}
                 </div>
                 @endif
             </div>

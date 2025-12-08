@@ -758,10 +758,111 @@
         @endif
     </section>
 
+    <!-- Liked Yachts Section -->
+    <section class="liked-section">
+        <div class="section-title">
+            <h2>My Liked Yachts</h2>
+            <p>Yachts you've saved for later</p>
+        </div>
+
+        @if($likedYachts->count() > 0)
+            <div class="carousel-container">
+                <button class="carousel-nav-btn prev-btn" onclick="slideYachtCarousel(-1)" id="prevYachtBtn" title="Previous">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                </button>
+                
+                <div class="carousel-wrapper">
+                    <div class="carousel-track" id="yachtCarouselTrack">
+                        @foreach($likedYachts as $yacht)
+                            <div class="property-card" style="cursor: pointer;" onclick="window.location.href='/yacht/{{ $yacht->slug }}'">
+                                <div class="property-image">
+                                    <img src="{{ asset($yacht->main_image ?? '/images/villa1.jpg') }}" alt="{{ $yacht->name }}">
+                                    
+                                    @if($yacht->status === 'coming_soon')
+                                        <div class="status-badge coming-soon">Coming Soon</div>
+                                    @elseif($yacht->status === 'fully_owned')
+                                        <div class="status-badge sold-out">Sold Out</div>
+                                    @endif
+                                    
+                                    <button class="like-btn liked" 
+                                            data-yacht-id="{{ $yacht->id}}"
+                                            onclick="event.stopPropagation(); toggleYachtLike(this, {{ $yacht->id }})">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="#e74c3c" stroke="#e74c3c" stroke-width="2">
+                                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="property-info-card">
+                                    <div class="property-header">
+                                        <h3 class="property-name">{{ $yacht->name }}</h3>
+                                        <div class="property-icon"></div>
+                                    </div>
+                                    <p class="property-price-text">{{ $yacht->formatted_price }}</p>
+                                    <p class="property-specs">{{ $yacht->ownership ?? '1/4 Ownership' }}</p>
+                                    <p class="property-specs" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12px; color: #666; font-family: 'Work Sans', sans-serif;">
+                                        @if($yacht->length_overall)
+                                        <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                            <img src="{{ asset('images/Icon-22.png') }}" alt="LOA" style="width: 24px; height: 24px; object-fit: contain;">
+                                            {{ $yacht->length_overall }}
+                                        </span>
+                                        @endif
+                                        @if($yacht->cruising_speed)
+                                        <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                                        <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                            <img src="{{ asset('images/Icon-24.png') }}" alt="Cruising Speed" style="width: 24px; height: 24px; object-fit: contain;">
+                                            {{ $yacht->cruising_speed }}
+                                        </span>
+                                        @endif
+                                        @if($yacht->maximum_passengers)
+                                        <span style="color: #666; opacity: 0.4; font-weight: 300;">|</span>
+                                        <span style="display: inline-flex; align-items: center; gap: 4px;">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#064852" stroke-width="1.5">
+                                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                                <circle cx="9" cy="7" r="4"/>
+                                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                            </svg>
+                                            {{ $yacht->maximum_passengers }} Guests
+                                        </span>
+                                        @endif
+                                    </p>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                
+                <button class="carousel-nav-btn next-btn" onclick="slideYachtCarousel(1)" id="nextYachtBtn" title="Next">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </button>
+            </div>
+
+            @if($likedYachts->hasPages())
+                <div style="display: flex; justify-content: center; margin-top: 40px;">
+                    {{ $likedYachts->links() }}
+                </div>
+            @endif
+
+        @else
+            <div class="empty-state">
+                <svg width="140" height="140" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                <h3>No Favorites Yet</h3>
+                <p>Start exploring and save yachts you love!</p>
+                <a href="{{ route('all.listings') }}?category=yacht" class="browse-btn">Browse Yachts</a>
+            </div>
+        @endif
+    </section>
+
     <script>
         let currentSlide = 0;
         const track = document.getElementById('carouselTrack');
-        const wrapper = document.querySelector('.carousel-wrapper');
+        const wrapper = track ? track.closest('.carousel-wrapper') : null;
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
 
@@ -792,7 +893,7 @@
         }
 
         function getCardCount() {
-            return document.querySelectorAll('.property-card').length;
+            return track ? track.querySelectorAll('.property-card').length : 0;
         }
 
         function getTotalSlides() {
@@ -802,10 +903,12 @@
         }
 
         function updateCarousel() {
-            const totalCards = getCardCount();
-            const cards = document.querySelectorAll('.property-card');
+            if (!track || !wrapper) return;
             
-            if (totalCards === 0 || !wrapper) return;
+            const totalCards = getCardCount();
+            const cards = track.querySelectorAll('.property-card');
+            
+            if (totalCards === 0) return;
 
             const cardsPerSlide = getCardsPerSlide();
             const gap = getGap();
@@ -917,13 +1020,12 @@
                             card.remove();
                             
                             // Update carousel after card removal
-                            const remainingCards = document.querySelectorAll('.property-card').length;
+                            const remainingCards = getCardCount();
                             if (remainingCards === 0) {
                                 location.reload();
                             } else {
                                 // Recalculate total slides with remaining cards
-                                const newTotalCards = remainingCards;
-                                const newTotalSlides = Math.ceil(newTotalCards / cardsPerSlide);
+                                const newTotalSlides = getTotalSlides();
                                 
                                 // If current slide is beyond available slides, go back one slide
                                 if (currentSlide >= newTotalSlides) {
@@ -939,6 +1041,155 @@
             })
             .catch(error => console.error('Error:', error));
         }
+
+        // Yacht Like Function - Global scope
+        function toggleYachtLike(button, yachtId) {
+            const card = button.closest('.property-card');
+            const svg = button.querySelector('svg');
+            
+            fetch(`/yacht/${yachtId}/like`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    if (data.liked) {
+                        button.classList.add('liked');
+                        svg.setAttribute('fill', '#e74c3c');
+                        svg.setAttribute('stroke', '#e74c3c');
+                    } else {
+                        button.classList.remove('liked');
+                        card.style.opacity = '0';
+                        card.style.transform = 'scale(0.9) translateY(20px)';
+                        card.style.transition = 'all 0.4s ease';
+                        
+                        setTimeout(() => {
+                            card.remove();
+                            const remainingCards = getYachtCardCount();
+                            if (remainingCards === 0) {
+                                location.reload();
+                            } else {
+                                const newTotalSlides = getTotalYachtSlides();
+                                if (typeof currentYachtSlide !== 'undefined' && currentYachtSlide >= newTotalSlides) {
+                                    currentYachtSlide = Math.max(0, newTotalSlides - 1);
+                                }
+                                if (typeof updateYachtCarousel === 'function') {
+                                    updateYachtCarousel();
+                                }
+                            }
+                        }, 400);
+                    }
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        // Yacht Carousel Functions
+        let currentYachtSlide = 0;
+        const yachtTrack = document.getElementById('yachtCarouselTrack');
+        const yachtWrapper = yachtTrack ? yachtTrack.closest('.carousel-wrapper') : null;
+        const prevYachtBtn = document.getElementById('prevYachtBtn');
+        const nextYachtBtn = document.getElementById('nextYachtBtn');
+
+        function getYachtCardCount() {
+            return yachtTrack ? yachtTrack.querySelectorAll('.property-card').length : 0;
+        }
+
+        function getTotalYachtSlides() {
+            const totalCards = getYachtCardCount();
+            const cardsPerSlide = getCardsPerSlide();
+            return Math.ceil(totalCards / cardsPerSlide);
+        }
+
+        function updateYachtCarousel() {
+            if (!yachtTrack || !yachtWrapper) return;
+            
+            const totalCards = getYachtCardCount();
+            const cards = yachtTrack.querySelectorAll('.property-card');
+            
+            if (totalCards === 0) return;
+
+            const cardsPerSlide = getCardsPerSlide();
+            const gap = getGap();
+            const totalSlides = getTotalYachtSlides();
+
+            // Reset current slide if out of bounds
+            if (currentYachtSlide >= totalSlides) {
+                currentYachtSlide = totalSlides - 1;
+            }
+            if (currentYachtSlide < 0) {
+                currentYachtSlide = 0;
+            }
+
+            // Hitung card width berdasarkan wrapper width
+            const wrapperWidth = yachtWrapper.offsetWidth;
+            let cardWidth;
+            
+            if (cardsPerSlide === 1) {
+                cardWidth = wrapperWidth;
+            } else if (cardsPerSlide === 2) {
+                cardWidth = (wrapperWidth - gap) / 2;
+            } else {
+                cardWidth = (wrapperWidth - (gap * 2)) / 3;
+            }
+            
+            // Set width untuk semua cards
+            cards.forEach(card => {
+                card.style.width = cardWidth + 'px';
+                card.style.minWidth = cardWidth + 'px';
+                card.style.flexBasis = cardWidth + 'px';
+            });
+
+            // Update gap di track
+            yachtTrack.style.gap = gap + 'px';
+
+            // Hitung offset untuk slide saat ini
+            const slideWidth = cardWidth + gap;
+            const offset = -currentYachtSlide * slideWidth * cardsPerSlide;
+            
+            yachtTrack.style.transform = `translateX(${offset}px)`;
+
+            // Update button states
+            if (prevYachtBtn) prevYachtBtn.disabled = currentYachtSlide === 0;
+            if (nextYachtBtn) nextYachtBtn.disabled = currentYachtSlide === totalSlides - 1;
+        }
+
+        function slideYachtCarousel(direction) {
+            const cardsPerSlide = getCardsPerSlide();
+            const totalSlides = getTotalYachtSlides();
+            const newSlide = currentYachtSlide + direction;
+            
+            if (newSlide >= 0 && newSlide < totalSlides) {
+                currentYachtSlide = newSlide;
+                updateYachtCarousel();
+            }
+        }
+
+        // Initialize yacht carousel on page load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(updateYachtCarousel, 100);
+            });
+        } else {
+            setTimeout(updateYachtCarousel, 100);
+        }
+
+        // Update yacht carousel on window resize
+        let yachtResizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(yachtResizeTimeout);
+            yachtResizeTimeout = setTimeout(() => {
+                const newTotalSlides = getTotalYachtSlides();
+                if (currentYachtSlide >= newTotalSlides && newTotalSlides > 0) {
+                    currentYachtSlide = Math.max(0, newTotalSlides - 1);
+                }
+                updateYachtCarousel();
+            }, 250);
+        });
     </script>
 
     @include('layouts.footer')

@@ -47,8 +47,40 @@ class PropertyController extends Controller
         
         $properties = $query->get();
         $locations = Location::withCount('properties')->get();
+        $category = 'home'; // Set category as home
         
-        return view('all-listings', compact('properties', 'locations'));
+        return view('all-listings', compact('properties', 'locations', 'category'));
+    }
+
+    /**
+     * Display all yacht/sail listings
+     */
+    public function yachtListings(Request $request)
+    {
+        $query = \App\Models\Yacht::query();
+        
+        // Filter by brand
+        if ($request->filled('brand')) {
+            $query->where('brand', $request->brand);
+        }
+        
+        // Sort by price
+        if ($request->filled('sort')) {
+            if ($request->sort === 'price_asc') {
+                $query->orderBy('price', 'asc');
+            } elseif ($request->sort === 'price_desc') {
+                $query->orderBy('price', 'desc');
+            }
+        } else {
+            // Default sort by latest
+            $query->latest();
+        }
+        
+        $properties = $query->get(); // Using 'properties' variable to match view expectations
+        $locations = Location::withCount('properties')->get();
+        $category = 'yacht'; // Set category as yacht
+        
+        return view('all-listings', compact('properties', 'locations', 'category'));
     }
 
     /**
@@ -156,6 +188,41 @@ class PropertyController extends Controller
         }
 
         return view('properties.show', compact('property', 'relatedProperties'));
+    }
+
+    /**
+     * Display yacht detail page
+     */
+    public function showYacht(\App\Models\Yacht $yacht)
+    {
+        // Calculate price range (±20% from current yacht price)
+        $minPrice = $yacht->price * 0.8;
+        $maxPrice = $yacht->price * 1.2;
+
+        // First, try to get yachts within 20% price range
+        $relatedYachts = \App\Models\Yacht::where('id', '!=', $yacht->id)
+            ->whereBetween('price', [$minPrice, $maxPrice])
+            ->inRandomOrder()
+            ->take(4)
+            ->get();
+
+        // If we don't have 4 yachts, get the closest ones by price
+        if ($relatedYachts->count() < 4) {
+            $needed = 4 - $relatedYachts->count();
+            $excludeIds = $relatedYachts->pluck('id')->push($yacht->id)->toArray();
+            
+            // Get closest yachts by price difference
+            $closestYachts = \App\Models\Yacht::whereNotIn('id', $excludeIds)
+                ->selectRaw('*, ABS(price - ?) as price_diff', [$yacht->price])
+                ->orderBy('price_diff', 'asc')
+                ->take($needed)
+                ->get();
+            
+            // Merge the collections
+            $relatedYachts = $relatedYachts->merge($closestYachts);
+        }
+
+        return view('yachts.show', compact('yacht', 'relatedYachts'));
     }
 
     /**

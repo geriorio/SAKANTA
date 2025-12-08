@@ -10,12 +10,13 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Arial, sans-serif; background: #f5f5f5; }
-        .header { background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .header { background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
         .header h1 { color: #333; font-size: 1.5rem; }
-        .nav { display: flex; gap: 1rem; align-items: center; }
-        .nav a { color: #667eea; text-decoration: none; padding: 0.5rem 1rem; border-radius: 5px; transition: background 0.3s; }
+        .nav { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+        .nav a { color: #667eea; text-decoration: none; padding: 0.5rem 0.75rem; border-radius: 5px; transition: all 0.3s; font-size: 0.9rem; white-space: nowrap; }
         .nav a:hover { background: #f0f0f0; }
-        .logout-btn { background: #dc3545; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; }
+        .nav-divider { height: 20px; width: 1px; background: #ddd; margin: 0 0.25rem; }
+        .logout-btn { background: #dc3545; color: white; border: none; padding: 0.5rem 0.75rem; border-radius: 5px; cursor: pointer; font-size: 0.9rem; }
         .container { max-width: 1400px; margin: 2rem auto; padding: 0 1rem; }
         .container-fluid { max-width: 100%; padding: 0 2rem; }
         .card { background: white; border-radius: 10px; padding: 2rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 1.5rem; }
@@ -90,11 +91,16 @@
         <h1>🏠 Admin Panel - Sakanta</h1>
         <div class="nav">
             <a href="{{ route('admin.dashboard') }}">Dashboard</a>
+            <div class="nav-divider"></div>
             <a href="{{ route('admin.properties.index') }}">Properties</a>
+            <a href="{{ route('admin.yachts.index') }}">Yachts</a>
+            <a href="{{ route('admin.locations.index') }}">Locations</a>
+            <div class="nav-divider"></div>
             <a href="{{ route('admin.faqs.index') }}">FAQs</a>
             <a href="{{ route('admin.articles.index') }}">Articles</a>
-            <a href="/">View Website</a>
-            <span style="color: #666;">{{ Auth::user()->name }}</span>
+            <div class="nav-divider"></div>
+            <a href="/" target="_blank">View Site</a>
+            <span style="color: #999; font-size: 0.85rem;">{{ Auth::user()->name }}</span>
             <form method="POST" action="{{ route('admin.logout') }}" style="display: inline;">
                 @csrf
                 <button type="submit" class="logout-btn">Logout</button>
