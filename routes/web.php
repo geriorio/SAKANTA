@@ -20,7 +20,19 @@ use Illuminate\Support\Facades\Route;
 // Intro Page
 Route::get('/intro', [AuthController::class, 'showIntro'])->name('auth.intro');
 
-// Authentication Routes
+// Authentication Routes - New Flow
+Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->name('auth.google.redirect');
+Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+Route::get('/auth/choice', [AuthController::class, 'showAccessChoice'])->name('auth.access-choice');
+Route::get('/auth/enter-access', [AuthController::class, 'showEnterAccess'])->name('auth.enter-access');
+Route::post('/auth/verify-access', [AuthController::class, 'verifyAccess'])->name('auth.verify-access');
+Route::get('/auth/request-access', [AuthController::class, 'showRequestAccess'])->name('auth.request-access');
+Route::post('/auth/submit-request', [AuthController::class, 'submitRequest'])->name('auth.submit-request');
+
+// Login page with Google button
+Route::get('/login', [AuthController::class, 'showLogin'])->name('auth.login');
+
+// Old Authentication Routes (kept for backward compatibility)
 Route::get('/signin', [AuthController::class, 'showSignin'])->name('auth.signin');
 Route::post('/signin', [AuthController::class, 'signin'])->name('auth.signin.submit');
 Route::get('/signup', [AuthController::class, 'showSignup'])->name('auth.signup');
@@ -28,10 +40,6 @@ Route::post('/signup', [AuthController::class, 'signup'])->name('auth.signup.sub
 
 // Membership Request
 Route::post('/membership/request', [MembershipRequestController::class, 'submit'])->name('membership.request.submit');
-
-// Google Authentication Routes
-Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->name('auth.google.redirect');
-Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('auth.google.callback');
 
 // Protected Routes (User Must Be Authenticated)
 Route::middleware(['userAuth', 'prevent.back'])->group(function () {

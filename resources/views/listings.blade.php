@@ -886,7 +886,7 @@
                             <div class="property-icon" style="width: 100px; height: 100px; flex-shrink: 0; color: #064852; background-image: url('/images/KV-13.png'); background-size: contain; background-repeat: no-repeat; background-position: center; position: absolute; top: -35px; right: -10px;"></div>
                         </div>
                         <p class="property-location-text" style="font-family: 'Work Sans', sans-serif; font-size: 14px; color: #7a9ca5; margin: 4px 0;">{{ $property->location->name ?? $property->city }}</p>
-                        <p class="property-price-text" style="font-family: 'Work Sans', sans-serif; font-size: 18px; color: #064852; margin: 8px 0; font-weight: 600;">{{ $property->formatted_price }}</p>
+                        <p class="property-price-text" style="font-family: 'Work Sans', sans-serif; font-size: 18px; color: #064852; margin: 8px 0; font-weight: 600;">{{ $property->formatted_price }} / share</p>
                         <p class="property-specs" style="font-family: 'Work Sans', sans-serif; font-size: 14px; color: #064852; margin: 4px 0;">{{ $property->ownership ?? '1/4 Ownership' }}</p>
                         <p class="property-specs" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12px; color: #666; font-family: 'Work Sans', sans-serif; margin-top: 12px;">
                             <span style="display: inline-flex; align-items: center; gap: 4px;">
@@ -954,7 +954,7 @@
                             <div class="property-icon" style="width: 100px; height: 100px; flex-shrink: 0; color: #064852; background-image: url('/images/KV-13.png'); background-size: contain; background-repeat: no-repeat; background-position: center; position: absolute; top: -35px; right: -10px;"></div>
                         </div>
                         <p class="property-location-text" style="font-family: 'Work Sans', sans-serif; font-size: 14px; color: #7a9ca5; margin: 4px 0;">{{ $property->location->name ?? $property->city }}</p>
-                        <p class="property-price-text" style="font-family: 'Work Sans', sans-serif; font-size: 18px; color: #064852; margin: 8px 0; font-weight: 600;">{{ $property->formatted_price }}</p>
+                        <p class="property-price-text" style="font-family: 'Work Sans', sans-serif; font-size: 18px; color: #064852; margin: 8px 0; font-weight: 600;">{{ $property->formatted_price }} / share</p>
                         <p class="property-specs" style="font-family: 'Work Sans', sans-serif; font-size: 14px; color: #064852; margin: 4px 0;">{{ $property->ownership ?? '1/4 Ownership' }}</p>
                         <p class="property-specs" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12px; color: #666; font-family: 'Work Sans', sans-serif; margin-top: 12px;">
                             <span style="display: inline-flex; align-items: center; gap: 4px;">

@@ -1587,7 +1587,7 @@
                 <div class="property-main-info">
                     <h2>{{ $property->title }}</h2>
                     <p class="property-price">
-                        {{ $property->formatted_price }}
+                        {{ $property->formatted_price }} / share
                         @if($property->ownership)
                             <span class="ownership-separator"> • </span>
                             <span class="property-ownership">{{ $property->ownership }}</span>
@@ -1965,7 +1965,7 @@
                                     {{ number_format($relatedProperty->land_area, 0) }} m²
                                 </span>
                             </p>
-                            <p class="related-property-price">{{ $relatedProperty->formatted_price }}</p>
+                            <p class="related-property-price">{{ $relatedProperty->formatted_price }} / share</p>
                         </div>
                     </a>
                     @endforeach

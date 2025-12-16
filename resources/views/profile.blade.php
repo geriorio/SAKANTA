@@ -692,7 +692,7 @@
                                         <div class="property-icon"></div>
                                     </div>
                                     <p class="property-location-text">{{ $property->location->name ?? $property->city }}</p>
-                                    <p class="property-price-text">{{ $property->formatted_price }}</p>
+                                    <p class="property-price-text">{{ $property->formatted_price }} / share</p>
                                     <p class="property-specs">{{ $property->ownership ?? '1/4 Ownership' }}</p>
                                     <p class="property-specs" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12px; color: #666; font-family: 'Work Sans', sans-serif;">
                                         <span style="display: inline-flex; align-items: center; gap: 4px;">
@@ -799,7 +799,7 @@
                                         <h3 class="property-name">{{ $yacht->name }}</h3>
                                         <div class="property-icon"></div>
                                     </div>
-                                    <p class="property-price-text">{{ $yacht->formatted_price }}</p>
+                                    <p class="property-price-text">{{ $yacht->formatted_price }} / share</p>
                                     <p class="property-specs">{{ $yacht->ownership ?? '1/4 Ownership' }}</p>
                                     <p class="property-specs" style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12px; color: #666; font-family: 'Work Sans', sans-serif;">
                                         @if($yacht->length_overall)

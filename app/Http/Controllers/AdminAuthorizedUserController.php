@@ -34,6 +34,7 @@ class AdminAuthorizedUserController extends Controller
     {
         $request->validate([
             'email' => 'required|email|unique:authorized_users,email',
+            'referral_code' => 'nullable|string|max:20|unique:authorized_users,referral_code',
         ]);
 
         $accessCode = AuthorizedUser::generateAccessCode();
@@ -41,6 +42,8 @@ class AdminAuthorizedUserController extends Controller
         AuthorizedUser::create([
             'email' => $request->email,
             'access_code' => $accessCode,
+            'referral_code' => $request->referral_code,
+            'referred_users' => [],
         ]);
 
         return redirect()->route('admin.authorized-users.index')
@@ -62,10 +65,12 @@ class AdminAuthorizedUserController extends Controller
     {
         $request->validate([
             'email' => 'required|email|unique:authorized_users,email,' . $authorizedUser->id,
+            'referral_code' => 'nullable|string|max:20|unique:authorized_users,referral_code,' . $authorizedUser->id,
         ]);
 
         $authorizedUser->update([
             'email' => $request->email,
+            'referral_code' => $request->referral_code,
         ]);
 
         return redirect()->route('admin.authorized-users.index')

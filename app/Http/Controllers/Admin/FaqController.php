@@ -35,6 +35,7 @@ class FaqController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255|unique:faqs',
+            'type' => 'required|in:homes,sail',
             'description' => 'required|string',
             'hero_small_title' => 'required|string|max:255',
             'hero_big_title' => 'required|string|max:255',
@@ -55,6 +56,7 @@ class FaqController extends Controller
         $faq = Faq::create([
             'title' => $validated['title'],
             'slug' => Str::slug($validated['title']),
+            'type' => $validated['type'],
             'description' => $validated['description'],
             'hero_small_title' => $validated['hero_small_title'],
             'hero_big_title' => $validated['hero_big_title'],
@@ -90,6 +92,7 @@ class FaqController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255|unique:faqs,title,' . $faq->id,
+            'type' => 'required|in:homes,sail',
             'description' => 'required|string',
             'hero_small_title' => 'required|string|max:255',
             'hero_big_title' => 'required|string|max:255',
@@ -114,6 +117,7 @@ class FaqController extends Controller
         $faq->update([
             'title' => $validated['title'],
             'slug' => Str::slug($validated['title']),
+            'type' => $validated['type'],
             'description' => $validated['description'],
             'hero_small_title' => $validated['hero_small_title'],
             'hero_big_title' => $validated['hero_big_title'],

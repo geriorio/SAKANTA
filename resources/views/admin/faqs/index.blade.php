@@ -28,6 +28,7 @@
         <thead>
             <tr>
                 <th>Title</th>
+                <th>Type</th>
                 <th>Description</th>
                 <th>Questions</th>
                 <th>Actions</th>
@@ -37,6 +38,13 @@
             @foreach($faqs as $faq)
             <tr>
                 <td><strong>{{ $faq->title }}</strong></td>
+                <td>
+                    <span style="display: inline-block; padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.875rem; font-weight: 600; 
+                                 background: {{ $faq->type == 'sail' ? '#e3f2fd' : '#f3e5f5' }}; 
+                                 color: {{ $faq->type == 'sail' ? '#1976d2' : '#7b1fa2' }};">
+                        {{ ucfirst($faq->type) }}
+                    </span>
+                </td>
                 <td>{{ substr($faq->description, 0, 60) }}...</td>
                 <td>{{ $faq->questions->count() }} Q&A</td>
                 <td>

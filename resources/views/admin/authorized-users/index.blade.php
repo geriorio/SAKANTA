@@ -92,6 +92,8 @@
                     <tr>
                         <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Email</th>
                         <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Access Code</th>
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Referral Code</th>
+                        <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Referred (Max 5)</th>
                         <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
                         <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Registered User</th>
                         <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Created</th>
@@ -113,6 +115,37 @@
                                     </svg>
                                 </button>
                             </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            @if($authUser->referral_code)
+                                <div class="flex items-center">
+                                    <code class="text-sm font-mono bg-blue-50 text-blue-700 px-3 py-1 rounded border border-blue-200">{{ $authUser->referral_code }}</code>
+                                    <button onclick="copyToClipboard('{{ $authUser->referral_code }}')" class="ml-2 text-blue-400 hover:text-blue-600">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            @else
+                                <span class="text-gray-400 text-sm">-</span>
+                            @endif
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            @if($authUser->referral_code)
+                                @php
+                                    $referredCount = is_array($authUser->referred_users) ? count($authUser->referred_users) : 0;
+                                @endphp
+                                <div class="flex items-center">
+                                    <span class="text-sm font-medium {{ $referredCount >= 5 ? 'text-red-600' : 'text-gray-900' }}">
+                                        {{ $referredCount }}/5
+                                    </span>
+                                    @if($referredCount >= 5)
+                                        <span class="ml-2 px-2 py-1 text-xs bg-red-100 text-red-700 rounded-full">Full</span>
+                                    @endif
+                                </div>
+                            @else
+                                <span class="text-gray-400 text-sm">-</span>
+                            @endif
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             @if($authUser->is_used)
@@ -168,7 +201,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6" class="px-6 py-12 text-center text-gray-500">
+                        <td colspan="8" class="px-6 py-12 text-center text-gray-500">
                             <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
                             </svg>

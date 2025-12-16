@@ -31,11 +31,13 @@
             overflow-x: hidden;
             width: 100%;
             max-width: 100vw;
+            background: #F7EFE2;
         }
 
         body {
             font-family: 'Esther', 'Georgia', serif;
             color: #2c3e50;
+            background: #F7EFE2;
         }
 
         /* Success Notification */
@@ -310,13 +312,20 @@
             margin-bottom: 25px;
         }
 
+        /* Section 2B - Sail (reduced spacing) */
+        .section2.section-sail {
+            min-height: auto;
+            padding: 60px 80px;
+            padding-bottom: 100px;
+        }
+
         /* Section 3 */
         .section3 {
-            min-height: 100vh;
+            min-height: auto;
             display: flex;
             align-items: center;
             background: #F7EFE2;
-            padding: 100px 80px;
+            padding: 70px 80px;
         }
 
         @media (max-width: 768px) {
@@ -431,11 +440,11 @@
 
         /* Section 4 */
         .section4 {
-            min-height: 100vh;
+            min-height: auto;
             display: flex;
             align-items: center;
             background: #F7EFE2;
-            padding: 100px 80px;
+            padding: 70px 80px;
         }
 
         .section4-container {
@@ -535,7 +544,8 @@
         /* Three Cards Section */
         .three-cards-section {
             background: #F7EFE2;
-            padding: 100px 80px;
+            padding: 70px 80px;
+            padding-bottom: 180px;
         }
 
         .three-cards-headline {
@@ -869,6 +879,20 @@
         </div>
     </section>
 
+    <!-- Section 2B - Sail/Yacht -->
+    <section class="section2 section-sail">
+        <div class="section2-container">
+            <div class="section2-content">
+                <h2>Set sail.<br>Find freedom.<br>Embrace the horizon.</h2>
+                <p>At Sakanta Sail, the ocean becomes your sanctuary. Co-own luxury yachts designed for those who seek adventure without compromise — where the journey matters as much as the destination.</p>
+                <p>From intimate sunset cruises to extended voyages across pristine waters, every moment aboard is crafted for connection, comfort, and wonder. Because ownership should feel like freedom, not an anchor.</p>
+            </div>
+            <div class="section2-image">
+                <img src="{{ asset('images/sail03.png') }}" alt="Sakanta Yacht">
+            </div>
+        </div>
+    </section>
+
     <!-- Section 3 -->
     <section class="section3">
         <div class="section3-container">
@@ -953,7 +977,7 @@
         <div class="three-cards-container">
             <!-- Left Card - Personalized -->
             <div class="card-item">
-                <img src="{{ asset('images/villa1.jpg') }}" alt="Personalized">
+                <img src="{{ asset('images/sail04.png') }}" alt="Personalized">
                 <div class="card-overlay">
                 </div>
                 <div class="card-popup">
@@ -974,7 +998,7 @@
 
             <!-- Right Card - Premium -->
             <div class="card-item">
-                <img src="{{ asset('images/villa5.jpg') }}" alt="Premium">
+                <img src="{{ asset('images/sail06.png') }}" alt="Premium">
                 <div class="card-overlay">
                 </div>
                 <div class="card-popup">
@@ -985,12 +1009,12 @@
         </div>
     </section>
 
-    <!-- Featured Listings Carousel -->
-    @include('components.featured-listings', [
+    {{-- Featured Listings Carousel --}}
+    {{-- @include('components.featured-listings', [
         'listings' => $listings ?? collect(),
         'title' => 'Recommended Homes For You',
         'description' => 'Discover our finest investment opportunities across all locations'
-    ])
+    ]) --}}
 
     @include('layouts.footer')
 

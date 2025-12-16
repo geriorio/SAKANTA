@@ -282,9 +282,9 @@
             <h1>{{ $property->title }}</h1>
             @if($property->subtitle)
                 <p class="subtitle">{{ $property->subtitle }}</p>
-            @endif
+                @endif
             <p class="location">📍 {{ $property->location->name ?? $property->city }}</p>
-            <p class="price">{{ $property->formatted_price }}</p>
+            <p class="price">{{ $property->formatted_price }} / share</p>
         </div>
     </section>
 
@@ -318,12 +318,10 @@
                         <p>{{ $property->address }}<br>{{ $property->location->name ?? $property->city }}, {{ $property->province }}</p>
                     </div>
 
-                    <div class="detail-item">
-                        <h3>Price</h3>
-                        <p>{{ $property->formatted_price }}</p>
-                    </div>
-
-                    <div class="detail-item">
+                <div class="detail-item">
+                    <h3>Price</h3>
+                    <p>{{ $property->formatted_price }} / share</p>
+                </div>                    <div class="detail-item">
                         <h3>Desc</h3>
                         <p>{{ $property->description }}</p>
                     </div>

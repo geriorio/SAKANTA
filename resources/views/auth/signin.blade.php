@@ -46,14 +46,22 @@
 
         .video-background video {
             position: absolute;
-            top: 50%;
-            left: 50%;
+            top: 0;
+            left: 0;
             min-width: 100%;
             min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%) scale(0.9);
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .video-background video.video-fade-out {
+            opacity: 0;
+        }
+
+        .video-background video.video-fade-in {
+            opacity: 1;
         }
 
         .video-overlay {
@@ -297,25 +305,59 @@
 
     <!-- Fullscreen Video Background -->
     <div class="video-background">
-        <video id="bgVideo" autoplay muted playsinline preload="auto">
+        <video id="bgVideo1" class="video-fade-in" autoplay muted playsinline preload="auto">
             <source src="{{ asset('videos/login1.mp4') }}" type="video/mp4">
+        </video>
+        <video id="bgVideo2" class="video-fade-out" muted playsinline preload="auto" style="opacity: 0;">
+            <source src="{{ asset('videos/login2.mp4') }}" type="video/mp4">
         </video>
         <div class="video-overlay"></div>
     </div>
 
     <script>
-        const video = document.getElementById('bgVideo');
-        const videos = [
-            "{{ asset('videos/login1.mp4') }}",
-            "{{ asset('videos/login2.mp4') }}"
-        ];
-        let currentVideoIndex = 0;
+        const video1 = document.getElementById('bgVideo1');
+        const video2 = document.getElementById('bgVideo2');
+        let isVideo1Active = true;
 
-        video.addEventListener('ended', function() {
-            currentVideoIndex = (currentVideoIndex + 1) % videos.length;
-            video.src = videos[currentVideoIndex];
-            video.play();
-        });
+        // Preload and prepare both videos
+        video1.load();
+        video2.load();
+
+        // Smooth crossfade between videos
+        function crossfadeVideos() {
+            if (isVideo1Active) {
+                // Switch to video 2
+                video2.currentTime = 0;
+                video2.play().then(() => {
+                    video2.style.opacity = '1';
+                    video1.style.opacity = '0';
+                }).catch(e => console.error('Play error:', e));
+                
+                setTimeout(() => {
+                    video1.pause();
+                    video1.currentTime = 0;
+                }, 1500);
+                
+                isVideo1Active = false;
+            } else {
+                // Switch to video 1
+                video1.currentTime = 0;
+                video1.play().then(() => {
+                    video1.style.opacity = '1';
+                    video2.style.opacity = '0';
+                }).catch(e => console.error('Play error:', e));
+                
+                setTimeout(() => {
+                    video2.pause();
+                    video2.currentTime = 0;
+                }, 1500);
+                
+                isVideo1Active = true;
+            }
+        }
+
+        video1.addEventListener('ended', crossfadeVideos);
+        video2.addEventListener('ended', crossfadeVideos);
     </script>
 
     <div class="main-container">

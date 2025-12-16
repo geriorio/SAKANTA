@@ -907,17 +907,15 @@
         <div class="yacht-info-container">
             <!-- Title and Price Row -->
             <div class="yacht-title-row">
-                <div class="yacht-main-info">
-                    <h2>{{ $yacht->name }}</h2>
-                    <p class="yacht-price">
-                        {{ $yacht->formatted_price }}
-                        @if($yacht->ownership)
-                            <span class="ownership-separator"> • </span>
-                            <span class="yacht-ownership">{{ $yacht->ownership }}</span>
-                        @endif
-                    </p>
-                    
-                    <!-- Shares Committed Badge -->
+            <div class="yacht-main-info">
+                <h2>{{ $yacht->name }}</h2>
+                <p class="yacht-price">
+                    {{ $yacht->formatted_price }} / share
+                    @if($yacht->ownership)
+                        <span class="ownership-separator"> • </span>
+                        <span class="yacht-ownership">{{ $yacht->ownership }}</span>
+                    @endif
+                </p>                    <!-- Shares Committed Badge -->
                     @if($yacht->shares_committed)
                     <div style="margin-top: 12px;">
                         <span style="display: inline-block; padding: 6px 14px; background: rgba(6, 72, 82, 0.1); color: #064852; font-size: 11px; font-weight: 600; border-radius: 14px; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Work Sans', sans-serif;">
@@ -1232,7 +1230,7 @@
                                 </span>
                                 @endif
                             </p>
-                            <p class="related-yacht-price">{{ $relatedYacht->formatted_price }}</p>
+                            <p class="related-yacht-price">{{ $relatedYacht->formatted_price }} / share</p>
                         </div>
                     </a>
                     @endforeach

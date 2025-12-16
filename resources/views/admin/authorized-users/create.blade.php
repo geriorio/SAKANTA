@@ -38,6 +38,38 @@
                 <p class="mt-2 text-sm text-gray-500">An access code will be automatically generated for this email.</p>
             </div>
 
+            <div class="mb-6">
+                <label for="referral_code" class="block text-sm font-semibold text-gray-700 mb-2">
+                    Referral Code (Optional)
+                </label>
+                <div class="flex gap-2">
+                    <input 
+                        type="text" 
+                        id="referral_code" 
+                        name="referral_code" 
+                        value="{{ old('referral_code') }}"
+                        class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 @error('referral_code') border-red-500 @enderror"
+                        placeholder="SKTREFXXXXX"
+                        maxlength="20"
+                        readonly
+                    >
+                    <button 
+                        type="button" 
+                        onclick="generateReferralCode()"
+                        class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold whitespace-nowrap"
+                    >
+                        Generate Code
+                    </button>
+                </div>
+                @error('referral_code')
+                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                @enderror
+                <p class="mt-2 text-sm text-gray-500">
+                    Generate a unique referral code for this user. This allows them to refer up to 5 users. 
+                    <br>Leave blank if you don't want to give referral privileges.
+                </p>
+            </div>
+
             <div class="flex items-center justify-end gap-4">
                 <a href="{{ route('admin.authorized-users.index') }}" class="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 font-semibold">
                     Cancel
@@ -50,4 +82,15 @@
     </div>
 
 </div>
+
+<script>
+function generateReferralCode() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let code = 'SKTREF';
+    for (let i = 0; i < 5; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    document.getElementById('referral_code').value = code;
+}
+</script>
 @endsection

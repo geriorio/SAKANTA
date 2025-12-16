@@ -7,6 +7,7 @@ use App\Models\AuthorizedUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
@@ -21,10 +22,20 @@ class AuthController extends Controller
             return redirect('/');
         }
         
-        // Set session that intro has been seen
-        session(['intro_seen' => true]);
-        
         return view('auth.intro');
+    }
+
+    /**
+     * Show login page with Google button
+     */
+    public function showLogin()
+    {
+        // If already logged in, redirect to home
+        if (Auth::check()) {
+            return redirect('/');
+        }
+        
+        return view('auth.login');
     }
 
     /**
@@ -136,14 +147,6 @@ class AuthController extends Controller
      */
     public function redirectToGoogle(Request $request)
     {
-        // Validate access code
-        $request->validate([
-            'access_code' => 'required|string',
-        ]);
-
-        // Store access code in session
-        session(['pending_access_code' => $request->access_code]);
-
         return Socialite::driver('google')
             ->with(['prompt' => 'select_account'])
             ->redirect();
@@ -156,72 +159,225 @@ class AuthController extends Controller
     {
         try {
             $googleUser = Socialite::driver('google')->user();
-            $accessCode = session('pending_access_code');
-
-            // Validate access code from session
-            if (!$accessCode) {
-                return redirect()->route('auth.signin')->with('error', 'Access code is required. Please try again.');
-            }
-
-            // Find authorized user with matching email and access code
-            $authorizedUser = AuthorizedUser::where('access_code', $accessCode)
-                ->where('email', $googleUser->email)
-                ->first();
-
-            if (!$authorizedUser) {
-                session()->forget('pending_access_code');
-                return redirect()->route('auth.signin')->with('error', 'Access code does not match your Google account email.');
-            }
-
-            // Check if access code is already used by different user
-            if ($authorizedUser->is_used && $authorizedUser->user_id) {
-                $existingUser = User::find($authorizedUser->user_id);
+            
+            // Check if user already exists
+            $existingUser = User::where('email', $googleUser->email)->first();
+            
+            if ($existingUser) {
+                // Check if user has valid access code
+                $validAccessCode = AuthorizedUser::where('email', $googleUser->email)
+                    ->where('is_used', true)
+                    ->where('user_id', $existingUser->id)
+                    ->first();
                 
-                if ($existingUser && $existingUser->email === $googleUser->email) {
-                    // Same user logging in again - allow
+                if ($validAccessCode) {
+                    // User has valid access, login directly
                     Auth::login($existingUser, true);
-                    session()->forget('pending_access_code');
-                    return redirect()->intended('/')->with('success', 'Welcome back, ' . $existingUser->name . '!');
-                } else {
-                    // Access code used by different user
-                    session()->forget('pending_access_code');
-                    return redirect()->route('auth.signin')->with('error', 'This access code has already been used by another account.');
+                    return redirect('/')->with('success', 'Welcome back, ' . $existingUser->name . '!');
                 }
+                
+                // User exists but no valid access code (maybe deleted then re-registered)
+                // Treat as new registration
             }
+            
+            // New user or user without valid access - store Google info in session for registration
+            session([
+                'google_user_email' => $googleUser->email,
+                'google_user_name' => $googleUser->name,
+                'google_user_id' => $googleUser->id,
+                'google_user_avatar' => $googleUser->avatar,
+            ]);
 
-            // Create new user or update existing
-            $user = User::where('email', $googleUser->email)->first();
-
-            if (!$user) {
-                // Create new user
-                $user = User::create([
-                    'name' => $googleUser->name,
-                    'email' => $googleUser->email,
-                    'google_id' => $googleUser->id,
-                    'avatar' => $googleUser->avatar,
-                    'password' => Hash::make('google_oauth_' . now()->timestamp),
-                ]);
-            } else {
-                // Update existing user
-                $user->google_id = $googleUser->id;
-                $user->avatar = $googleUser->avatar;
-                $user->name = $googleUser->name;
-                $user->save();
-            }
-
-            // Mark access code as used
-            $authorizedUser->markAsUsed($user);
-
-            // Login user
-            Auth::login($user, true);
-            session()->forget('pending_access_code');
-
-            return redirect()->intended('/')->with('success', 'Welcome to Sakanta, ' . $user->name . '!');
+            // Redirect to access choice page for new users
+            return redirect()->route('auth.access-choice');
 
         } catch (\Exception $e) {
-            session()->forget('pending_access_code');
-            return redirect()->route('auth.signin')->with('error', 'Failed to authenticate with Google. Please try again.');
+            return redirect()->route('auth.intro')->with('error', 'Failed to authenticate with Google. Please try again.');
         }
+    }
+
+    /**
+     * Show access choice page
+     */
+    public function showAccessChoice()
+    {
+        if (!session('google_user_email')) {
+            return redirect()->route('auth.intro')->with('error', 'Please sign in with Google first.');
+        }
+
+        return view('auth.access-choice');
+    }
+
+    /**
+     * Show enter access code page
+     */
+    public function showEnterAccess()
+    {
+        if (!session('google_user_email')) {
+            return redirect()->route('auth.intro')->with('error', 'Please sign in with Google first.');
+        }
+
+        return view('auth.enter-access');
+    }
+
+    /**
+     * Verify access code and login
+     */
+    public function verifyAccess(Request $request)
+    {
+        $request->validate([
+            'access_code' => 'required|string',
+            'email' => 'required|email',
+        ]);
+
+        // Find authorized user
+        $authorizedUser = AuthorizedUser::where('access_code', $request->access_code)
+            ->where('email', $request->email)
+            ->first();
+
+        if (!$authorizedUser) {
+            return back()->with('error', 'Invalid access code or email.');
+        }
+
+        // If already used, login existing user
+        if ($authorizedUser->is_used && $authorizedUser->user_id) {
+            $user = User::find($authorizedUser->user_id);
+            
+            if ($user) {
+                Auth::login($user, true);
+                
+                // Clear Google session data
+                session()->forget(['google_user_email', 'google_user_name', 'google_user_id', 'google_user_avatar']);
+                
+                return redirect('/')->with('success', 'Welcome back, ' . $user->name . '!');
+            }
+        }
+
+        // Access code valid but user not registered yet - create user
+        $googleEmail = session('google_user_email');
+        $googleName = session('google_user_name');
+        $googleId = session('google_user_id');
+        $googleAvatar = session('google_user_avatar');
+
+        if (!$googleEmail) {
+            return back()->with('error', 'Session expired. Please start over.');
+        }
+
+        // Check if user already exists with this email
+        $existingUser = User::where('email', $googleEmail)->first();
+        
+        if ($existingUser) {
+            // User already exists, just mark access code as used and login
+            $authorizedUser->markAsUsed($existingUser);
+            Auth::login($existingUser, true);
+            
+            // Clear Google session data
+            session()->forget(['google_user_email', 'google_user_name', 'google_user_id', 'google_user_avatar']);
+            
+            return redirect('/')->with('success', 'Welcome back, ' . $existingUser->name . '!');
+        }
+
+        // Create new user
+        $user = User::create([
+            'name' => $googleName,
+            'email' => $googleEmail,
+            'google_id' => $googleId,
+            'avatar' => $googleAvatar,
+            'password' => Hash::make('google_oauth_' . now()->timestamp),
+        ]);
+
+        // Mark access code as used
+        $authorizedUser->markAsUsed($user);
+
+        // Login user
+        Auth::login($user, true);
+        
+        // Clear Google session data
+        session()->forget(['google_user_email', 'google_user_name', 'google_user_id', 'google_user_avatar']);
+
+        return redirect('/')->with('success', 'Welcome to Sakanta, ' . $user->name . '!');
+    }
+
+    /**
+     * Show request access page
+     */
+    public function showRequestAccess()
+    {
+        if (!session('google_user_email')) {
+            return redirect()->route('auth.intro')->with('error', 'Please sign in with Google first.');
+        }
+
+        return view('auth.request-access');
+    }
+
+    /**
+     * Submit access request
+     */
+    public function submitRequest(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string',
+            'referral_code' => 'nullable|string',
+        ]);
+
+        $email = $request->email;
+
+        // Check if user already has access
+        if (AuthorizedUser::where('email', $email)->exists()) {
+            return back()->with('error', 'This email already has an access code.');
+        }
+
+        // If referral code provided, validate it
+        if ($request->filled('referral_code')) {
+            $referrer = AuthorizedUser::where('referral_code', $request->referral_code)->first();
+
+            if (!$referrer) {
+                return back()->with('error', 'Invalid referral code.');
+            }
+
+            if (!$referrer->canAcceptReferral()) {
+                return back()->with('error', 'Referral code has already been used 5 times.');
+            }
+
+            // Generate access code for user
+            $accessCode = AuthorizedUser::generateAccessCode();
+
+            // Create authorized user
+            $authorizedUser = AuthorizedUser::create([
+                'email' => $email,
+                'access_code' => $accessCode,
+                'is_used' => false,
+            ]);
+
+            // Add to referrer's referred users
+            $referrer->addReferredUser($email);
+
+            // Send email with access code
+            try {
+                Mail::send('emails.access-code', ['accessCode' => $accessCode, 'name' => $request->name], function($message) use ($email) {
+                    $message->to($email)
+                            ->subject('Your Sakanta Access Code');
+                });
+            } catch (\Exception $e) {
+                \Log::error('Failed to send access code email: ' . $e->getMessage());
+            }
+
+            // Show success page with access code
+            return view('auth.access-code-generated', ['accessCode' => $accessCode]);
+        }
+
+        // No referral code - save to membership requests
+        \App\Models\MembershipRequest::create([
+            'full_name' => $request->name,
+            'email' => $email,
+            'phone' => $request->phone,
+            'has_referral' => false,
+            'status' => 'pending',
+        ]);
+
+        return view('auth.request-submitted');
     }
 
     /**

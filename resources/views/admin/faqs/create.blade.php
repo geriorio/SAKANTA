@@ -46,6 +46,21 @@
         </div>
 
         <div class="form-group">
+            <label class="form-control-label">FAQ Type</label>
+            <div style="display: flex; gap: 2rem; margin-top: 0.5rem;">
+                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                    <input type="radio" name="type" value="homes" {{ old('type', 'homes') == 'homes' ? 'checked' : '' }} required>
+                    <span>Homes</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                    <input type="radio" name="type" value="sail" {{ old('type') == 'sail' ? 'checked' : '' }} required>
+                    <span>Sail</span>
+                </label>
+            </div>
+            <small style="color: #666;">Select whether this FAQ is for Homes or Sail</small>
+        </div>
+
+        <div class="form-group">
             <label class="form-control-label">Hero Section - Big Title (Esther Font)</label>
             <input type="text" name="hero_big_title" value="{{ old('hero_big_title') }}" class="form-control" placeholder="e.g., Frequently Asked Questions" required>
             <small style="color: #666;">Main title displayed large in detail page hero section</small>

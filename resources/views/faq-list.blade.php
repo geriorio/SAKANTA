@@ -24,8 +24,10 @@
         .hero-text small { font-size: 18px; letter-spacing: 4px; text-transform: uppercase; display: block; margin-bottom: 20px; opacity: 0.9; font-family: 'Work Sans'; font-weight: 500; }
         .hero-text h1 { font-size: 82px; font-weight: 300; letter-spacing: 4px; margin-bottom: 30px; }
         .hero-text p { font-size: 20px; line-height: 1.6; opacity: 0.95; font-family: 'Work Sans'; }
-        .scroll-indicator { position: relative; z-index: 2; color: white; font-size: 24px; animation: bounce 2s infinite; cursor: pointer; }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
+        .hero-nav-links { position: relative; z-index: 2; display: flex; gap: 20px; align-items: center; margin-top: 40px; font-family: 'Work Sans', sans-serif; }
+        .hero-nav-links a { color: white; text-decoration: none; font-size: 16px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; padding: 12px 30px; border: 2px solid white; border-radius: 4px; transition: all 0.3s; }
+        .hero-nav-links a:hover { background: white; color: #064852; transform: translateY(-2px); }
+        .hero-nav-links .separator { color: white; font-size: 20px; font-weight: 300; }
         .faq-section { background: #F7EFE2; padding: 100px 60px 80px; }
         .faq-container { max-width: 1200px; margin: 0 auto; }
         .faq-title { font-size: 52px; font-weight: 400; color: #064852; margin-bottom: 60px; text-align: center; }
@@ -117,21 +119,26 @@
             <h1>FAQs</h1>
             <p>Everything you need to know about co-owning with Sakanta — in one place.</p>
         </div>
-        <div class="scroll-indicator" onclick="document.querySelector('.faq-section').scrollIntoView({ behavior: 'smooth' })" style="cursor: pointer;">↓</div>
+        <div class="hero-nav-links">
+            <a href="#faq-homes" onclick="event.preventDefault(); document.getElementById('faq-homes').scrollIntoView({ behavior: 'smooth', block: 'start' });">Homes</a>
+            <span class="separator">|</span>
+            <a href="#faq-sail" onclick="event.preventDefault(); document.getElementById('faq-sail').scrollIntoView({ behavior: 'smooth', block: 'start' });">Sail</a>
+        </div>
     </section>
 
     <section class="faq-section">
         <div class="faq-container">
-            <h2 class="faq-title">Browse FAQ Categories</h2>
+            <!-- FAQ Homes Section -->
+            <h2 class="faq-title" id="faq-homes">FAQ Categories - Homes</h2>
 
-            @if($faqs->count() > 0)
+            @if($faqsHomes->count() > 0)
             <div class="categories-grid">
-                @foreach($faqs as $faq)
+                @foreach($faqsHomes as $faq)
                 <a href="{{ route('faq.show', $faq->slug) }}" class="category-card" onclick="sessionStorage.setItem('scrollToFaqCategories', 'true')">
                     @if($faq->icon)
                         <img src="{{ asset('storage/' . $faq->icon) }}" alt="{{ $faq->title }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 50%; margin-bottom: 15px;">
                     @else
-                        <div class="category-icon">📖</div>
+                        <div class="category-icon">🏡</div>
                     @endif
                     <h3>{{ $faq->title }}</h3>
                     <p>{{ $faq->description }}</p>
@@ -141,9 +148,35 @@
             </div>
             @else
             <div class="no-faqs">
-                <p>No FAQ categories available at the moment.</p>
+                <p>No FAQ categories available for Homes at the moment.</p>
             </div>
             @endif
+
+            <!-- FAQ Sail Section -->
+            <div style="margin-top: 120px;">
+                <h2 class="faq-title" id="faq-sail">FAQ Categories - Sail</h2>
+
+                @if($faqsSail->count() > 0)
+                <div class="categories-grid">
+                    @foreach($faqsSail as $faq)
+                    <a href="{{ route('faq.show', $faq->slug) }}" class="category-card" onclick="sessionStorage.setItem('scrollToFaqCategories', 'true')">
+                        @if($faq->icon)
+                            <img src="{{ asset('storage/' . $faq->icon) }}" alt="{{ $faq->title }}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 50%; margin-bottom: 15px;">
+                        @else
+                            <div class="category-icon">⛵</div>
+                        @endif
+                        <h3>{{ $faq->title }}</h3>
+                        <p>{{ $faq->description }}</p>
+                        <span class="category-btn">View Questions</span>
+                    </a>
+                    @endforeach
+                </div>
+                @else
+                <div class="no-faqs">
+                    <p>No FAQ categories available for Sail at the moment.</p>
+                </div>
+                @endif
+            </div>
         </div>
 
         <!-- Content Row Section -->

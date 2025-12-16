@@ -18,7 +18,7 @@
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Esther', 'Georgia', serif; color: #2c3e50; }
-        .hero-faq { height: 100vh; background: url('/images/hero5.jpg') center/cover no-repeat; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .hero-faq { height: 100vh; background: url('{{ $faq->type === 'sail' ? '/images/sail07.jpg' : '/images/hero5.jpg' }}') center/cover no-repeat; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .hero-faq::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.4); }
         .hero-text { position: relative; z-index: 2; text-align: center; color: white; max-width: 800px; }
         .hero-text small { font-size: 18px; letter-spacing: 4px; text-transform: uppercase; display: block; margin-bottom: 20px; opacity: 0.9; font-family: 'Work Sans'; font-weight: 500; }
@@ -108,7 +108,11 @@
     </section>
 
     <!-- Featured Listings Section -->
-    @include('components.featured-listings', ['listings' => $featuredListings ?? []])
+    @if($faq->type === 'sail')
+        @include('components.featured-yachts', ['yachts' => $featuredListings ?? []])
+    @else
+        @include('components.featured-listings', ['listings' => $featuredListings ?? []])
+    @endif
 
     @include('layouts.footer')
 

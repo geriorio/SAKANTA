@@ -36,16 +36,19 @@
     <div class="row">
         <div class="col-12">
             <div class="card shadow-sm">
-                <div class="card-header bg-white py-3">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h5 class="mb-0 text-dark fw-bold">User Management</h5>
-                            <p class="text-muted small mb-0">Manage registered users who can access the website</p>
-                        </div>
+            <div class="card-header bg-white py-3">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h5 class="mb-0 text-dark fw-bold">User Management</h5>
+                        <p class="text-muted small mb-0">Manage registered users who can access the website</p>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{{ route('admin.authorized-users.index') }}" class="btn btn-warning">
+                            <i class="bi bi-key-fill me-1"></i> Access Codes & Referral
+                        </a>
                     </div>
                 </div>
-
-                <div class="card-body">
+            </div>                <div class="card-body">
                     <!-- Add New User Form -->
                     <div class="card mb-4 border-primary">
                         <div class="card-header bg-primary text-white">
