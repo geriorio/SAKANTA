@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ asset('images/Logo-02.png') }}?v=2">
     <title>@yield('title', 'Sakanta - Platform Co-Ownership Property Terdepan')</title>
     <meta name="description" content="@yield('description', 'Investasi property bersama dengan sistem co-ownership. Miliki saham property impian Anda mulai dari 1/8 bagian.')">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&family=Poppins:wght@100;200;300;400;500;600&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&family=Poppins:wght@100;200;300;400;500;600&family=Space+Grotesk:wght@300;400;500;600&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -43,6 +44,14 @@
     
     <!-- Custom CSS -->
     <style>
+        @font-face {
+            font-family: 'Esther';
+            src: url('/fonts/Esther-Regular.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
         :root {
             --color-sage: #727444;
             --color-cream: #d2b996;
@@ -55,7 +64,7 @@
         }
         
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Esther', 'Inter', sans-serif;
             font-weight: 300;
             background: linear-gradient(135deg, var(--color-deep-forest) 0%, var(--color-olive) 50%, var(--color-sage) 100%);
             min-height: 100vh;
@@ -90,20 +99,20 @@
         }
         
         .navbar-transparent {
-            background: rgba(255, 255, 255, 0);
-            backdrop-filter: blur(0px);
-            border: 1px solid rgba(255, 255, 255, 0);
-            box-shadow: none;
+            background: rgba(255, 255, 255, 0) !important;
+            backdrop-filter: blur(0px) !important;
+            border: 1px solid rgba(255, 255, 255, 0) !important;
+            box-shadow: none !important;
             transition: all 0.3s ease;
         }
         
         .navbar-scrolled {
-            background: rgba(45, 51, 23, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(114, 116, 68, 0.3);
+            background: rgba(45, 51, 23, 0.95) !important;
+            backdrop-filter: blur(20px) !important;
+            border: 1px solid rgba(114, 116, 68, 0.3) !important;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), 
                         inset 0 1px 0 rgba(114, 116, 68, 0.3),
-                        0 0 30px rgba(45, 51, 23, 0.2);
+                        0 0 30px rgba(45, 51, 23, 0.2) !important;
         }
         
         .navbar-scrolled .navbar-logo-text {
@@ -243,20 +252,25 @@
         }
         
         .card-hover {
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border-radius: inherit;
         }
         
         .card-hover:hover {
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(114, 116, 68, 0.1);
+            border-radius: inherit;
         }
         
         .btn-gradient {
             background: linear-gradient(135deg, var(--color-sage) 0%, var(--color-taupe) 100%);
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(114, 116, 68, 0.4);
-            font-weight: 300;
+            font-weight: 600;
             color: white;
+            font-family: 'Work Sans', sans-serif;
         }
         
         .btn-gradient:hover {
@@ -267,8 +281,9 @@
         .btn-sunset {
             background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-warm-cream) 100%);
             box-shadow: 0 4px 15px rgba(210, 185, 150, 0.4);
-            font-weight: 300;
+            font-weight: 600;
             color: var(--color-olive);
+            font-family: 'Work Sans', sans-serif;
         }
         
         .btn-sunset:hover {
@@ -279,8 +294,9 @@
         .btn-ocean {
             background: linear-gradient(135deg, var(--color-light-sage) 0%, var(--color-sage) 100%);
             box-shadow: 0 4px 15px rgba(138, 148, 86, 0.4);
-            font-weight: 300;
+            font-weight: 600;
             color: white;
+            font-family: 'Work Sans', sans-serif;
         }
         
         .btn-ocean:hover {
@@ -292,8 +308,9 @@
             background: linear-gradient(135deg, var(--color-taupe) 0%, var(--color-moss) 100%);
             box-shadow: 0 4px 15px rgba(118, 100, 69, 0.4);
             border: 1px solid rgba(118, 100, 69, 0.3);
-            font-weight: 300;
+            font-weight: 600;
             color: white;
+            font-family: 'Work Sans', sans-serif;
         }
         
         .btn-natural:hover {
@@ -411,158 +428,206 @@
             background: linear-gradient(135deg, var(--color-light-sage) 0%, var(--color-cream) 100%);
         }
         
-        /* Custom Swiper Styles */
+        /* Swiper Styles */
         .swiper-container {
-            position: relative;
-            padding: 0 60px 60px 60px;
-            margin: 0 -60px;
             overflow: hidden;
         }
         
-        .swiper {
-            overflow: hidden;
-            padding-bottom: 50px;
-            width: 100%;
-        }
-        
-        .swiper-wrapper {
-            align-items: stretch;
-        }
-        
-        .featured-properties-swiper .swiper-slide {
-            height: auto;
-            display: flex;
-        }
-        
-        .featured-properties-swiper .swiper-slide > div {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-        }
-        
-        .latest-properties-swiper .swiper-slide {
-            height: auto;
-            display: flex;
-        }
-        
-        .latest-properties-swiper .swiper-slide > div {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-        }
-        
-        /* Prevent horizontal scroll on body */
-        body {
-            overflow-x: hidden;
-        }
-        
-        /* Custom Navigation Buttons */
-        .swiper-button-next, .swiper-button-prev {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 50%;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
-            width: 44px !important;
-            height: 44px !important;
-            margin-top: -22px !important;
-            z-index: 10;
-            backdrop-filter: blur(10px);
-        }
-        
-        .swiper-button-next:after, .swiper-button-prev:after {
-            font-size: 16px !important;
-            font-weight: bold;
-        }
-        
-        .swiper-button-next {
-            right: 10px !important;
-        }
-        
+        /* Hide all navigation arrows */
+        .swiper-button-next, 
         .swiper-button-prev {
-            left: 10px !important;
-        }
-        
-        .swiper-button-next:hover, .swiper-button-prev:hover {
-            background: rgba(255, 255, 255, 1);
-            transform: scale(1.1);
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
-        }
-        
-        /* Featured Properties Navigation Colors */
-        .featured-properties-swiper .swiper-button-next,
-        .featured-properties-swiper .swiper-button-prev {
-            color: #d97706 !important;
-        }
-        
-        .featured-properties-swiper .swiper-button-next:hover,
-        .featured-properties-swiper .swiper-button-prev:hover {
-            color: #ea580c !important;
-        }
-        
-        /* Latest Properties Navigation Colors */
-        .latest-properties-swiper .swiper-button-next,
-        .latest-properties-swiper .swiper-button-prev {
-            color: #059669 !important;
-        }
-        
-        .latest-properties-swiper .swiper-button-next:hover,
-        .latest-properties-swiper .swiper-button-prev:hover {
-            color: #047857 !important;
-        }
-        
-        /* Pagination Styles */
-        .swiper-pagination {
-            bottom: 10px !important;
-            position: relative !important;
-            margin-top: 20px;
+            display: none !important;
         }
         
         .swiper-pagination-bullet {
-            background: rgba(114, 116, 68, 0.3);
-            transition: all 0.3s ease;
-            width: 10px;
-            height: 10px;
+            background: rgba(114, 116, 68, 0.3) !important;
+            opacity: 1 !important;
+            width: 10px !important;
+            height: 10px !important;
+            border: 1px solid rgba(114, 116, 68, 0.2) !important;
+            transition: all 0.3s ease !important;
             margin: 0 4px !important;
         }
         
-        .swiper-pagination-bullet-active {
-            background: var(--color-sage);
-            transform: scale(1.3);
+        /* Additional AOS and Performance Optimizations */
+        [data-aos] {
+            transition-property: opacity, transform;
+            transition-timing-function: ease-out-quart;
         }
         
-        .featured-properties-swiper .swiper-pagination-bullet {
-            background: rgba(217, 119, 6, 0.3);
+        [data-aos].aos-animate {
+            transition-timing-function: ease-out-quart;
         }
         
-        .featured-properties-swiper .swiper-pagination-bullet-active {
-            background: #d97706;
+        /* Enhanced Swiper Visual Effects */
+        .swiper {
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
         }
         
-        .latest-properties-swiper .swiper-pagination-bullet {
-            background: rgba(5, 150, 105, 0.3);
+        .swiper-slide {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            will-change: transform;
         }
         
-        .latest-properties-swiper .swiper-pagination-bullet-active {
-            background: #059669;
+        .swiper-slide:hover {
+            transform: translateY(-5px);
         }
         
-        /* Responsive adjustments */
+        .swiper-slide-active {
+            z-index: 2;
+        }
+        
+        /* Enhanced pagination */
+        .swiper-pagination {
+            bottom: 15px !important;
+            z-index: 10;
+        }
+        
+        /* Property card enhancements */
+        .property-card {
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: transform, box-shadow;
+            position: relative;
+            overflow: hidden;
+            border-radius: inherit;
+        }
+        
+        .property-card:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.12),
+                0 5px 15px rgba(0, 0, 0, 0.08),
+                0 0 0 1px rgba(114, 116, 68, 0.05);
+            border-radius: inherit;
+        }
+        
+        .property-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(114, 116, 68, 0.03) 0%, rgba(210, 185, 150, 0.03) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+            border-radius: inherit;
+        }
+        
+        .property-card:hover::before {
+            opacity: 1;
+        }
+        
+        /* Modern Property Card Styles */
+        .line-clamp-1 {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+        }
+        
+        .line-clamp-2 {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+        
+        /* Enhanced card animations */
+        .modern-card {
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .modern-card:hover {
+            transform: translateY(-8px);
+        }
+        
+        .modern-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--color-sage), var(--color-olive));
+            opacity: 0;
+            z-index: -1;
+            border-radius: inherit;
+            filter: blur(20px);
+            transition: opacity 0.4s ease;
+        }
+        
+        .modern-card:hover::after {
+            opacity: 0.3;
+        }
+        
+        /* Badge styles */
+        .badge-modern {
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Enhanced gradients for text */
+        .text-gradient-sage {
+            background: linear-gradient(135deg, var(--color-sage) 0%, var(--color-olive) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Improved shadow effects */
+        .shadow-premium {
+            box-shadow: 
+                0 10px 25px -3px rgba(0, 0, 0, 0.1), 
+                0 4px 6px -2px rgba(0, 0, 0, 0.05),
+                0 0 0 1px rgba(0, 0, 0, 0.05);
+        }
+        
+        .shadow-premium-hover {
+            box-shadow: 
+                0 20px 40px -4px rgba(0, 0, 0, 0.15), 
+                0 8px 16px -4px rgba(0, 0, 0, 0.1),
+                0 0 0 1px rgba(114, 116, 68, 0.1);
+        }
+        
+        /* Button enhancements */
+        .btn, .button, [class*="btn-"] {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Work Sans', sans-serif;
+        }
+        
+        .btn:hover, .button:hover, [class*="btn-"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn:active, .button:active, [class*="btn-"]:active {
+            transform: translateY(0);
+        }
+        
+        /* Loading and performance optimizations */
+        body.loaded .swiper {
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+        
+        .lazy-load {
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .lazy-load.loaded {
+            opacity: 1;
+        }
+        
+        /* Responsive improvements */
         @media (max-width: 768px) {
-            .swiper-container {
-                padding: 0 40px 40px 40px;
-                margin: 0 -40px;
-            }
-            
-            .swiper-button-next {
-                right: 5px !important;
-            }
-            
-            .swiper-button-prev {
-                left: 5px !important;
-            }
-            
             .swiper-button-next, .swiper-button-prev {
                 width: 36px !important;
                 height: 36px !important;
@@ -572,23 +637,108 @@
             .swiper-button-next:after, .swiper-button-prev:after {
                 font-size: 14px !important;
             }
+            
+            .property-card:hover, .card-hover:hover {
+                transform: translateY(-4px) scale(1.005);
+            }
+            
+            .property-card:hover {
+                box-shadow: 
+                    0 10px 25px rgba(0, 0, 0, 0.1),
+                    0 3px 10px rgba(0, 0, 0, 0.06),
+                    0 0 0 1px rgba(114, 116, 68, 0.03);
+            }
         }
         
-        @media (max-width: 480px) {
-            .swiper-container {
-                padding: 0 20px 30px 20px;
-                margin: 0 -20px;
-            }
-            
-            .swiper-button-next, .swiper-button-prev {
-                width: 32px !important;
-                height: 32px !important;
-                margin-top: -16px !important;
-            }
-            
-            .swiper-button-next:after, .swiper-button-prev:after {
-                font-size: 12px !important;
-            }
+        /* Enhanced shadow effects that follow border radius */
+        .rounded-xl:hover, .rounded-2xl:hover, .rounded-3xl:hover {
+            box-shadow: inherit;
+        }
+        
+        /* Ensure all cards maintain their border radius */
+        .bg-white\\/95:hover,
+        .bg-gradient-to-br:hover {
+            border-radius: inherit !important;
+        }
+        
+        /* Fix for rounded corners on all card elements */
+        .property-card,
+        .card-hover {
+            position: relative;
+            isolation: isolate;
+        }
+        
+        .property-card::after,
+        .card-hover::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        /* Specific border radius preservation */
+        .rounded-2xl.property-card:hover {
+            border-radius: 1rem !important;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.12),
+                0 5px 15px rgba(0, 0, 0, 0.08),
+                0 0 0 1px rgba(114, 116, 68, 0.05);
+        }
+        
+        .rounded-xl.property-card:hover {
+            border-radius: 0.75rem !important;
+            box-shadow: 
+                0 12px 30px rgba(0, 0, 0, 0.1),
+                0 4px 12px rgba(0, 0, 0, 0.06),
+                0 0 0 1px rgba(114, 116, 68, 0.04);
+        }
+        
+        .rounded-3xl.card-hover:hover {
+            border-radius: 1.5rem !important;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(114, 116, 68, 0.1);
+        }
+        
+        /* Smooth transformations */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Performance optimizations */
+        * {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Prevent sharp edges during transformations */
+        .property-card,
+        .card-hover {
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        
+        /* Ensure consistent rendering across browsers */
+        .property-card:hover,
+        .card-hover:hover {
+            will-change: transform, box-shadow;
+            transform-origin: center center;
+        }
+        
+        /* Focus improvements for accessibility */
+        .swiper-pagination-bullet:focus {
+            outline: 2px solid var(--color-sage);
+            outline-offset: 2px;
+        }
+        
+        .swiper-pagination-bullet-active {
+            background: var(--color-sage) !important;
+            border-color: var(--color-olive) !important;
+            transform: scale(1.3) !important;
+            box-shadow: 0 2px 8px rgba(114, 116, 68, 0.4) !important;
         }
         
         /* Page Loader Styles */
@@ -598,7 +748,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, var(--color-deep-forest) 0%, var(--color-olive) 50%, var(--color-sage) 100%);
+            background: 
+                linear-gradient(135deg, rgba(45, 51, 23, 0.85) 0%, rgba(62, 56, 30, 0.8) 50%, rgba(114, 116, 68, 0.85) 100%),
+                url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80') center/cover;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -615,8 +767,11 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: radial-gradient(circle at center, rgba(210, 185, 150, 0.1) 0%, transparent 70%);
-            animation: backgroundPulse 4s ease-in-out infinite;
+            background: 
+                radial-gradient(circle at 30% 80%, rgba(114, 116, 68, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 70% 20%, rgba(210, 185, 150, 0.3) 0%, transparent 50%),
+                linear-gradient(180deg, transparent 0%, rgba(45, 51, 23, 0.2) 100%);
+            animation: backgroundPulse 6s ease-in-out infinite;
         }
         
         .page-loader.hidden {
@@ -628,22 +783,40 @@
             text-align: center;
             color: white;
             position: relative;
-            z-index: 2;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .loader-brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         
         .loader-logo {
             width: 140px;
             height: 140px;
-            margin: 0 auto 2.5rem;
+            margin-bottom: 1.5rem;
             position: relative;
-            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+            background: rgba(255, 255, 255, 0.1);
+            border: 3px solid rgba(210, 185, 150, 0.3);
+            border-radius: 50%;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.4));
+            animation: logoFloat 4s ease-in-out infinite;
         }
         
         .loader-logo .logo-image {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            animation: logoFloat 3s ease-in-out infinite;
             transition: all 0.3s ease;
         }
         
@@ -655,94 +828,73 @@
         .loader-text {
             font-family: 'Space Grotesk', sans-serif;
             font-size: 2.5rem;
-            font-weight: 300;
-            margin-bottom: 1rem;
-            letter-spacing: 0.1em;
-            background: linear-gradient(90deg, var(--color-warm-cream), var(--color-cream), var(--color-light-sage));
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            margin: 0;
+            background: linear-gradient(135deg, #ffffff 0%, var(--color-warm-cream) 50%, var(--color-cream) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: textShimmer 2s ease-in-out infinite;
+            background-size: 200% 200%;
+            animation: textShimmer 3s ease-in-out infinite;
+            text-shadow: 0 4px 20px rgba(210, 185, 150, 0.3);
         }
-        
-        .loader-subtext {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 200;
-            opacity: 0.9;
-            margin-bottom: 0.5rem;
-        }
-        
-        .loading-dots {
-            display: inline-flex;
-            gap: 6px;
-            margin-top: 1rem;
-            justify-content: center;
-        }
-        
-        .loading-dots span {
-            width: 8px;
-            height: 8px;
-            background: var(--color-cream);
-            border-radius: 50%;
-            animation: dotPulse 1.4s ease-in-out infinite;
-            box-shadow: 0 2px 10px rgba(210, 185, 150, 0.3);
-        }
-        
-        .loading-dots span:nth-child(1) { animation-delay: 0s; }
-        .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
-        .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
         
         @keyframes backgroundPulse {
             0%, 100% {
-                opacity: 0.3;
+                opacity: 0.8;
+                transform: scale(1);
             }
             50% {
-                opacity: 0.6;
+                opacity: 1;
+                transform: scale(1.02);
             }
         }
         
         @keyframes logoFloat {
             0%, 100% {
-                transform: translateY(0px) scale(1) rotate(0deg);
+                transform: translateY(0px) scale(1);
+                border-color: rgba(210, 185, 150, 0.3);
+                box-shadow: 
+                    0 20px 40px rgba(0, 0, 0, 0.3),
+                    0 0 0 1px rgba(255, 255, 255, 0.1),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2);
             }
             25% {
-                transform: translateY(-5px) scale(1.02) rotate(1deg);
+                transform: translateY(-8px) scale(1.03);
+                border-color: rgba(210, 185, 150, 0.4);
+                box-shadow: 
+                    0 25px 45px rgba(0, 0, 0, 0.4),
+                    0 0 0 1px rgba(255, 255, 255, 0.15),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.25);
             }
             50% {
-                transform: translateY(-10px) scale(1.05) rotate(0deg);
+                transform: translateY(-12px) scale(1.05);
+                border-color: rgba(210, 185, 150, 0.5);
+                box-shadow: 
+                    0 30px 50px rgba(0, 0, 0, 0.5),
+                    0 0 0 1px rgba(255, 255, 255, 0.2),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.3);
             }
             75% {
-                transform: translateY(-5px) scale(1.02) rotate(-1deg);
-            }
-        }
-        
-        @keyframes loaderSpin {
-            0% {
-                transform: translate(-50%, -50%) rotate(0deg);
-            }
-            100% {
-                transform: translate(-50%, -50%) rotate(360deg);
+                transform: translateY(-8px) scale(1.03);
+                border-color: rgba(210, 185, 150, 0.4);
+                box-shadow: 
+                    0 25px 45px rgba(0, 0, 0, 0.4),
+                    0 0 0 1px rgba(255, 255, 255, 0.15),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.25);
             }
         }
         
         @keyframes textShimmer {
-            0%, 100% {
-                background-position: 0% 50%;
+            0% {
+                background-position: -200% 0;
             }
             50% {
-                background-position: 100% 50%;
+                background-position: 200% 0;
             }
-        }
-        
-        @keyframes dotPulse {
-            0%, 20%, 80%, 100% {
-                transform: scale(1);
-                opacity: 0.6;
-            }
-            50% {
-                transform: scale(1.4);
-                opacity: 1;
+            100% {
+                background-position: -200% 0;
             }
         }
         
@@ -751,14 +903,11 @@
             .loader-logo {
                 width: 120px;
                 height: 120px;
+                padding: 18px;
             }
             
             .loader-text {
                 font-size: 2rem;
-            }
-            
-            .loader-subtext {
-                font-size: 1rem;
             }
         }
         
@@ -766,14 +915,12 @@
             .loader-logo {
                 width: 100px;
                 height: 100px;
+                padding: 15px;
             }
             
             .loader-text {
                 font-size: 1.8rem;
-            }
-            
-            .loader-subtext {
-                font-size: 0.9rem;
+                letter-spacing: 0.15em;
             }
         }
         
@@ -789,19 +936,12 @@
     <!-- Page Loader -->
     <div class="page-loader" id="pageLoader">
         <div class="loader-content">
-            <div class="loader-logo">
-                <!-- Sakanta Logo Image -->
-                <img src="{{ asset('images/sakanta.png') }}" alt="Sakanta Logo" class="logo-image">
-            </div>
-            
-            <div class="loader-text">SAKANTA</div>
-            <div class="loader-subtext">
-                <span>Platform Co-Ownership Property Terdepan</span>
-                <div class="loading-dots">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+            <div class="loader-brand">
+                <div class="loader-logo">
+                    <!-- Sakanta Logo Image -->
+                    <img src="{{ asset('images/sakanta.png') }}" alt="Sakanta Logo" class="logo-image">
                 </div>
+                <div class="loader-text">SAKANTA</div>
             </div>
         </div>
     </div>
@@ -819,7 +959,7 @@
     <!-- Cyber Grid Background -->
     <div class="fixed inset-0 cyber-grid opacity-20 pointer-events-none z-0"></div>
     <!-- Navigation -->
-    <nav class="fixed w-full top-0 z-50 navbar-transparent" x-data="{ open: false }" id="navbar">
+    <nav class="fixed w-full top-0 z-50 navbar-transparent" x-data="{ open: false }" id="navbar" style="background: transparent; border: none;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
@@ -840,13 +980,16 @@
                         <a href="{{ route('home') }}" class="navbar-link text-white hover:text-cream px-4 py-2 text-sm font-normal transition-all hover:bg-white/10 rounded-lg backdrop-blur-sm">
                             Beranda
                         </a>
-                        <a href="{{ route('properties.index') }}" class="navbar-link text-white hover:text-cream px-4 py-2 text-sm font-normal transition-all hover:bg-white/10 rounded-lg backdrop-blur-sm">
-                            Property
+                        <a href="{{ route('listings') }}" class="navbar-link text-white hover:text-cream px-4 py-2 text-sm font-normal transition-all hover:bg-white/10 rounded-lg backdrop-blur-sm">
+                            Listings
                         </a>
-                        <a href="{{ route('getstarted.index') }}" class="navbar-link text-white hover:text-cream px-4 py-2 text-sm font-normal transition-all hover:bg-white/10 rounded-lg backdrop-blur-sm">
-                            Get Started
+                        <a href="{{ route('about') }}" class="navbar-link text-white hover:text-cream px-4 py-2 text-sm font-normal transition-all hover:bg-white/10 rounded-lg backdrop-blur-sm">
+                            Tentang
                         </a>
-                        <a href="{{ route('contact.index') }}" class="navbar-link text-white hover:text-cream px-4 py-2 text-sm font-normal transition-all hover:bg-white/10 rounded-lg backdrop-blur-sm">
+                        <a href="{{ route('faq') }}" class="navbar-link text-white hover:text-cream px-4 py-2 text-sm font-normal transition-all hover:bg-white/10 rounded-lg backdrop-blur-sm">
+                            FAQs
+                        </a>
+                        <a href="#kontak" class="navbar-link text-white hover:text-cream px-4 py-2 text-sm font-normal transition-all hover:bg-white/10 rounded-lg backdrop-blur-sm">
                             Kontak
                         </a>
                     </div>
@@ -870,7 +1013,7 @@
                                 <a href="#dashboard" class="block px-4 py-2 text-sm text-gray-700 hover:bg-white/50 font-light">Dashboard</a>
                                 <a href="#investasi" class="block px-4 py-2 text-sm text-gray-700 hover:bg-white/50 font-light">Investasi Saya</a>
                                 <hr class="my-1 border-gray-200">
-                                <form method="POST" action="{{ route('logout') }}">
+                                <form method="POST" action="{{ route('logout') }}" id="logoutForm">
                                     @csrf
                                     <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 font-light">
                                         Logout
@@ -904,15 +1047,16 @@
         <div x-show="open" x-transition class="md:hidden bg-gradient-dark/95 backdrop-blur-sm border-t border-sage/30">
             <div class="px-4 py-3 space-y-1">
                 <a href="{{ route('home') }}" class="block px-3 py-2 text-cream hover:text-warm-cream hover:bg-sage/20 rounded-lg font-light">Beranda</a>
-                <a href="{{ route('properties.index') }}" class="block px-3 py-2 text-cream hover:text-warm-cream hover:bg-sage/20 rounded-lg font-light">Property</a>
-                <a href="{{ route('getstarted.index') }}" class="block px-3 py-2 text-cream hover:text-warm-cream hover:bg-sage/20 rounded-lg font-light">Get Started</a>
-                <a href="{{ route('contact.index') }}" class="block px-3 py-2 text-cream hover:text-warm-cream hover:bg-sage/20 rounded-lg font-light">Kontak</a>
+                <a href="{{ route('listings') }}" class="block px-3 py-2 text-cream hover:text-warm-cream hover:bg-sage/20 rounded-lg font-light">Listings</a>
+                <a href="{{ route('about') }}" class="block px-3 py-2 text-cream hover:text-warm-cream hover:bg-sage/20 rounded-lg font-light">Tentang</a>
+                <a href="{{ route('faq') }}" class="block px-3 py-2 text-cream hover:text-warm-cream hover:bg-sage/20 rounded-lg font-light">FAQs</a>
+                <a href="#kontak" class="block px-3 py-2 text-cream hover:text-warm-cream hover:bg-sage/20 rounded-lg font-light">Kontak</a>
                 
                 @auth
                     <hr class="my-3 border-sage/30">
                     <a href="#dashboard" class="block px-3 py-2 text-cream hover:bg-sage/20 rounded-lg font-light">Dashboard</a>
                     <a href="#investasi" class="block px-3 py-2 text-cream hover:bg-sage/20 rounded-lg font-light">Investasi Saya</a>
-                    <form method="POST" action="{{ route('logout') }}">
+                    <form method="POST" action="{{ route('logout') }}" id="logoutFormMobile">
                         @csrf
                         <button type="submit" class="block w-full text-left px-3 py-2 text-red-400 hover:bg-red-900/20 rounded-lg font-light">Logout</button>
                     </form>
@@ -1082,21 +1226,48 @@
         document.addEventListener('DOMContentLoaded', function() {
             const navbar = document.getElementById('navbar');
             
+            // Ensure navbar starts transparent with inline style
+            navbar.classList.add('navbar-transparent');
+            navbar.classList.remove('navbar-scrolled');
+            navbar.style.background = 'transparent';
+            navbar.style.border = 'none';
+            navbar.style.boxShadow = 'none';
+            
             function handleScroll() {
-                if (window.scrollY > 50) {
+                // Calculate 85% of viewport height as threshold
+                // This ensures navbar stays transparent throughout hero section
+                const heroThreshold = window.innerHeight * 0.85;
+                
+                if (window.scrollY > heroThreshold) {
                     navbar.classList.remove('navbar-transparent');
                     navbar.classList.add('navbar-scrolled');
+                    navbar.style.background = 'rgba(45, 51, 23, 0.95)';
+                    navbar.style.backdropFilter = 'blur(20px)';
+                    navbar.style.border = '1px solid rgba(114, 116, 68, 0.3)';
+                    navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(114, 116, 68, 0.3), 0 0 30px rgba(45, 51, 23, 0.2)';
                 } else {
                     navbar.classList.remove('navbar-scrolled');
                     navbar.classList.add('navbar-transparent');
+                    navbar.style.background = 'transparent';
+                    navbar.style.backdropFilter = 'none';
+                    navbar.style.border = 'none';
+                    navbar.style.boxShadow = 'none';
                 }
             }
             
-            // Set initial state
-            handleScroll();
+            // Listen for scroll events with throttle for performance
+            let scrollTimeout;
+            window.addEventListener('scroll', function() {
+                if (scrollTimeout) {
+                    window.cancelAnimationFrame(scrollTimeout);
+                }
+                scrollTimeout = window.requestAnimationFrame(function() {
+                    handleScroll();
+                });
+            });
             
-            // Listen for scroll events
-            window.addEventListener('scroll', handleScroll);
+            // Initial check after a short delay
+            setTimeout(handleScroll, 100);
         });
     </script>
     
@@ -1118,14 +1289,29 @@
     
     <!-- Page Loader Script -->
     <script>
-        // Loader initialization
+        // Loader initialization with first visit detection
         (function() {
             const loader = document.getElementById('pageLoader');
             const body = document.body;
             const logoImage = loader.querySelector('.logo-image');
             
-            // Minimum loading time (2.5 seconds) for smooth experience
-            const minLoadTime = 2500;
+            // Check if this is the first visit in this session
+            const isFirstVisit = !sessionStorage.getItem('sakanta_visited');
+            
+            // If not first visit, hide loader immediately
+            if (!isFirstVisit) {
+                if (loader) {
+                    loader.style.display = 'none';
+                    body.classList.remove('loading');
+                }
+                return;
+            }
+            
+            // Mark as visited for this session
+            sessionStorage.setItem('sakanta_visited', 'true');
+            
+            // Minimum loading time (3 seconds) for better visual experience
+            const minLoadTime = 3000;
             const startTime = performance.now();
             
             let isPageLoaded = false;
@@ -1135,11 +1321,9 @@
             if (logoImage) {
                 logoImage.addEventListener('error', function() {
                     console.warn('Failed to load Sakanta logo');
-                    // Keep the fallback styling
                 });
                 
                 logoImage.addEventListener('load', function() {
-                    // Add loaded class for any additional styling
                     logoImage.classList.add('loaded');
                 });
             }
@@ -1182,7 +1366,7 @@
             // Multiple event listeners for comprehensive loading detection
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', function() {
-                    setTimeout(checkPageReady, 100);
+                    setTimeout(checkPageReady, 200);
                 });
             } else {
                 checkPageReady();
@@ -1193,13 +1377,13 @@
                 hideLoader();
             });
             
-            // Fallback: Hide loader after maximum 6 seconds
+            // Fallback: Hide loader after maximum 7 seconds
             setTimeout(() => {
                 if (!loaderHidden) {
                     console.warn('Loader timeout reached, forcing hide');
                     hideLoader();
                 }
-            }, 6000);
+            }, 7000);
             
             // Handle page navigation (for SPA-like behavior)
             window.addEventListener('beforeunload', function() {
@@ -1213,8 +1397,66 @@
                 history.scrollRestoration = 'manual';
             }
         })();
+
+        // Prevent back button to access protected pages after logout
+        (function() {
+            // Force reload from server when page is loaded from cache (back/forward button)
+            if (performance.navigation.type === 2 || performance.getEntriesByType('navigation')[0]?.type === 'back_forward') {
+                // Page accessed via back/forward button - force reload from server
+                window.location.reload(true);
+            }
+
+            @guest
+            // User is not logged in - completely prevent back navigation
+            window.history.forward();
+            window.onunload = function() { null };
+            @endguest
+        })();
+
+        @auth
+        // Handle logout - use AJAX to prevent history issues
+        const logoutForm = document.getElementById('logoutForm');
+        const logoutFormMobile = document.getElementById('logoutFormMobile');
+        
+        function handleLogout(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const formData = new FormData(form);
+            
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            }).then(() => {
+                // Clear all storage
+                sessionStorage.clear();
+                localStorage.clear();
+                
+                // Use replace to prevent back navigation
+                window.location.replace('{{ route("auth.intro") }}');
+            }).catch(() => {
+                // Even on error, redirect to intro
+                window.location.replace('{{ route("auth.intro") }}');
+            });
+            
+            return false;
+        }
+        
+        if (logoutForm) {
+            logoutForm.addEventListener('submit', handleLogout);
+        }
+        
+        if (logoutFormMobile) {
+            logoutFormMobile.addEventListener('submit', handleLogout);
+        }
+        @endauth
     </script>
     
     @stack('scripts')
 </body>
 </html>
+
+

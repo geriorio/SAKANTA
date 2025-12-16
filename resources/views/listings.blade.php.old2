@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Listings - SAKANTA</title>
+    
+    <!-- Google Fonts - Work Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        @font-face {
+            font-family: 'Esther';
+            src: url('/fonts/Esther-Regular.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Esther', 'Georgia', serif;
+            color: #2c3e50;
+        }
+        
+        /* Apply Work Sans ONLY to buttons */
+        .area-guide-btn, .ownership-btn {
+            font-family: 'Work Sans', sans-serif !important;
+            font-weight: 600 !important;
+        }
+
+        .email-icon {
+            position: fixed;
+            left: 50px;
+            bottom: 50px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero-listings {
+            height: 100vh;
+            background: url('/images/herolistings.jpg') center/cover no-repeat;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-listings::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-text {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-text small {
+            font-size: 20px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .hero-text h1 {
+            font-size: 82px;
+            font-weight: 300;
+            letter-spacing: 4px;
+            margin-bottom: 60px;
+        }
+
+        .scroll-indicator {
+            position: relative;
+            z-index: 2;
+            color: white;
+            font-size: 24px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Section 2 - What We Offer */
+        .what-we-offer {
+            background: #e8e3d8;
+            padding: 120px 80px;
+            text-align: center;
+        }
+
+        .offer-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .offer-icon {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .offer-icon img {
+            max-width: 80px;
+            height: auto;
+            filter: drop-shadow(0 2px 8px rgba(44, 95, 127, 0.2));
+        }
+
+        .offer-icon svg {
+            width: 60px;
+            height: 60px;
+            stroke: #2c5f7f;
+            stroke-width: 1.5;
+        }
+
+        .offer-label {
+            font-size: 20px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #2c5f7f;
+            margin-bottom: 30px;
+        }
+
+        .offer-title {
+            font-size: 48px;
+            font-weight: 400;
+            color: #2c5f7f;
+            margin-bottom: 40px;
+            line-height: 1.3;
+        }
+
+        .offer-description {
+            font-size: 20px;
+            line-height: 1.8;
+            color: #2c5f7f;
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        /* Section 3 - Properties Grid */
+        .properties-grid {
+            background: #e8e3d8;
+            padding: 80px 80px 120px;
+            overflow: visible;
+        }
+
+        .grid-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .property-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            position: relative;
+            z-index: 1;
+            cursor: pointer;
+        }
+
+        .property-card:hover {
+            transform: translateY(-10px);
+            z-index: 10;
+        }
+
+        .property-image {
+            width: 100%;
+            height: 350px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Like Button */
+        .like-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .like-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .like-btn svg {
+            transition: all 0.3s;
+        }
+
+        .like-btn.liked svg {
+            fill: #e74c3c;
+        }
+
+        .property-info-card {
+            padding: 30px;
+        }
+
+        .property-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+
+        .property-name {
+            font-size: 28px;
+            font-weight: 400;
+            color: #2c5f7f;
+        }
+
+        .property-icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        .property-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: #2c5f7f;
+            stroke-width: 1.5;
+        }
+
+        .property-location-text {
+            font-size: 17px;
+            color: #5a8aaa;
+            margin-bottom: 20px;
+        }
+
+        .property-price-text {
+            font-size: 30px;
+            font-weight: 600;
+            color: #2c5f7f;
+            margin-bottom: 15px;
+        }
+
+        .property-specs {
+            font-size: 17px;
+            color: #2c5f7f;
+            margin-bottom: 5px;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 60px;
+        }
+
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #2c5f7f;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2c5f7f;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .page-btn:hover,
+        .page-btn.active {
+            background: #2c5f7f;
+            color: white;
+        }
+
+        /* Section 4 - Area Guide */
+        .area-guide {
+            background: #2c5f7f;
+            padding: 120px 80px;
+            text-align: center;
+        }
+
+        .area-guide h2 {
+            font-size: 52px;
+            font-weight: 400;
+            color: white;
+            margin-bottom: 30px;
+            line-height: 1.3;
+        }
+
+        .area-guide p {
+            font-size: 20px;
+            color: white;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            font-family: "Work Sans", sans-serif;
+        }
+
+        .area-guide-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            border: 2px solid white;
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .area-guide-btn:hover {
+            background: white;
+            color: #2c5f7f;
+        }
+
+        /* Section 5 - Ownership */
+        .ownership-section {
+            background: #e8e3d8;
+            padding: 100px 80px;
+            align-items: center;
+        }
+
+        .ownership-container {
+            max-width: 1150px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 280px;
+            align-items: center;
+            justify-items: start;
+        }
+
+        .ownership-stamp {
+            position: relative;
+            width: 100%;
+        }
+
+        .ownership-stamp img {
+            width: 300px;
+            height: auto;
+            border-radius: 8px;
+            transform: rotate(-8deg);
+            transition: transform 0.3s ease;
+        }
+
+        .ownership-stamp img:hover {
+            transform: rotate(-5deg) scale(1.05);
+        }
+
+        .ownership-content {
+            max-width: 600px;
+            text-align: start;
+        }
+
+        .ownership-label {
+            font-size: 17px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #5a8aaa;
+            margin-bottom: 20px;
+            font-family: "Work Sans", sans-serif;
+        }
+
+        .ownership-content h2 {
+            font-size: 34px;
+            font-weight: 400;
+            line-height: 1.4;
+            margin-bottom: 40px;
+            color: #2c5f7f;
+        }
+
+        .ownership-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border: 2px solid #2c5f7f;
+            color: #2c5f7f;
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
+        .ownership-btn:hover {
+            background: #2c5f7f;
+            color: #e8e3d8;
+        }
+
+        /* Slider Container */
+        .slider-wrapper {
+            overflow: hidden;
+            position: relative;
+            padding-top: 20px;
+            margin-top: -20px;
+        }
+
+        .slider-container {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            gap: 30px;
+        }
+
+        .slider-container .property-card {
+            flex: 0 0 calc((100% - 60px) / 3);
+            max-width: calc((100% - 60px) / 3);
+        }
+    </style>
+</head>
+<body>
+    @include('layouts.navbar')
+
+    <!-- Email Icon -->
+    <div class="email-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2c3e50" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-listings">
+        <div class="hero-text">
+            <small>FIND YOUR SANCTUARY IN</small>
+            <h1>Bali</h1>
+        </div>
+        <div class="scroll-indicator">↓</div>
+    </section>
+
+    <!-- Section 2 - What We Offer -->
+    <section class="what-we-offer">
+        <div class="offer-container">
+            <div class="offer-icon">
+                <img src="/images/KV-02.png" alt="Sakanta Icon" style="width: 80px; height: auto;">
+            </div>
+            <p class="offer-label">WHAT WE OFFER</p>
+            <h2 class="offer-title">A Home That Moves With You</h2>
+            <p class="offer-description">
+                Each villa comes with transparent ownership rights, flexible usage, & the invitation to belong — anytime.
+            </p>
+        </div>
+    </section>
+
+    <!-- Section 3 - Properties Grid -->
+    <section class="properties-grid">
+        <div class="slider-wrapper">
+            <div class="slider-container" id="propertySlider">
+                                @forelse($properties as $property)
+                <!-- {{ $property->title }} -->
+                <div class="property-card" style="cursor: pointer;" onclick="window.location.href='/property/{{ $property->slug }}'">
+                    <div class="property-image">
+                        <img src="{{ $property->main_image ?? '/images/villa1.jpg' }}" alt="{{ $property->title }}">
+                        
+                        @auth
+                        <button class="like-btn {{ Auth::user()->hasLiked($property->id) ? 'liked' : '' }}" 
+                                data-property-id="{{ $property->id}}"
+                                onclick="event.stopPropagation(); toggleLike(this, {{ $property->id }})">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="{{ Auth::user()->hasLiked($property->id) ? '#e74c3c' : 'none' }}" stroke="{{ Auth::user()->hasLiked($property->id) ? '#e74c3c' : '#666' }}" stroke-width="2">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            </svg>
+                        </button>
+                        @endauth
+                    </div>
+                    <div class="property-info-card">
+                        <div class="property-header">
+                            <h3 class="property-name">{{ $property->title }}</h3>
+                            <div class="property-icon">
+                                <svg viewBox="0 0 50 50" fill="none">
+                                    <path d="M 10 25 L 25 10 L 40 25 L 25 40 Z" stroke="currentColor" fill="none"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="property-location-text">{{ $property->city }}</p>
+                        <p class="property-price-text">{{ $property->formatted_price }}</p>
+                        <p class="property-specs">1/{{ $property->total_shares }} Ownership</p>
+                        <p class="property-specs">{{ $property->bedrooms }} BDS  |  {{ $property->bathrooms }} BA  |  {{ number_format($property->building_area, 0) }} FT</p>
+                    </div>
+                </div>
+                @empty
+                <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
+                    <p style="font-size: 18px; color: #999;">No properties available at the moment.</p>
+                </div>
+                @endforelse
+        </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <a href="#" class="page-btn" onclick="changeSlide('prev'); return false;">←</a>
+            <a href="#" class="page-btn page-number" data-page="1" onclick="goToPage(1); return false;">1</a>
+            <a href="#" class="page-btn page-number active" data-page="2" onclick="goToPage(2); return false;">2</a>
+            <a href="#" class="page-btn page-number" data-page="3" onclick="goToPage(3); return false;">3</a>
+            <a href="#" class="page-btn page-number" data-page="4" onclick="goToPage(4); return false;">4</a>
+            <a href="#" class="page-btn" onclick="changeSlide('next'); return false;">→</a>
+        </div>
+    </section>
+
+    <script>
+        let currentPage = 1;
+        const itemsPerPage = 3;
+        const slider = document.getElementById('propertySlider');
+        const totalItems = slider.children.length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+        function updateSlider() {
+            // Calculate card width including gap
+            const sliderWrapper = slider.parentElement;
+            const wrapperWidth = sliderWrapper.offsetWidth;
+            const gap = 30; // gap between cards
+            const cardWidth = (wrapperWidth - (gap * 2)) / 3; // width of one card
+            const moveDistance = (cardWidth + gap) * 3; // move exactly 3 cards + their gaps
+            
+            // Calculate offset in pixels
+            const offset = -(currentPage - 1) * moveDistance;
+            slider.style.transform = `translateX(${offset}px)`;
+            
+            // Update active pagination
+            document.querySelectorAll('.page-number').forEach(btn => {
+                btn.classList.remove('active');
+                if (parseInt(btn.dataset.page) === currentPage) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+
+        function changeSlide(direction) {
+            if (direction === 'next' && currentPage < totalPages) {
+                currentPage++;
+            } else if (direction === 'prev' && currentPage > 1) {
+                currentPage--;
+            }
+            updateSlider();
+        }
+
+        function goToPage(page) {
+            if (page >= 1 && page <= totalPages) {
+                currentPage = page;
+                updateSlider();
+            }
+        }
+
+        // Initialize
+        updateSlider();
+        
+        // Recalculate on window resize
+        window.addEventListener('resize', updateSlider);
+
+        // Make property cards clickable
+        document.querySelectorAll('.property-card').forEach((card, index) => {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', function(e) {
+                // Get property name from the card
+                const propertyName = this.querySelector('.property-name').textContent;
+                const slug = propertyName.toLowerCase().replace(/\s+/g, '-');
+                window.location.href = `/property/${slug}`;
+            });
+        });
+    </script>
+
+    <!-- Section 4 - Area Guide -->
+    <section class="area-guide dark-section">
+        <h2>Not Sure Where To<br>Hang Your Hat?</h2>
+        <p>Every place whispers a different kind of peace.</p>
+        <a href="#" class="area-guide-btn">AREA GUIDES</a>
+    </section>
+
+    <!-- Section 5 - Ownership -->
+    <section class="ownership-section">
+        <div class="ownership-container">
+            <div class="ownership-stamp">
+                <img src="/images/Stamp-01.png" alt="Sakanta Stamp">
+            </div>
+            <div class="ownership-content">
+                <p class="ownership-label">EXPLORE SAKANTA OWNERSHIP</p>
+                <h2>Thoughtfully designed spaces that give you order and flexibility: private nooks to work or rest; communal areas to gather, dine, laugh.</h2>
+                <a href="#" class="ownership-btn">LEARN MORE →</a>
+            </div>
+        </div>
+    </section>
+
+    @include('layouts.footer')
+    
+    <script>
+        // AJAX Like/Unlike Function
+        function toggleLike(button, propertyId) {
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            const svg = button.querySelector('svg');
+            
+            fetch(`/property/${propertyId}/like`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.liked) {
+                    button.classList.add('liked');
+                    svg.setAttribute('fill', '#e74c3c');
+                    svg.setAttribute('stroke', '#e74c3c');
+                } else {
+                    button.classList.remove('liked');
+                    svg.setAttribute('fill', 'none');
+                    svg.setAttribute('stroke', '#666');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Please sign in to like properties');
+            });
+        }
+    </script>
+</body>
+</html>
