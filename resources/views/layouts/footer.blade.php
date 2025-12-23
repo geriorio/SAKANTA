@@ -2,8 +2,8 @@
 <footer class="footer">
     <!-- Top Icons -->
     <div class="footer-top-icons">
-        <img src="/images/KV-13.png" alt="Sakanta Icon" class="footer-icon">
-        <img src="/images/KV-13.png" alt="Sakanta Icon" class="footer-icon">
+        <img src="{{ asset('images/KV-13.png') }}" alt="Sakanta Icon" class="footer-icon">
+        <img src="{{ asset('images/KV-13.png') }}" alt="Sakanta Icon" class="footer-icon">
     </div>
     
     <div class="footer-container">

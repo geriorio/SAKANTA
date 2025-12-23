@@ -1,25 +1,29 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FaqController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\AdminAuthorizedUserController;
-use App\Http\Controllers\MembershipRequestController;
-use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\PropertyLikeController;
+use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\YachtLikeController;
 use App\Http\Controllers\NewsletterController;
-use App\Http\Controllers\FaqController;
-use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\PropertyController as AdminPropertyController;
+use App\Http\Controllers\ContactFormController;
+use App\Http\Controllers\PropertyLikeController;
+use App\Http\Controllers\MembershipRequestController;
+use App\Http\Controllers\AdminAuthorizedUserController;
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 use App\Http\Controllers\Admin\LocationController as AdminLocationController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\PropertyController as AdminPropertyController;
 
 // Public Routes (No Auth Required)
 // Intro Page
 Route::get('/intro', [AuthController::class, 'showIntro'])->name('auth.intro');
-
+Route::get('/', [HomeController::class, 'index'])
+    ->middleware('ensure.intro')
+    ->name('home');
+    
 // Authentication Routes - New Flow
 Route::get('/auth/google', [AuthController::class, 'redirectToGoogle'])->name('auth.google.redirect');
 Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallback'])->name('auth.google.callback');

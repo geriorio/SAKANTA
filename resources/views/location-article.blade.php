@@ -561,7 +561,7 @@
             </div>
             <div class="section-two-image">
                 <!-- Template image - tidak dari input -->
-                <img src="/images/article-template.jpg" alt="Location Feature" onerror="this.src='/images/locations/{{ $location->image }}'">
+                <img src="{{ asset('images/article-template.jpg') }}" alt="Location Feature" onerror="this.src='{{ asset('images/locations/' . $location->image) }}'">
             </div>
         </div>
     </section>

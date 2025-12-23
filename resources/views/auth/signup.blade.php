@@ -28,7 +28,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            background: #000000;
+            background: #F7EFE2;
             position: relative;
             overflow-x: hidden;
         }

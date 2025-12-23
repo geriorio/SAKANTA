@@ -9,20 +9,24 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EnsureIntroVisited
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
     public function handle(Request $request, Closure $next): Response
     {
-        // Skip middleware if user is authenticated or accessing intro page
-        if (Auth::check() || $request->is('intro') || $request->is('auth/google/callback')) {
+        // Jika user sudah login → bebas
+        if (Auth::check()) {
             return $next($request);
         }
 
-        // Check if user has visited intro page in this session
+        // Jika sedang akses intro atau callback → bebas
+        if (
+            $request->is('intro') ||
+            $request->is('auth/google/callback')
+        ) {
+            return $next($request);
+        }
+
+        // Paksa intro HANYA SEKALI
         if (!session()->has('intro_visited')) {
+            session(['intro_visited' => true]);
             return redirect()->route('auth.intro');
         }
 

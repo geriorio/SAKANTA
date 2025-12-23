@@ -64,7 +64,7 @@
                         Current image: {{ $location->image }}
                     </small>
                     @if($location->image)
-                        <img src="/images/locations/{{ $location->image }}" alt="{{ $location->name }}" class="image-preview">
+                        <img src="{{ asset('images/locations/' . $location->image) }}"alt="{{ $location->name }}"class="image-preview">
                     @endif
                     @error('image')
                         <div class="error">{{ $message }}</div>

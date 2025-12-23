@@ -854,7 +854,7 @@
                 </svg>
                 <h3>No Favorites Yet</h3>
                 <p>Start exploring and save yachts you love!</p>
-                <a href="{{ route('all.listings') }}?category=yacht" class="browse-btn">Browse Yachts</a>
+                <a href="{{ route('yacht.listings') }}?category=yacht" class="browse-btn">Browse Yachts</a>
             </div>
         @endif
     </section>

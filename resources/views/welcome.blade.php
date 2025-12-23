@@ -848,18 +848,18 @@
     <section class="hero-section">
         <!-- Sakanta Homes - Left Half -->
         <a href="/listings" class="hero-half">
-            <img src="/images/home.jpg" alt="Sakanta Home" class="hero-bg">
+            <img src="{{ asset('images/home.jpg') }}" alt="Sakanta Home" class="hero-bg">
             <div class="hero-content">
-                <img src="/images/logohome.png" alt="Home Logo" class="hero-logo-img">
+                <img src="{{ asset('images/logohome.png') }}" alt="Home Logo" class="hero-logo-img">
                 <div class="hero-button">EXPLORE HOMES</div>
             </div>
         </a>
 
         <!-- Sakanta Sail - Right Half -->
         <a href="/yacht-listings" class="hero-half">
-            <img src="/images/yacht.jpg" alt="Sakanta Sail" class="hero-bg">
+            <img src="{{ asset('images/yacht.jpg') }}" alt="Sakanta Sail" class="hero-bg">
             <div class="hero-content">
-                <img src="/images/logosail.png" alt="Sail Logo" class="hero-logo-img">
+                <img src="{{ asset('images/logosail.png') }}" alt="Sail Logo" class="hero-logo-img">
                 <div class="hero-button">EXPLORE SAIL</div>
             </div>
         </a>
@@ -869,7 +869,7 @@
     <section class="section2">
         <div class="section2-container">
             <div class="section2-image">
-                <img src="/images/Image-04.png" alt="Sakanta Villa">
+                <img src="{{ asset('images/Image-04.png') }}" alt="Sakanta Villa">
             </div>
             <div class="section2-content">
                 <h2>Escape the rush.<br>Find connection.<br>Live it all.</h2>
@@ -913,7 +913,7 @@
                 <a href="{{ route('all.listings') }}" class="section3-button">View All Homes</a>
             </div>
             <div class="section3-image">
-                <img src="/images/Image-01.png" alt="Sakanta Villa">
+                <img src="{{ asset('images/Image-01.png') }}" alt="Sakanta Villa">
 
             </div>
         </div>
@@ -923,7 +923,7 @@
     <section class="section4">
         <div class="section4-container">
             <div class="section4-stamp">
-                <img src="/images/Stamp-01.png" alt="Sakanta Stamp">
+                <img src="{{ asset('images/Stamp-01.png') }}" alt="Sakanta Stamp">
             </div>
             <div class="section4-content">
                 <h2>Thoughtfully designed spaces that give you order and flexibility: private nooks to work or rest; communal areas to gather, dine, laugh</h2>

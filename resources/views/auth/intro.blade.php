@@ -32,7 +32,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: #000000;
+            background: #F7EFE2;
             position: relative;
             overflow: hidden;
         }

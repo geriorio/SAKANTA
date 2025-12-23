@@ -375,7 +375,7 @@
             <!-- Logo -->
             <div class="logo">
                 <div class="logo-wrapper">
-                    <img src="/images/Logo-04.png" alt="Sakanta Logo">
+                    <img src="{{ asset('images/Logo-04.png') }}" alt="Sakanta Logo">
                 </div>
             </div>
 

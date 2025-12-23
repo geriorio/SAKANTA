@@ -25,7 +25,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #000000;
+            background: #F7EFE2;
             position: relative;
             overflow-x: hidden;
             padding: 2rem 1rem;
@@ -144,7 +144,7 @@
 
     <div class="container">
         <div class="logo">
-            <img src="{{ asset('images/Logo-01.png') }}" alt="Sakanta">
+            <img src="{{ asset('images/Logo-03.png') }}" alt="Sakanta">
         </div>
 
         <h1>Welcome</h1>

@@ -1157,7 +1157,7 @@
         <section class="section5">
             <div class="section5-container">
                 <div class="section5-image">
-                    <img src="/images/sail01.png" alt="Sakanta Sail">
+                    <img src="{{ asset('images/sail01.png') }}" alt="Sakanta Sail">
                 </div>
                 <div class="section5-content">
                     <h2>Ready to make it yours?</h2>
@@ -1179,7 +1179,7 @@
                     <a href="{{ route('faq') }}" class="cta-button">Explore the Full Story</a>
                 </div>
                 <div class="section6-image">
-                    <img src="/images/sail02.png" alt="Sakanta Sail">
+                    <img src="{{ asset('images/sail02.png') }}" alt="Sakanta Sail">
                 </div>
             </div>
         </section>

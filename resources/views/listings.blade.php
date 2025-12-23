@@ -819,7 +819,7 @@
             <div class="location-carousel-container" id="locationCarousel">
                 @foreach($locations as $location)
                 <div class="location-card" data-location-id="{{ $location->id }}" data-location-slug="{{ $location->slug }}" data-location-name="{{ $location->name }}" onclick="selectLocation('{{ $location->slug }}')">
-                    <img src="/images/locations/{{ $location->image }}" alt="{{ $location->name }}" class="location-card-image">
+                    <img src="{{ asset('images/locations/' . $location->image) }}" alt="{{ $location->name }}" class="location-card-image">
                     <div class="location-card-content">
                         <div class="location-card-name">{{ $location->name }}</div>
                         <div class="location-card-description">{{ $location->description }}</div>
@@ -844,7 +844,7 @@
     <section class="what-we-offer">
         <div class="offer-container">
             <div class="offer-icon">
-                <img src="/images/Icon Test-01.svg" alt="Sakanta Icon" style="width: 80px; height: auto;">
+                <img src="{{ asset('images/Icon Test-01.svg') }}" alt="Sakanta Icon" style="width: 80px; height: auto;">
             </div>
             <p class="offer-label">WHAT WE OFFER</p>
             <h2 class="offer-title">A Home That Moves With You</h2>

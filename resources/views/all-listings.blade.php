@@ -666,17 +666,17 @@
     <!-- Hero Section -->
     <section class="hero-section {{ $category === 'yacht' ? 'hero-yacht' : '' }}">
         @if($category === 'home')
-            <img src="/images/homehero.avif" alt="Sakanta Home" class="hero-background">
+            <img src="{{ asset('images/homehero.avif') }}" alt="Sakanta Home" class="hero-background">
         @else
-            <img src="/images/yachthero.avif" alt="Sakanta Sail" class="hero-background">
+            <img src="{{ asset('images/yachthero.avif') }}" alt="Sakanta Sail" class="hero-background">
         @endif
         
         <div class="hero-content">
             @if($category === 'home')
-                <img src="/images/logohome.png" alt="Sakanta Home Logo" class="hero-logo">
+                <img src="{{ asset('images/logohome.png') }}" alt="Sakanta Home Logo" class="hero-logo">
                 <h1 class="hero-title">Find your place in paradise — thoughtfully curated luxury villas for effortless co-ownership.</h1>
             @else
-                <img src="/images/logosail.png" alt="Sakanta Sail Logo" class="hero-logo">
+                <img src="{{ asset('images/logosail.png') }}" alt="Sakanta Sail Logo" class="hero-logo">
                 <h1 class="hero-title">Set sail on your terms — access world-class yachts without the full-ownership burden.</h1>
             @endif
         </div>

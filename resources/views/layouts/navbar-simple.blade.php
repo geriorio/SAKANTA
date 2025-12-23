@@ -770,26 +770,6 @@
     </div>
 
     <div class="nav-right">
-        <!-- Language Switcher Globe -->
-        <div class="language-switcher" style="position: relative;">
-            <button class="lang-btn" onclick="toggleLanguageMenuSimple()" style="background: transparent; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; padding: 0; transition: all 0.3s;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M2 12h20"></path>
-                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                </svg>
-            </button>
-            
-            <!-- Language Dropdown Menu -->
-            <div class="lang-menu" id="langMenuSimple" style="position: absolute; top: 50px; right: 0; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); min-width: 150px; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s; z-index: 1001; overflow: hidden;">
-                <a href="#" style="display: block; padding: 12px 20px; text-decoration: none; color: #064852; font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid #eee; transition: background 0.2s;" onmouseover="this.style.background='#f8f9fa'" onmouseout="this.style.background='transparent'">
-                    ENGLISH
-                </a>
-                <a href="#" style="display: block; padding: 12px 20px; text-decoration: none; color: #064852; font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; transition: background 0.2s;" onmouseover="this.style.background='#f8f9fa'" onmouseout="this.style.background='transparent'">
-                    BAHASA
-                </a>
-            </div>
-        </div>
         @auth
             <!-- User sudah login - tampilkan Profile dengan Dropdown -->
             <div class="user-dropdown" style="position: relative;">

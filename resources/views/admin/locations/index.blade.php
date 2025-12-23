@@ -66,7 +66,7 @@
                         <tr>
                             <td><strong style="color: #667eea;">#{{ $location->id }}</strong></td>
                             <td>
-                                <img src="/images/locations/{{ $location->image }}" alt="{{ $location->name }}" class="image-preview">
+                                <img src="{{ asset('images/locations/' . $location->image) }}"alt="{{ $location->name }}"class="image-preview">
                             </td>
                             <td>{{ $location->name }}</td>
                             <td>{{ $location->slug }}</td>

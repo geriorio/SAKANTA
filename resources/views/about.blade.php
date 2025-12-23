@@ -365,7 +365,7 @@
             <!-- Row 1 - Image Left -->
             <div class="content-row">
                 <div class="content-image">
-                    <img src="/images/homevilla.jpg" alt="Sakanta Villa">
+                    <img src="{{ asset('images/homevilla.jpg') }}" alt="Sakanta Villa">
                 </div>
                 <div class="content-text">
                     <small>About Sakanta</small>
@@ -380,7 +380,7 @@
             <!-- Row 2 - Image Right -->
             <div class="content-row reverse">
                 <div class="content-image">
-                    <img src="/images/homevilla2.jpg" alt="Sakanta Ownership">
+                    <img src="{{ asset('images/homevilla2.jpg') }}" alt="Sakanta Ownership">
                 </div>
                 <div class="content-text">
                     <small>Our Mission</small>
@@ -394,7 +394,7 @@
             <!-- Row 3 - Image Left -->
             <div class="content-row">
                 <div class="content-image">
-                    <img src="/images/Image-05.png" alt="Luxury Living">
+                    <img src="{{ asset('images/Image-05.png') }}" alt="Luxury Living">
                 </div>
                 <div class="content-text">
                     <small>Our Vision</small>
@@ -407,7 +407,7 @@
             <!-- Row 4 - Image Right -->
             <div class="content-row reverse">
                 <div class="content-image">
-                    <img src="/images/hero2.jpg" alt="Flexible Ownership">
+                    <img src="{{ asset('images/hero2.jpg') }}" alt="Flexible Ownership">
                 </div>
                 <div class="content-text">
                     <small>Our People</small>
@@ -420,7 +420,7 @@
             <!-- Row 5 - Image Left -->
             <div class="content-row">
                 <div class="content-image">
-                    <img src="/images/hero.jpg" alt="Community">
+                    <img src="{{ asset('images/hero.jpg') }}" alt="Community">
                 </div>
                 <div class="content-text">
                     <small>Our Journey</small>
